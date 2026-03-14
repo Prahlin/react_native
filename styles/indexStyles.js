@@ -33,8 +33,8 @@ export default StyleSheet.create({
     position: "absolute",
     top: height * 0.07,
     left: -width * 0.22,
-    width: width * 1.05,
-    height: height * 0.25,
+    width: 410,
+    height: 211,
     resizeMode: "contain",
   },
 
@@ -42,8 +42,8 @@ export default StyleSheet.create({
     position: "absolute",
     top: height * 0.07,
     right: -width * 0.22,
-    width: width * 1.05,
-    height: height * 0.25,
+    width: 410,
+    height: 211,
     resizeMode: "contain",
   },
 
@@ -51,8 +51,8 @@ export default StyleSheet.create({
     position: "absolute",
     bottom: height * 0.06,
     left: -width * 0.22,
-    width: width * 1.05,
-    height: height * 0.25,
+    width: 410,
+    height: 211,
     resizeMode: "contain",
     zIndex: -2,
   },
@@ -61,8 +61,8 @@ export default StyleSheet.create({
     position: "absolute",
     bottom: height * 0.06,
     right: -width * 0.22,
-    width: width * 1.05,
-    height: height * 0.25,
+    width: 410,
+    height: 211,
     resizeMode: "contain",
     zIndex: -2,
   },
@@ -172,12 +172,12 @@ fieldRow: {
 
   logoContainer: {
     width: "100%",
-    height: height * 0.16,
+    height: 135,
     alignSelf: "center",
     marginBottom: height * 0.055,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
 
   coinGroup: {

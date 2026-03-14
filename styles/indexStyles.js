@@ -1,9 +1,6 @@
 import { Dimensions, StyleSheet } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-const usernameEllipseBack = require("../assets/ellipse-6.png");
-const usernameEllipseFront = require("../assets/ellipse-7.png");
-const usernameRect = require("../assets/rectangle-4.png");
 
 
 export default StyleSheet.create({
@@ -28,126 +25,126 @@ export default StyleSheet.create({
   stage: {
     flex: 1,
     alignItems: "center",
-    paddingTop: 70,
+    paddingTop: height * 0.09,
     overflow: "hidden",
   },
 
   bgEllipse1: {
     position: "absolute",
-    top: 60,
-    left: -90,
-    width: 420,
-    height: 200,
+    top: height * 0.07,
+    left: -width * 0.22,
+    width: width * 1.05,
+    height: height * 0.25,
     resizeMode: "contain",
   },
 
   bgEllipse2: {
     position: "absolute",
-    top: 60,
-    right: -90,
-    width: 420,
-    height: 200,
+    top: height * 0.07,
+    right: -width * 0.22,
+    width: width * 1.05,
+    height: height * 0.25,
     resizeMode: "contain",
   },
 
   bgEllipse3: {
     position: "absolute",
-    bottom: 50,
-    left: -90,
-    width: 420,
-    height: 200,
+    bottom: height * 0.06,
+    left: -width * 0.22,
+    width: width * 1.05,
+    height: height * 0.25,
     resizeMode: "contain",
     zIndex: -2,
   },
 
   bgEllipse4: {
     position: "absolute",
-    bottom: 50,
-    right: -90,
-    width: 420,
-    height: 200,
+    bottom: height * 0.06,
+    right: -width * 0.22,
+    width: width * 1.05,
+    height: height * 0.25,
     resizeMode: "contain",
     zIndex: -2,
   },
 
   ellipseTop: {
     position: "absolute",
-    top: 50,
+    top: height * 0.06,
     alignSelf: "center",
-    width: 320,
-    height: 320,
+    width: width * 0.8,
+    height: width * 0.8,
     resizeMode: "contain",
   },
 
   ellipseMiddle: {
     position: "absolute",
-    top: 250,
+    top: height * 0.31,
     alignSelf: "center",
-    width: 320,
-    height: 320,
+    width: width * 0.8,
+    height: width * 0.8,
     resizeMode: "contain",
   },
 
   ellipseBottom: {
     position: "absolute",
-    top: 400,
+    top: height * 0.5,
     alignSelf: "center",
-    width: 240,
-    height: 240,
+    width: width * 0.6,
+    height: width * 0.6,
     resizeMode: "contain",
     zIndex: -2,
   },
 
   ellipseLeftSide: {
     position: "absolute",
-    top: 255,
-    left: 20,
-    width: 170,
-    height: 170,
+    top: height * 0.32,
+    left: width * 0.05,
+    width: width * 0.43,
+    height: width * 0.43,
     resizeMode: "contain",
     zIndex: 0,
   },
 
   ellipseRightSide: {
     position: "absolute",
-    top: 255,
-    right: 20,
-    width: 170,
-    height: 170,
+    top: height * 0.32,
+    right: width * 0.05,
+    width: width * 0.43,
+    height: width * 0.43,
     resizeMode: "contain",
     zIndex: -2,
   },
 
   card: {
     width: width * 0.8,
-    height: height * 0.7,
     backgroundColor: "#F7F7F7",
     borderRadius: 28,
     borderWidth: 1.5,
     borderColor: "#C6C6C6",
-    paddingTop: 30,
-    paddingHorizontal: 32,
-    paddingBottom: 60,
+    paddingTop: height * 0.04,
+    paddingHorizontal: width * 0.08,
+    paddingBottom: height * 0.08,
   },
 
 fieldRow: {
-  marginBottom: 20,
-  position: "relative", // ensure the field row is the reference for absolute positioning
+  flexDirection: "row",
+  alignItems: "center",
+  marginBottom: height * 0.025,
 },
 
   input: {
+    flex: 1,
     fontSize: 14,
     color: "#808690",
     borderBottomWidth: 2,
     borderBottomColor: "#D0D4DC",
     paddingBottom: 8,
-    paddingLeft: 28,
   },
 
   rememberRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 48,
+    marginBottom: height * 0.06,
   },
 
   rememberText: {
@@ -174,10 +171,10 @@ fieldRow: {
   },
 
   logoContainer: {
-    width: 320,
-    height: 132,
+    width: "100%",
+    height: height * 0.16,
     alignSelf: "center",
-    marginBottom: 44,
+    marginBottom: height * 0.055,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -252,58 +249,25 @@ fieldRow: {
   },
 
 usernameIcon: {
-  position: "absolute",
-  left: 10, // slightly more to the left
-  top: "50%", // vertical centering
-  width: 20,
-  height: 20,
-  zIndex: 2,
-  transform: [{ translateY: -10 }], // half of the icon size to vertically center
+  width: 22,
+  height: 22,
+  marginLeft: 4,
+  marginRight: 8,
+  justifyContent: "center",
+  alignItems: "center",
 },
 
-  usernameEllipseBack: {
-    position: "absolute",
-    left: 0,
-    top: 5,
-    width: 18,
-    height: 18,
-    resizeMode: "contain",
-  },
-
-  usernameEllipseFront: {
-    position: "absolute",
-    left: 5.5,
-    top: 9,
-    width: 7,
-    height: 7,
-    resizeMode: "contain",
-  },
-
-  usernameRect: {
-    position: "absolute",
-    left: 3.8,
-    top: 16,
-    width: 12,
-    height: 7,
-    resizeMode: "contain",
-  },
-
-  usernameVector: {
-    position: "absolute",
-    left: 0,
-    top: 68,
-    width: 16,
-    height: 16,
-    opacity: 1,
+  fieldIcon: {
+    width: "100%",
+    height: "100%",
   },
 
 lockIcon: {
-  position: "absolute",
-  left: 10, // same logic for consistency
-  top: "50%",
-  width: 20,
-  height: 20,
-  zIndex: 2,
-  transform: [{ translateY: -10 }], // same centering logic
+  width: 22,
+  height: 22,
+  marginLeft: 4,
+  marginRight: 8,
+  justifyContent: "center",
+  alignItems: "center",
 },
 });

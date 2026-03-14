@@ -103,21 +103,9 @@ export default function Index() {
           <View style={styles.fieldRow}>
             <View style={styles.usernameIcon}>
               <Image
-                source={require("../assets/ellipse-6.png")}
-                style={styles.usernameEllipseBack}
-              />
-              <Image
-                source={require("../assets/ellipse-7.png")}
-                style={styles.usernameEllipseFront}
-              />
-              <Image
-                source={require("../assets/rectangle-4.png")}
-                style={styles.usernameRect}
-              />
-              <Image
-                source={require("../assets/vector.png")}
+                source={require("../assets/username.png")}
                 resizeMode="contain"
-                style={styles.usernameVector}
+                style={styles.fieldIcon}
               />
             </View>
 
@@ -129,7 +117,13 @@ export default function Index() {
           </View>
 
           <View style={styles.fieldRow}>
-            <View style={styles.lockIcon} />
+            <View style={styles.lockIcon}>
+              <Image
+                source={require("../assets/password.png")}
+                resizeMode="contain"
+                style={styles.fieldIcon}
+              />
+            </View>
 
             <TextInput
               placeholder="Password"

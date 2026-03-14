@@ -129,7 +129,7 @@ export default StyleSheet.create({
 fieldRow: {
   flexDirection: "row",
   alignItems: "center",
-  marginBottom: 20,
+  marginBottom: height * 0.025,
 },
 
   input: {

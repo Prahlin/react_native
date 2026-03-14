@@ -103,7 +103,7 @@ export default function Index() {
           <View style={styles.fieldRow}>
             <View style={styles.usernameIcon}>
               <Image
-                source={require("../assets/username.png")}
+                source={require("../assets/avatar.png")}
                 resizeMode="contain"
                 style={styles.fieldIcon}
               />
@@ -119,7 +119,7 @@ export default function Index() {
           <View style={styles.fieldRow}>
             <View style={styles.lockIcon}>
               <Image
-                source={require("../assets/password.png")}
+                source={require("../assets/lock.png")}
                 resizeMode="contain"
                 style={styles.fieldIcon}
               />

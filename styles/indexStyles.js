@@ -26,6 +26,7 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingTop: height * 0.09,
+    paddingBottom: height * 0.09,
     overflow: "hidden",
   },
 
@@ -116,6 +117,7 @@ export default StyleSheet.create({
   },
 
   card: {
+    flex: 1,
     width: width * 0.8,
     backgroundColor: "#F7F7F7",
     borderRadius: 28,

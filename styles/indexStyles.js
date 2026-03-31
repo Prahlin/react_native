@@ -25,7 +25,7 @@ export default StyleSheet.create({
   stage: {
     flex: 1,
     alignItems: "center",
-    paddingTop: height * 0.09,
+    justifyContent: "center",
     overflow: "hidden",
   },
 

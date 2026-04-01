@@ -1,7 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
-
-const { width, height } = Dimensions.get("window");
-
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -11,8 +8,8 @@ export default StyleSheet.create({
 
   bgPattern: {
     position: "absolute",
-    width: width,
-    height: height,
+    width: "100%",
+    height: "100%",
     resizeMode: "cover",
     opacity: 0,
   },
@@ -31,105 +28,105 @@ export default StyleSheet.create({
 
   bgEllipse1: {
     position: "absolute",
-    top: height * 0.07,
-    left: -width * 0.22,
-    width: width * 1.05,
-    height: height * 0.25,
+    top: "7%",
+    left: "-22%",
+    width: "105%",
+    height: "25%",
     resizeMode: "contain",
   },
 
   bgEllipse2: {
     position: "absolute",
-    top: height * 0.07,
-    right: -width * 0.22,
-    width: width * 1.05,
-    height: height * 0.25,
+    top: "7%",
+    right: "-22%",
+    width: "105%",
+    height: "25%",
     resizeMode: "contain",
   },
 
   bgEllipse3: {
     position: "absolute",
-    bottom: height * 0.06,
-    left: -width * 0.22,
-    width: width * 1.05,
-    height: height * 0.25,
+    bottom: "6%",
+    left: "-22%",
+    width: "105%",
+    height: "25%",
     resizeMode: "contain",
     zIndex: -2,
   },
 
   bgEllipse4: {
     position: "absolute",
-    bottom: height * 0.06,
-    right: -width * 0.22,
-    width: width * 1.05,
-    height: height * 0.25,
+    bottom: "6%",
+    right: "-22%",
+    width: "105%",
+    height: "25%",
     resizeMode: "contain",
     zIndex: -2,
   },
 
   ellipseTop: {
     position: "absolute",
-    top: height * 0.06,
+    top: "6%",
     alignSelf: "center",
-    width: width * 0.8,
-    height: width * 0.8,
+    width: "80%",
+    height: "80%",
     resizeMode: "contain",
   },
 
   ellipseMiddle: {
     position: "absolute",
-    top: height * 0.31,
+    top: "31%",
     alignSelf: "center",
-    width: width * 0.8,
-    height: width * 0.8,
+    width: "80%",
+    height: "80%",
     resizeMode: "contain",
   },
 
   ellipseBottom: {
     position: "absolute",
-    top: height * 0.5,
+    top: "50%",
     alignSelf: "center",
-    width: width * 0.6,
-    height: width * 0.6,
+    width: "60%",
+    height: "60%",
     resizeMode: "contain",
     zIndex: -2,
   },
 
   ellipseLeftSide: {
     position: "absolute",
-    top: height * 0.32,
-    left: width * 0.05,
-    width: width * 0.43,
-    height: width * 0.43,
+    top: "32%",
+    left: "5%",
+    width: "43%",
+    height: "43%",
     resizeMode: "contain",
     zIndex: 0,
   },
 
   ellipseRightSide: {
     position: "absolute",
-    top: height * 0.32,
-    right: width * 0.05,
-    width: width * 0.43,
-    height: width * 0.43,
+    top: "32%",
+    right: "5%",
+    width: "43%",
+    height: "43%",
     resizeMode: "contain",
     zIndex: -2,
   },
 
   card: {
-    width: width * 0.8,
+    width: "80%",
     backgroundColor: "#F7F7F7",
     borderRadius: 28,
     borderWidth: 1.5,
     borderColor: "#C6C6C6",
-    paddingTop: height * 0.04,
-    paddingHorizontal: width * 0.08,
-    paddingBottom: height * 0.08,
+    paddingTop: "4%",
+    paddingHorizontal: "8%",
+    paddingBottom: "8%",
   },
 
 fieldRow: {
   flexDirection: "row",
   alignItems: "center",
-  marginBottom: height * 0.025,
+  marginBottom: "2.5%",
 },
 
   input: {
@@ -144,7 +141,7 @@ fieldRow: {
   rememberRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: height * 0.06,
+    marginBottom: "6%",
   },
 
   rememberText: {
@@ -172,9 +169,9 @@ fieldRow: {
 
   logoContainer: {
     width: "100%",
-    height: height * 0.16,
+    height: "16%",
     alignSelf: "center",
-    marginBottom: height * 0.055,
+    marginBottom: "5.5%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

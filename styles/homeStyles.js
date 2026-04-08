@@ -18,75 +18,104 @@ const styles = StyleSheet.create({
     paddingBottom: 90,
   },
 
-mainContent: {
-  paddingTop: 72,
-  paddingHorizontal: 8,
-  gap: 8,
-  zIndex: 1,
-},
+  mainContent: {
+    paddingTop: 72,
+    paddingHorizontal: 8,
+    gap: 8,
+    zIndex: 1,
+  },
 
-stickyHeaderWrap: {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  zIndex: 20,
-},
+  dashboardLetterRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-welcomeSteve: {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  height: 68,
-  backgroundColor: "rgba(151, 162, 254, 1)",
-},
+  dashboardLetter: {
+    fontSize: 12,
+    fontWeight: "400",
+  },
 
-stickyTopNav: {
-  paddingHorizontal: 8,
-  paddingTop: 68,
-  backgroundColor: "transparent",
-},
+  dashboardLetterInactive: {
+    color: "#A9ADB6",
+  },
 
-bG: {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  height: 0,
-  backgroundColor: "transparent",
-},
+  dashboardLetterActive: {
+    color: "#6A79D1",
+  },
 
-time: {
-  display: "none",
-},
+  navTrack: {
+    marginTop: 6,
+    width: "100%",
+    height: 4,
+    backgroundColor: "#D9D9D9",
+    borderRadius: 4,
+    overflow: "hidden",
+    position: "relative",
+  },
 
-frame188: {
-  display: "none",
-},
+  navUnderlineActive: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    height: 4,
+    backgroundColor: "#6A79D1",
+    borderRadius: 4,
+  },
+
+  stickyHeaderWrap: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 20,
+  },
+
+  welcomeSteve: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 68,
+    backgroundColor: "#97A2FE",
+  },
+
+  stickyTopNav: {
+    paddingHorizontal: 8,
+    paddingTop: 68,
+    backgroundColor: "transparent",
+  },
+
+  bG: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 0,
+    backgroundColor: "transparent",
+  },
+
+  time: {
+    display: "none",
+  },
+
+  frame188: {
+    display: "none",
+  },
 
   statusText: {
     color: "#222227",
     fontSize: 8,
   },
 
-welcomeSteve: {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  height: 68,
-  backgroundColor: "#97A2FE",
-},
-
-frame189: {
-  flex: 1,
-  paddingHorizontal: 20,
-  paddingTop: 20,
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-},
+  frame189: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
 
   _welcomeSteve: {
     color: "#fff",
@@ -94,61 +123,53 @@ frame189: {
     fontWeight: "700",
   },
 
-frame155: {
-  backgroundColor: "rgba(255, 255, 255, 1)",
-  borderRadius: 6,
-  minHeight: 44,
-  paddingHorizontal: 10,
-  paddingTop: 10,
-  paddingBottom: 14,
-  position: "relative",
-  marginTop: 8,
-},
+  frame155: {
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    borderRadius: 6,
+    minHeight: 44,
+    paddingHorizontal: 10,
+    paddingTop: 10,
+    paddingBottom: 14,
+    position: "relative",
+    marginTop: 8,
+  },
 
-topNav: {
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: 0,
-},
+  topNav: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 0,
+  },
 
-navTab: {
-  flex: 1,
-  alignItems: "center",
-},
+  navTab: {
+    flex: 1,
+    alignItems: "center",
+  },
 
-navItem: {
-  fontSize: 12,
-  color: "#A9ADB6",
-  textAlign: "center",
-  width: "100%",
-},
+  navItem: {
+    fontSize: 12,
+    color: "#A9ADB6",
+    textAlign: "center",
+    width: "100%",
+  },
 
-navItemActive: {
-  fontSize: 12,
-  color: "#6A79D1",
-  textAlign: "center",
-  width: "100%",
-},
+  navItemActive: {
+    fontSize: 12,
+    color: "#6A79D1",
+    textAlign: "center",
+    width: "100%",
+  },
 
-navUnderline: {
-  marginTop: 6,
-  width: "102%",
-  height: 4,
-  backgroundColor: "#D9D9D9",
-  borderRadius: 4,
-},
-
-navUnderlineActive: {
-  marginTop: 6,
-  width: "102%",
-  height: 4,
-  backgroundColor: "#6A79D1",
-  borderRadius: 4,
-},
+  navUnderline: {
+    marginTop: 6,
+    width: "102%",
+    height: 4,
+    backgroundColor: "#D9D9D9",
+    borderRadius: 4,
+  },
 
   frame156: {
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
     padding: 12,
   },
@@ -163,40 +184,40 @@ navUnderlineActive: {
     gap: 14,
   },
 
-creditBureaus: {
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-},
+  creditBureaus: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 
-transUnion: {
-  flex: 1,
-  left: 4,
-  fontSize: 12,
-},
+  transUnion: {
+    flex: 1,
+    left: 4,
+    fontSize: 12,
+  },
 
-equifax: {
-  flex: 1,
-  left: 10,
-  fontSize: 12,
-  textAlign: "left",
-},
+  equifax: {
+    flex: 1,
+    left: 10,
+    fontSize: 12,
+    textAlign: "left",
+  },
 
-myVar: {
-  width: 40,
-  right: 14,
-  fontSize: 12,
-  fontWeight: "900",
-  textAlign: "right",
-},
+  myVar: {
+    width: 40,
+    right: 14,
+    fontSize: 12,
+    fontWeight: "900",
+    textAlign: "right",
+  },
 
-_myVar: {
-  width: 40,
-  right: 8,
-  fontSize: 12,
-  fontWeight: "900",
-  textAlign: "right",
-},
+  _myVar: {
+    width: 40,
+    right: 8,
+    fontSize: 12,
+    fontWeight: "900",
+    textAlign: "right",
+  },
 
   creditRangesRow: {
     flexDirection: "row",
@@ -334,15 +355,57 @@ _myVar: {
     borderBottomLeftRadius: 10,
   },
 
-  arrow1: { position: "absolute", left: "22%", top: 18 },
-  arrow2: { position: "absolute", left: "54%", top: 0 },
-  arrow3: { position: "absolute", left: "22%", top: 18 },
-  arrow4: { position: "absolute", left: "52%", top: 0 },
+  arrow1: {
+    position: "absolute",
+    left: "22%",
+    top: 18,
+  },
 
-fair: { position: "absolute", left: 6, top: 20, fontSize: 10 },
-excellent: { position: "absolute", right: 0, top: 20, fontSize: 10 },
-_fair: { position: "absolute", left: 6, top: 20, fontSize: 10 },
-_excellent: { position: "absolute", right: 0, top: 20, fontSize: 10 },
+  arrow2: {
+    position: "absolute",
+    left: "54%",
+    top: 0,
+  },
+
+  arrow3: {
+    position: "absolute",
+    left: "22%",
+    top: 18,
+  },
+
+  arrow4: {
+    position: "absolute",
+    left: "52%",
+    top: 0,
+  },
+
+  fair: {
+    position: "absolute",
+    left: 6,
+    top: 20,
+    fontSize: 10,
+  },
+
+  excellent: {
+    position: "absolute",
+    right: 0,
+    top: 20,
+    fontSize: 10,
+  },
+
+  _fair: {
+    position: "absolute",
+    left: 6,
+    top: 20,
+    fontSize: 10,
+  },
+
+  _excellent: {
+    position: "absolute",
+    right: 0,
+    top: 20,
+    fontSize: 10,
+  },
 
   frame62: {
     marginTop: 20,
@@ -360,11 +423,11 @@ _excellent: { position: "absolute", right: 0, top: 20, fontSize: 10 },
     fontWeight: "700",
   },
 
-frame107: {
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
-  borderRadius: 6,
-  padding: 12,
-},
+  frame107: {
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    borderRadius: 6,
+    padding: 12,
+  },
 
   _spending: {
     fontSize: 12,
@@ -427,7 +490,7 @@ frame107: {
   },
 
   frame157: {
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
     padding: 12,
   },
@@ -442,35 +505,35 @@ frame107: {
     fontSize: 10,
   },
 
-offersGrid: {
-  marginTop: 16,
-  flexDirection: "row",
-  flexWrap: "wrap",
-  justifyContent: "space-between",
-  rowGap: 14,
-  columnGap: 0,
-},
+  offersGrid: {
+    marginTop: 16,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    rowGap: 14,
+    columnGap: 0,
+  },
 
-offerItem: {
-  width: "48%",
-  alignItems: "center",
-  justifyContent: "flex-start",
-},
+  offerItem: {
+    width: "48%",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
 
-offerLabel: {
-  fontSize: 8,
-  textAlign: "center",
-  marginBottom: 8,
-  width: 60,
-  alignSelf: "center",
-},
+  offerLabel: {
+    fontSize: 8,
+    textAlign: "center",
+    marginBottom: 8,
+    width: 60,
+    alignSelf: "center",
+  },
 
-offerCard: {
-  width: 100,
-  height: 60,
-  aspectRatio: 60 / 38,
-  alignSelf: "center",
-},
+  offerCard: {
+    width: 100,
+    height: 60,
+    aspectRatio: 60 / 38,
+    alignSelf: "center",
+  },
 
   _frame62: {
     marginTop: 20,
@@ -489,7 +552,7 @@ offerCard: {
   },
 
   frame153: {
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
     padding: 12,
   },
@@ -545,25 +608,25 @@ offerCard: {
     fontWeight: "700",
   },
 
-bottomNav: {
-  position: "absolute",
-  left: 0,
-  right: 0,
-  bottom: 0,
-  height: 98,
-  paddingBottom: 40,
-backgroundColor: "rgba(255, 255, 255, 1)",
-  flexDirection: "row",
-  justifyContent: "space-around",
-  alignItems: "center",
-  paddingHorizontal: 14,
-},
+  bottomNav: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 98,
+    paddingBottom: 40,
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingHorizontal: 14,
+  },
 
-bottomNavIcon: {
-  width: 32,
-  height: 32,
-  resizeMode: "contain",
-},
+  bottomNavIcon: {
+    width: 32,
+    height: 32,
+    resizeMode: "contain",
+  },
 
   frame26: {
     alignItems: "center",
@@ -571,58 +634,73 @@ bottomNavIcon: {
     gap: 3,
   },
 
-frame27: {
-  alignItems: "center",
-  justifyContent: "center",
-},
+  frame27: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-frame28: {
-  alignItems: "center",
-  justifyContent: "center",
-},
+  frame28: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-frame29: {
-  alignItems: "center",
-  justifyContent: "center",
-},
+  frame29: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-frame31: {
-  alignItems: "center",
-  justifyContent: "center",
-},
+  frame31: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-_vector: {
-  width: 20,
-  height: 19,
-},
+  _vector: {
+    width: 20,
+    height: 19,
+  },
 
   home: {
     color: "#6A79D1",
     fontSize: 7,
   },
 
-  activity: { color: "#A9ADB6", fontSize: 7 },
-  news: { color: "#A9ADB6", fontSize: 7 },
-  rewards: { color: "#A9ADB6", fontSize: 7 },
-  stats: { color: "#A9ADB6", fontSize: 7 },
+  activity: {
+    color: "#A9ADB6",
+    fontSize: 7,
+  },
 
-twirlbackgroundPNG1: {
-  position: "absolute",
-  top: 70,
-  left: -25,
-  width: 420,
-  height: 420,
-  opacity: 0.35,
-},
+  news: {
+    color: "#A9ADB6",
+    fontSize: 7,
+  },
 
-twirlbackgroundPNG2: {
-  position: "absolute",
-  top: 760,
-  left: -25,
-  width: 420,
-  height: 420,
-  opacity: 0.35,
-},
+  rewards: {
+    color: "#A9ADB6",
+    fontSize: 7,
+  },
+
+  stats: {
+    color: "#A9ADB6",
+    fontSize: 7,
+  },
+
+  twirlbackgroundPNG1: {
+    position: "absolute",
+    top: 70,
+    left: -25,
+    width: 420,
+    height: 420,
+    opacity: 0.35,
+  },
+
+  twirlbackgroundPNG2: {
+    position: "absolute",
+    top: 760,
+    left: -25,
+    width: 420,
+    height: 420,
+    opacity: 0.35,
+  },
 
   notificationListAnimation: {
     width: 77,
@@ -659,17 +737,62 @@ twirlbackgroundPNG2: {
     height: 16,
   },
 
-  ellipse16: { position: "absolute", top: 0 },
-  ellipse17: { position: "absolute", top: 6 },
-  ellipse18: { position: "absolute", top: 12 },
+  ellipse16: {
+    position: "absolute",
+    top: 0,
+  },
 
-  alarm: { width: 15, height: 15 },
-  union: { position: "absolute", top: 1, left: 1 },
-  bluetooth: { width: 15, height: 15 },
-  vectorStroke: { position: "absolute", top: 2, right: 3, bottom: 2, left: 3 },
-  wifi: { width: 15, alignItems: "center", justifyContent: "center" },
-  signal: { width: 15, alignItems: "center", justifyContent: "center" },
-  battery: { width: 15, alignItems: "center", justifyContent: "center" },
+  ellipse17: {
+    position: "absolute",
+    top: 6,
+  },
+
+  ellipse18: {
+    position: "absolute",
+    top: 12,
+  },
+
+  alarm: {
+    width: 15,
+    height: 15,
+  },
+
+  union: {
+    position: "absolute",
+    top: 1,
+    left: 1,
+  },
+
+  bluetooth: {
+    width: 15,
+    height: 15,
+  },
+
+  vectorStroke: {
+    position: "absolute",
+    top: 2,
+    right: 3,
+    bottom: 2,
+    left: 3,
+  },
+
+  wifi: {
+    width: 15,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  signal: {
+    width: 15,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  battery: {
+    width: 15,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default styles;

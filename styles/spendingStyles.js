@@ -10,32 +10,32 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
 
-dashboardHomeScreenContainer: {
-  width: "100%",
-  minHeight: "100%",
-  backgroundColor: "rgba(217, 217, 217, 0.5)",
-  overflow: "hidden",
-  paddingBottom: 90,
-},
+  dashboardHomeScreenContainer: {
+    width: "100%",
+    minHeight: "100%",
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
+    overflow: "hidden",
+    paddingBottom: 90,
+  },
 
-dashboardLetterRow: {
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
-},
+  dashboardLetterRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-dashboardLetter: {
-  fontSize: 12,
-  fontWeight: "400",
-},
+  dashboardLetter: {
+    fontSize: 12,
+    fontWeight: "400",
+  },
 
-dashboardLetterInactive: {
-  color: "#A9ADB6",
-},
+  dashboardLetterInactive: {
+    color: "#A9ADB6",
+  },
 
-dashboardLetterActive: {
-  color: "#6A79D1",
-},
+  dashboardLetterActive: {
+    color: "#6A79D1",
+  },
 
   mainContent: {
     paddingTop: 72,
@@ -93,16 +93,16 @@ dashboardLetterActive: {
     fontWeight: "700",
   },
 
-frame155: {
-  backgroundColor: "rgba(255, 255, 255, 1)",
-  borderRadius: 6,
-  minHeight: 44,
-  paddingHorizontal: 10,
-  paddingTop: 10,
-  paddingBottom: 14,
-  position: "relative",
-  marginTop: 8,
-},
+  frame155: {
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    borderRadius: 6,
+    minHeight: 44,
+    paddingHorizontal: 10,
+    paddingTop: 10,
+    paddingBottom: 14,
+    position: "relative",
+    marginTop: 8,
+  },
 
   topNav: {
     flexDirection: "row",
@@ -149,19 +149,34 @@ navUnderlineActive: {
   borderRadius: 4,
 },
 
-frameDebt: {
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
-  borderRadius: 6,
-  paddingHorizontal: 12,
-  paddingTop: 12,
-  paddingBottom: 12,
-},
+  frameSpending: {
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+
+  frameExpenditure: {
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+
+  frameTrack: {
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
 
   cardHeaderRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 6,
   },
 
   sectionTitle: {
@@ -176,107 +191,63 @@ frameDebt: {
     color: "#111111",
   },
 
-  chartWrap: {
-    flexDirection: "row",
-    marginTop: 2,
-    alignItems: "stretch",
-  },
-
-  chartLeft: {
-    flex: 1,
-    minWidth: 0,
-  },
-
-  chartRight: {
-    width: 34,
-    justifyContent: "space-between",
-    paddingTop: 8,
-    paddingBottom: 26,
-    alignItems: "flex-end",
-  },
-
-  monthRow: {
-    marginTop: -8,
-    paddingLeft: 14,
-    paddingRight: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-
-  monthLabel: {
-    fontSize: 8,
-    color: "#222227",
-  },
-
-  axisLabel: {
-    fontSize: 8,
-    color: "#222227",
-  },
-
-frame153: {
-  backgroundColor: "rgba(255,255,255,0.6)",
-  borderRadius: 6,
-  paddingHorizontal: 12,
-  paddingTop: 12,
-  paddingBottom: 14,
-},
-
-  loanOffers: {
+  sourcesText: {
     fontSize: 12,
     fontWeight: "900",
     color: "#111111",
   },
 
-  _basedonyourcreditscore: {
-    marginTop: 4,
-    fontSize: 10,
-    color: "#333333",
+  barChartWrap: {
+    marginTop: 20,
+    paddingHorizontal: 10,
+    paddingBottom: 8,
   },
 
-loanGrid: {
-  marginTop: 12,
-  flexDirection: "row",
-  flexWrap: "wrap",
-  justifyContent: "space-between",
-  rowGap: 14,
-},
+  barsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    height: 118,
+  },
 
-loanItem: {
-  width: "48%",
-  alignItems: "center",
-  justifyContent: "flex-start",
-},
+  barGroup: {
+    width: "13.5%",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
 
-loanLabel: {
-  fontSize: 8,
-  marginBottom: 8,
-  textAlign: "center",
-  color: "#222227",
-  width: "100%",
-  minHeight: 20,
-},
+  barTrack: {
+    width: "100%",
+    height: 88,
+    justifyContent: "flex-end",
+  },
 
-loanIconBox: {
-  width: 44,
-  height: 44,
-  borderRadius: 6,
-  alignItems: "center",
-  justifyContent: "center",
-},
+  barFill: {
+    width: "100%",
+    backgroundColor: "#7785E8",
+  },
 
-loanIconText: {
-  fontSize: 12,
-  fontWeight: "900",
-},
+  monthLabel: {
+    marginTop: 8,
+    fontSize: 8,
+    color: "#222227",
+  },
 
-loanIcon: {
-  width: 44,
-  height: 44,
-  alignSelf: "center",
-},
+  monthLabelActive: {
+    marginTop: 8,
+    fontSize: 8,
+    color: "#222227",
+    fontWeight: "900",
+  },
 
-  __frame62: {
-    marginTop: 20,
+  pieWrap: {
+    marginTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  outlineButton: {
+    marginTop: 18,
     borderWidth: 1,
     borderColor: "#3E4BB5",
     borderRadius: 8,
@@ -285,74 +256,92 @@ loanIcon: {
     justifyContent: "center",
   },
 
-  _findoutmore: {
+  outlineButtonText: {
     color: "#3E4BB5",
     fontSize: 12,
     fontWeight: "700",
   },
 
-frameAcademy: {
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
-  borderRadius: 6,
-  paddingHorizontal: 12,
-  paddingTop: 12,
-  paddingBottom: 12,
-},
-
-  academyIntro: {
+  trackIntro: {
     marginTop: 8,
     fontSize: 12,
-    lineHeight: 18,
-    color: "#4A4A4A",
-  },
-
-  academyList: {
-    marginTop: 10,
-  },
-
-  academyRow: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    marginBottom: 7,
-  },
-
-  star: {
-    color: "#A9ADB6",
-    fontSize: 12,
-    marginRight: 7,
-    lineHeight: 16,
-    width: 10,
-  },
-
-  starGold: {
-    color: "#FFD700",
-    fontSize: 12,
-    marginRight: 7,
-    lineHeight: 16,
-    width: 10,
-  },
-
-  academyText: {
-    flex: 1,
-    fontSize: 12,
-    color: "#444444",
     lineHeight: 17,
+    color: "#444444",
+    width: "72%",
   },
 
-  _frame62: {
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: "#3E4BB5",
-    borderRadius: 8,
-    height: 40,
+  accountList: {
+    marginTop: 14,
+    gap: 12,
+  },
+
+  accountRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  trackLogoImage: {
+    width: 34,
+    height: 34,
+    marginRight: 10,
+  },
+
+  trackLogoTile: {
+    width: 34,
+    height: 34,
+    marginRight: 10,
     alignItems: "center",
     justifyContent: "center",
   },
 
-  seemoreoffers: {
-    color: "#3E4BB5",
-    fontSize: 12,
+  trackLogoCiti: {
+    backgroundColor: "#3F6FE9",
+  },
+
+  trackLogoCitiText: {
+    color: "#FFFFFF",
+    fontSize: 8,
     fontWeight: "700",
+  },
+
+  trackLogoCap1: {
+    backgroundColor: "#12345E",
+    paddingHorizontal: 2,
+  },
+
+  trackLogoCap1Text: {
+    color: "#FFFFFF",
+    fontSize: 4.8,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+
+  trackLogoAmex: {
+    backgroundColor: "#2B89E7",
+  },
+
+  trackLogoAmexText: {
+    color: "#FFFFFF",
+    fontSize: 8,
+    fontWeight: "700",
+    textAlign: "center",
+    lineHeight: 8,
+  },
+
+  accountTextWrap: {
+    flex: 1,
+  },
+
+  accountName: {
+    fontSize: 12,
+    fontWeight: "900",
+    color: "#111111",
+  },
+
+  accountSubtitle: {
+    marginTop: 1,
+    fontSize: 11,
+    color: "#444444",
   },
 
   bottomNav: {
@@ -362,7 +351,7 @@ frameAcademy: {
     bottom: 0,
     height: 98,
     paddingBottom: 40,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(255, 255, 255, 1)",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -411,23 +400,23 @@ frameAcademy: {
     fontSize: 7,
   },
 
-twirlbackgroundPNG1: {
-  position: "absolute",
-  top: 70,
-  left: -25,
-  width: 420,
-  height: 420,
-  opacity: 0.35,
-},
+  twirlbackgroundPNG1: {
+    position: "absolute",
+    top: 70,
+    left: -25,
+    width: 420,
+    height: 420,
+    opacity: 0.35,
+  },
 
-twirlbackgroundPNG2: {
-  position: "absolute",
-  top: 760,
-  left: -25,
-  width: 420,
-  height: 420,
-  opacity: 0.35,
-},
+  twirlbackgroundPNG2: {
+    position: "absolute",
+    top: 760,
+    left: -25,
+    width: 420,
+    height: 420,
+    opacity: 0.35,
+  },
 
   notificationListAnimation: {
     width: 77,

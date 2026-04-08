@@ -1,7 +1,188 @@
 import { router } from "expo-router";
-import { Image, ImageBackground, Pressable, ScrollView, Text, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Animated, Easing, Image, ImageBackground, Pressable, ScrollView, Text, View } from "react-native";
 import { Path, Svg } from "react-native-svg";
 import styles from "../styles/homeStyles";
+
+function TopNav() {
+  const currentIndex = 0;
+  const tabs = [
+    { label: "Dashboard", route: "/home" },
+    { label: "Debt", route: "/debt" },
+    { label: "Spending", route: "/spending" },
+    { label: "Credit", route: "/credit" },
+    { label: "Accounts", route: "/accounts" },
+  ];
+
+  const underlineAnim = useRef(new Animated.Value(currentIndex)).current;
+  const [selectedIndex, setSelectedIndex] = useState(currentIndex);
+  const [selectedLetterCount, setSelectedLetterCount] = useState(
+    tabs[currentIndex].label.length
+  );
+  const [selectedDirection, setSelectedDirection] = useState("ltr");
+  const [trackWidth, setTrackWidth] = useState(0);
+  const letterTimers = useRef([]);
+
+  const clearLetterTimers = () => {
+    letterTimers.current.forEach(clearTimeout);
+    letterTimers.current = [];
+  };
+
+  useEffect(() => {
+    Animated.timing(underlineAnim, {
+      toValue: currentIndex,
+      duration: 110,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: false,
+    }).start();
+
+    return () => clearLetterTimers();
+  }, [underlineAnim]);
+
+  const animateLetters = (targetIndex, totalDuration) => {
+    clearLetterTimers();
+
+    const direction = targetIndex > currentIndex ? "ltr" : "rtl";
+    const totalLetters = tabs[targetIndex].label.length;
+    const stepDuration = totalDuration / totalLetters;
+
+    setSelectedIndex(targetIndex);
+    setSelectedDirection(direction);
+    setSelectedLetterCount(0);
+
+    tabs[targetIndex].label.split("").forEach((_, index) => {
+      const timer = setTimeout(() => {
+        setSelectedLetterCount(index + 1);
+      }, stepDuration * index);
+
+      letterTimers.current.push(timer);
+    });
+  };
+
+  const goToTab = (index, route) => {
+    if (index === currentIndex) {
+      animateLetters(index, 320);
+
+      Animated.sequence([
+        Animated.timing(underlineAnim, {
+          toValue: -0.1,
+          duration: 180,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: false,
+        }),
+        Animated.timing(underlineAnim, {
+          toValue: 0,
+          duration: 140,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: false,
+        }),
+      ]).start();
+
+      return;
+    }
+
+    const totalDuration = 110;
+    animateLetters(index, totalDuration);
+
+    Animated.timing(underlineAnim, {
+      toValue: index,
+      duration: totalDuration,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: false,
+    }).start(({ finished }) => {
+      if (finished) router.push(route);
+    });
+  };
+
+  const stepWidth = trackWidth / 5;
+
+  const translateX = underlineAnim.interpolate({
+    inputRange: [-0.1, 0, 1, 2, 3, 4],
+    outputRange: [
+      -0.1 * stepWidth,
+      0,
+      1 * stepWidth,
+      2 * stepWidth,
+      3 * stepWidth,
+      4 * stepWidth,
+    ],
+  });
+
+  const renderAnimatedLabel = (label, tabIndex) => {
+    const chars = label.split("");
+
+    return (
+      <View style={styles.dashboardLetterRow}>
+        {chars.map((char, charIndex) => {
+          const isTargetTab = tabIndex === selectedIndex;
+
+          let isBlue = false;
+
+          if (isTargetTab) {
+            if (selectedLetterCount >= chars.length) {
+              isBlue = true;
+            } else if (selectedDirection === "rtl") {
+              const fromRightIndex = chars.length - 1 - charIndex;
+              isBlue = fromRightIndex < selectedLetterCount;
+            } else {
+              isBlue = charIndex < selectedLetterCount;
+            }
+          }
+
+          return (
+            <Text
+              key={`${label}-${char}-${charIndex}`}
+              style={[
+                styles.dashboardLetter,
+                isBlue
+                  ? styles.dashboardLetterActive
+                  : styles.dashboardLetterInactive,
+              ]}
+            >
+              {char}
+            </Text>
+          );
+        })}
+      </View>
+    );
+  };
+
+  return (
+    <View style={styles.frame155}>
+      <View style={styles.topNav}>
+        {tabs.map((tab, index) => (
+          <Pressable
+            key={tab.label}
+            style={styles.navTab}
+            onPress={() => goToTab(index, tab.route)}
+          >
+            {renderAnimatedLabel(tab.label, index)}
+          </Pressable>
+        ))}
+      </View>
+
+<View
+  style={styles.navTrack}
+  onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
+>
+  <Animated.View
+    style={[
+      styles.navUnderlineActive,
+      trackWidth > 0
+        ? {
+            width: stepWidth,
+            transform: [{ translateX }],
+          }
+        : {
+            width: "20%",
+            left: `${currentIndex * 20}%`,
+          },
+    ]}
+  />
+</View>
+    </View>
+  );
+}
 
 export default function Home() {
   return (
@@ -70,34 +251,7 @@ export default function Home() {
           />
 
           <View style={styles.mainContent}>
-            <View style={styles.frame155}>
-  <View style={styles.topNav}>
-    <View style={styles.navTab}>
-      <Text style={styles.navItemActive}>Dashboard</Text>
-      <View style={styles.navUnderlineActive} />
-    </View>
-
-    <Pressable style={styles.navTab} onPress={() => router.push("/debt")}>
-      <Text style={styles.navItem}>Debt</Text>
-      <View style={styles.navUnderline} />
-    </Pressable>
-
-    <Pressable style={styles.navTab} onPress={() => router.push("/spending")}>
-      <Text style={styles.navItem}>Spending</Text>
-      <View style={styles.navUnderline} />
-    </Pressable>
-
-    <Pressable style={styles.navTab} onPress={() => router.push("/credit")}>
-      <Text style={styles.navItem}>Credit</Text>
-      <View style={styles.navUnderline} />
-    </Pressable>
-
-    <Pressable style={styles.navTab} onPress={() => router.push("/accounts")}>
-      <Text style={styles.navItem}>Accounts</Text>
-      <View style={styles.navUnderline} />
-    </Pressable>
-  </View>
-</View>
+            <TopNav />
 
             <View style={styles.frame156}>
               <Text style={styles.creditScore}>Credit Score</Text>

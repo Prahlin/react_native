@@ -161,25 +161,81 @@ function TopNav() {
         ))}
       </View>
 
-<View
-  style={styles.navTrack}
-  onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
->
-  <Animated.View
-    style={[
-      styles.navUnderlineActive,
-      trackWidth > 0
-        ? {
-            width: stepWidth,
-            transform: [{ translateX }],
-          }
-        : {
-            width: "20%",
-            left: `${currentIndex * 20}%`,
-          },
-    ]}
-  />
-</View>
+      <View
+        style={styles.navTrack}
+        onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
+      >
+        <Animated.View
+          style={[
+            styles.navUnderlineActive,
+            trackWidth > 0
+              ? {
+                  width: stepWidth,
+                  transform: [{ translateX }],
+                }
+              : {
+                  width: "20%",
+                  left: `${currentIndex * 20}%`,
+                },
+          ]}
+        />
+      </View>
+    </View>
+  );
+}
+
+function BottomNav() {
+  return (
+    <View style={styles.bottomNav}>
+      <Pressable
+        style={styles.frame26}
+        onPress={() => router.push("/home")}
+      >
+        <Image
+          source={require("../assets/frame-26-blue.png")}
+          style={styles.bottomNavIcon}
+        />
+      </Pressable>
+
+      <Pressable
+        style={styles.frame27}
+        onPress={() => router.push("/activity")}
+      >
+        <Image
+          source={require("../assets/frame-27.png")}
+          style={styles.bottomNavIcon}
+        />
+      </Pressable>
+
+      <Pressable
+        style={styles.frame28}
+        onPress={() => router.push("/notifications")}
+      >
+        <Image
+          source={require("../assets/frame-28.png")}
+          style={styles.bottomNavIcon}
+        />
+      </Pressable>
+
+      <Pressable
+        style={styles.frame29}
+        onPress={() => router.push("/rewards")}
+      >
+        <Image
+          source={require("../assets/frame-29.png")}
+          style={styles.bottomNavIcon}
+        />
+      </Pressable>
+
+      <Pressable
+        style={styles.frame31}
+        onPress={() => router.push("/stats")}
+      >
+        <Image
+          source={require("../assets/frame-31.png")}
+          style={styles.bottomNavIcon}
+        />
+      </Pressable>
     </View>
   );
 }
@@ -471,32 +527,7 @@ export default function Home() {
         </View>
       </View>
 
-      <View style={styles.bottomNav}>
-        <View style={styles.frame26}>
-          <Svg style={styles._vector} width="20" height="19" viewBox="0 0 20 19" fill="none">
-            <Path d="M2.10679 9.09133C2.10679 8.43731 2.63698 7.90712 3.291 7.90712H16.3173C16.9713 7.90712 17.5015 8.43731 17.5015 9.09133V17.3808C17.5015 18.0348 16.9713 18.565 16.3173 18.565H3.291C2.63698 18.565 2.10679 18.0348 2.10679 17.3808V9.09133Z" fill="#6A79D1" />
-            <Path d="M7.43574 13.2361C7.43574 12.582 7.96593 12.0519 8.61995 12.0519H10.9884C11.6424 12.0519 12.1726 12.582 12.1726 13.2361V18.565H7.43574V13.2361Z" fill="white" />
-            <Path d="M9.02892 0.289032C9.47391 -0.0963437 10.1344 -0.0963439 10.5794 0.289031L19.197 7.75207C20.0258 8.46986 19.5182 9.83146 18.4217 9.83146H1.18659C0.0901428 9.83146 -0.417497 8.46986 0.411336 7.75207L9.02892 0.289032Z" fill="#6A79D1" />
-          </Svg>
-          <Text style={styles.home}>Home</Text>
-        </View>
-
-        <View style={styles.frame27}>
-          <Image source={require("../assets/frame-27.png")} style={styles.bottomNavIcon} />
-        </View>
-
-        <View style={styles.frame28}>
-          <Image source={require("../assets/frame-28.png")} style={styles.bottomNavIcon} />
-        </View>
-
-        <View style={styles.frame29}>
-          <Image source={require("../assets/frame-29.png")} style={styles.bottomNavIcon} />
-        </View>
-
-        <View style={styles.frame31}>
-          <Image source={require("../assets/frame-31.png")} style={styles.bottomNavIcon} />
-        </View>
-      </View>
+      <BottomNav />
     </View>
   );
 }

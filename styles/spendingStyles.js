@@ -157,13 +157,43 @@ navUnderlineActive: {
     paddingBottom: 12,
   },
 
-  frameExpenditure: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
-    borderRadius: 6,
-    paddingHorizontal: 12,
-    paddingTop: 12,
-    paddingBottom: 12,
-  },
+frameExpenditure: {
+  backgroundColor: "rgba(255, 255, 255, 0.6)",
+  borderRadius: 6,
+  paddingHorizontal: 12,
+  paddingTop: 12,
+  paddingBottom: 14,
+},
+
+expenditureImageWrap: {
+  width: "100%",
+  alignItems: "center",
+  justifyContent: "center",
+},
+
+expenditureImage: {
+  maxWidth: "100%",
+},
+
+expenditureImageWrap: {
+  width: "100%",
+  alignItems: "center",
+  justifyContent: "center",
+},
+
+expenditureImage: {
+  maxWidth: "100%",
+},
+
+outlineButton: {
+  marginTop: 0,
+  borderWidth: 1,
+  borderColor: "#3E4BB5",
+  borderRadius: 8,
+  height: 40,
+  alignItems: "center",
+  justifyContent: "center",
+},
 
   frameTrack: {
     backgroundColor: "rgba(255, 255, 255, 0.6)",
@@ -172,6 +202,10 @@ navUnderlineActive: {
     paddingTop: 12,
     paddingBottom: 12,
   },
+
+expenditureBody: {
+  width: "100%",
+},
 
   cardHeaderRow: {
     flexDirection: "row",
@@ -197,48 +231,46 @@ navUnderlineActive: {
     color: "#111111",
   },
 
-  barChartWrap: {
-    marginTop: 20,
-    paddingHorizontal: 10,
-    paddingBottom: 8,
-  },
+ barChartWrap: {
+  width: "100%",
+  alignItems: "center",
+  justifyContent: "center",
+  overflow: "hidden",
+},
 
-  barsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-    height: 118,
-  },
+barsRow: {
+  flexDirection: "row",
+  alignItems: "flex-end",
+  justifyContent: "space-between",
+},
 
-  barGroup: {
-    width: "13.5%",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
+barGroup: {
+  alignItems: "center",
+  justifyContent: "flex-end",
+},
 
-  barTrack: {
-    width: "100%",
-    height: 88,
-    justifyContent: "flex-end",
-  },
+barTrack: {
+  justifyContent: "flex-end",
+},
 
-  barFill: {
-    width: "100%",
-    backgroundColor: "#7785E8",
-  },
+barFill: {
+  backgroundColor: "#7785E8",
+},
 
-  monthLabel: {
-    marginTop: 8,
-    fontSize: 8,
-    color: "#222227",
-  },
+monthLabel: {
+  marginTop: 8,
+  fontSize: 8,
+  color: "#222227",
+  textAlign: "center",
+},
 
-  monthLabelActive: {
-    marginTop: 8,
-    fontSize: 8,
-    color: "#222227",
-    fontWeight: "900",
-  },
+monthLabelActive: {
+  marginTop: 8,
+  fontSize: 8,
+  color: "#222227",
+  fontWeight: "900",
+  textAlign: "center",
+},
 
   pieWrap: {
     marginTop: 10,

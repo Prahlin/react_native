@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from "react-native";
-import Svg, { Circle, Path, Text as SvgText } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 import styles from "../styles/spendingStyles";
 
 const monthlyBars = [
@@ -18,17 +18,8 @@ const monthlyBars = [
   { month: "Jun", value: 0.72 },
   { month: "Jul", value: 0.42 },
   { month: "Aug", value: 0.58 },
-  { month: "Sep", value: 0.80 },
+  { month: "Sep", value: 0.8 },
   { month: "Oct", value: 0.58, active: true },
-];
-
-const spendingSlices = [
-  { label: "Loans", value: 13, color: "#7280DE" },
-  { label: "Gas", value: 12, color: "#A6B0F5" },
-  { label: "Other", value: 15, color: "#F8F9FE" },
-  { label: "Utilities", value: 24, color: "#7280DE" },
-  { label: "Groceries", value: 18, color: "#F8F9FE" },
-  { label: "Restaurants", value: 18, color: "#8B98EE" },
 ];
 
 const trackedAccounts = [
@@ -41,27 +32,6 @@ const trackedAccounts = [
   { name: "American Express", subtitle: "From your credit profile", type: "amex" },
 ];
 
-function polarToCartesian(cx, cy, r, angle) {
-  const a = ((angle - 90) * Math.PI) / 180;
-  return {
-    x: cx + r * Math.cos(a),
-    y: cy + r * Math.sin(a),
-  };
-}
-
-function describeArc(cx, cy, r, startAngle, endAngle) {
-  const start = polarToCartesian(cx, cy, r, endAngle);
-  const end = polarToCartesian(cx, cy, r, startAngle);
-  const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
-
-  return [
-    `M ${cx} ${cy}`,
-    `L ${start.x} ${start.y}`,
-    `A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`,
-    "Z",
-  ].join(" ");
-}
-
 function SmallBankLogo({ type }) {
   const knownAssets = {
     wf: require("../assets/wells-fargo-icon-1.png"),
@@ -71,7 +41,13 @@ function SmallBankLogo({ type }) {
   };
 
   if (knownAssets[type]) {
-    return <Image source={knownAssets[type]} style={styles.trackLogoImage} resizeMode="contain" />;
+    return (
+      <Image
+        source={knownAssets[type]}
+        style={styles.trackLogoImage}
+        resizeMode="contain"
+      />
+    );
   }
 
   if (type === "citi") {
@@ -295,33 +271,39 @@ function TopNav() {
         ))}
       </View>
 
-<View
-  style={styles.navTrack}
-  onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
->
-  <Animated.View
-    style={[
-      styles.navUnderlineActive,
-      trackWidth > 0
-        ? {
-            width: widthScale.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, stepWidth],
-            }),
-            transform: [{ translateX }],
-          }
-        : {
-            width: "20%",
-            left: `${currentIndex * 20}%`,
-          },
-    ]}
-  />
-</View>
+      <View
+        style={styles.navTrack}
+        onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
+      >
+        <Animated.View
+          style={[
+            styles.navUnderlineActive,
+            trackWidth > 0
+              ? {
+                  width: widthScale.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, stepWidth],
+                  }),
+                  transform: [{ translateX }],
+                }
+              : {
+                  width: "20%",
+                  left: `${currentIndex * 20}%`,
+                },
+          ]}
+        />
+      </View>
     </View>
   );
 }
 
 function SpendingCard() {
+  const CHART_WIDTH = 330;
+  const CHART_HEIGHT = 120;
+  const BAR_WIDTH = 38;
+  const BAR_HEIGHT = 92;
+  const VERTICAL_GAP = 14;
+
   return (
     <View style={styles.frameSpending}>
       <View style={styles.cardHeaderRow}>
@@ -329,20 +311,22 @@ function SpendingCard() {
         <Text style={styles.amountText}>$3,765</Text>
       </View>
 
-      <View style={styles.barChartWrap}>
-        <View style={styles.barsRow}>
+      <View style={[styles.barChartWrap, { marginVertical: VERTICAL_GAP }]}>
+        <View style={[styles.barsRow, { width: CHART_WIDTH, height: CHART_HEIGHT }]}>
           {monthlyBars.map((item) => (
             <View key={item.month} style={styles.barGroup}>
-              <View style={styles.barTrack}>
+              <View style={[styles.barTrack, { width: BAR_WIDTH, height: BAR_HEIGHT }]}>
                 <View
                   style={[
                     styles.barFill,
                     {
-                      height: `${item.value * 100}%`,
+                      width: BAR_WIDTH,
+                      height: BAR_HEIGHT * item.value,
                     },
                   ]}
                 />
               </View>
+
               <Text style={item.active ? styles.monthLabelActive : styles.monthLabel}>
                 {item.month}
               </Text>
@@ -355,7 +339,8 @@ function SpendingCard() {
 }
 
 function ExpenditureCard() {
-  let startAngle = 0;
+  const CHART_SIZE = 180;
+  const VERTICAL_GAP = 14;
 
   return (
     <View style={styles.frameExpenditure}>
@@ -364,39 +349,18 @@ function ExpenditureCard() {
         <Text style={styles.sourcesText}>12 sources</Text>
       </View>
 
-      <View style={styles.pieWrap}>
-        <Svg width={180} height={180} viewBox="0 0 180 180">
-          {spendingSlices.map((slice) => {
-            const sweep = (slice.value / 100) * 360;
-            const endAngle = startAngle + sweep;
-            const d = describeArc(90, 90, 60, startAngle, endAngle);
-            const labelPoint = polarToCartesian(90, 90, 38, startAngle + sweep / 2);
+      <View style={styles.expenditureBody}>
+        <View style={[styles.expenditureImageWrap, { marginVertical: VERTICAL_GAP }]}>
+          <Image
+            source={require("../assets/expenditure.png")}
+            style={{ width: CHART_SIZE, height: CHART_SIZE }}
+            resizeMode="contain"
+          />
+        </View>
 
-            const segment = (
-              <View key={slice.label}>
-                <Path d={d} fill={slice.color} stroke="#5D6FD8" strokeWidth={2} />
-                <Circle cx="90" cy="90" r="2" fill="#5D6FD8" />
-                <SvgText
-                  x={labelPoint.x}
-                  y={labelPoint.y}
-                  fontSize="7"
-                  fill={slice.color === "#F8F9FE" ? "#5D6FD8" : "#FFFFFF"}
-                  fontWeight="600"
-                  textAnchor="middle"
-                >
-                  {slice.label}
-                </SvgText>
-              </View>
-            );
-
-            startAngle = endAngle;
-            return segment;
-          })}
-        </Svg>
-      </View>
-
-      <View style={styles.outlineButton}>
-        <Text style={styles.outlineButtonText}>View full breakdown</Text>
+        <View style={styles.outlineButton}>
+          <Text style={styles.outlineButtonText}>View full breakdown</Text>
+        </View>
       </View>
     </View>
   );
@@ -429,41 +393,13 @@ function TrackSpendingCard() {
   );
 }
 
-function BottomNav() {
-  return (
-    <View style={styles.bottomNav}>
-      <View style={styles.frame26}>
-        <Svg style={styles.bottomHomeIcon} width="20" height="19" viewBox="0 0 20 19" fill="none">
-          <Path d="M2.10679 9.09133C2.10679 8.43731 2.63698 7.90712 3.291 7.90712H16.3173C16.9713 7.90712 17.5015 8.43731 17.5015 9.09133V17.3808C17.5015 18.0348 16.9713 18.565 16.3173 18.565H3.291C2.63698 18.565 2.10679 18.0348 2.10679 17.3808V9.09133Z" fill="#6A79D1" />
-          <Path d="M7.43574 13.2361C7.43574 12.582 7.96593 12.0519 8.61995 12.0519H10.9884C11.6424 12.0519 12.1726 12.582 12.1726 13.2361V18.565H7.43574V13.2361Z" fill="white" />
-          <Path d="M9.02892 0.289032C9.47391 -0.0963437 10.1344 -0.0963439 10.5794 0.289031L19.197 7.75207C20.0258 8.46986 19.5182 9.83146 18.4217 9.83146H1.18659C0.0901428 9.83146 -0.417497 8.46986 0.411336 7.75207L9.02892 0.289032Z" fill="#6A79D1" />
-        </Svg>
-        <Text style={styles.home}>Home</Text>
-      </View>
-
-      <View style={styles.frame27}>
-        <Image source={require("../assets/frame-27.png")} style={styles.bottomNavIcon} />
-      </View>
-
-      <View style={styles.frame28}>
-        <Image source={require("../assets/frame-28.png")} style={styles.bottomNavIcon} />
-      </View>
-
-      <View style={styles.frame29}>
-        <Image source={require("../assets/frame-29.png")} style={styles.bottomNavIcon} />
-      </View>
-
-      <View style={styles.frame31}>
-        <Image source={require("../assets/frame-31.png")} style={styles.bottomNavIcon} />
-      </View>
-    </View>
-  );
-}
-
 export default function Spending() {
   return (
     <View style={styles.screen}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
         <ImageBackground
           style={styles.dashboardHomeScreenContainer}
           source={require("../assets/twirl-background-png-1.png")}
@@ -528,7 +464,32 @@ export default function Spending() {
         </View>
       </View>
 
-      <BottomNav />
+      <View style={styles.bottomNav}>
+        <View style={styles.frame26}>
+          <Svg style={styles.bottomHomeIcon} width="20" height="19" viewBox="0 0 20 19" fill="none">
+            <Path d="M2.10679 9.09133C2.10679 8.43731 2.63698 7.90712 3.291 7.90712H16.3173C16.9713 7.90712 17.5015 8.43731 17.5015 9.09133V17.3808C17.5015 18.0348 16.9713 18.565 16.3173 18.565H3.291C2.63698 18.565 2.10679 18.0348 2.10679 17.3808V9.09133Z" fill="#6A79D1" />
+            <Path d="M7.43574 13.2361C7.43574 12.582 7.96593 12.0519 8.61995 12.0519H10.9884C11.6424 12.0519 12.1726 12.582 12.1726 13.2361V18.565H7.43574V13.2361Z" fill="white" />
+            <Path d="M9.02892 0.289032C9.47391 -0.0963437 10.1344 -0.0963439 10.5794 0.289031L19.197 7.75207C20.0258 8.46986 19.5182 9.83146 18.4217 9.83146H1.18659C0.0901428 9.83146 -0.417497 8.46986 0.411336 7.75207L9.02892 0.289032Z" fill="#6A79D1" />
+          </Svg>
+          <Text style={styles.home}>Home</Text>
+        </View>
+
+        <View style={styles.frame27}>
+          <Image source={require("../assets/frame-27.png")} style={styles.bottomNavIcon} />
+        </View>
+
+        <View style={styles.frame28}>
+          <Image source={require("../assets/frame-28.png")} style={styles.bottomNavIcon} />
+        </View>
+
+        <View style={styles.frame29}>
+          <Image source={require("../assets/frame-29.png")} style={styles.bottomNavIcon} />
+        </View>
+
+        <View style={styles.frame31}>
+          <Image source={require("../assets/frame-31.png")} style={styles.bottomNavIcon} />
+        </View>
+      </View>
     </View>
   );
 }

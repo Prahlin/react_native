@@ -153,7 +153,26 @@ function TopNav() {
   };
 
   const goToTab = (index, route) => {
-    if (index === currentIndex) return;
+    if (index === currentIndex) {
+      animateLetters(index, 320);
+
+      Animated.sequence([
+        Animated.timing(underlineAnim, {
+          toValue: currentIndex - 0.1,
+          duration: 180,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: false,
+        }),
+        Animated.timing(underlineAnim, {
+          toValue: currentIndex,
+          duration: 140,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: false,
+        }),
+      ]).start();
+
+      return;
+    }
 
     if (index === 0) {
       const totalDuration = 320;

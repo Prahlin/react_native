@@ -108,6 +108,7 @@ function TopNav() {
   ];
 
   const underlineAnim = useRef(new Animated.Value(currentIndex)).current;
+  const widthScale = useRef(new Animated.Value(1)).current;
   const [selectedIndex, setSelectedIndex] = useState(currentIndex);
   const [selectedLetterCount, setSelectedLetterCount] = useState(
     tabs[currentIndex].label.length
@@ -156,19 +157,35 @@ function TopNav() {
     if (index === currentIndex) {
       animateLetters(index, 320);
 
-      Animated.sequence([
-        Animated.timing(underlineAnim, {
-          toValue: currentIndex - 0.1,
-          duration: 180,
-          easing: Easing.out(Easing.cubic),
-          useNativeDriver: false,
-        }),
-        Animated.timing(underlineAnim, {
-          toValue: currentIndex,
-          duration: 140,
-          easing: Easing.out(Easing.cubic),
-          useNativeDriver: false,
-        }),
+      Animated.parallel([
+        Animated.sequence([
+          Animated.timing(underlineAnim, {
+            toValue: currentIndex - 0.1,
+            duration: 180,
+            easing: Easing.out(Easing.cubic),
+            useNativeDriver: false,
+          }),
+          Animated.timing(underlineAnim, {
+            toValue: currentIndex,
+            duration: 140,
+            easing: Easing.out(Easing.cubic),
+            useNativeDriver: false,
+          }),
+        ]),
+        Animated.sequence([
+          Animated.timing(widthScale, {
+            toValue: 0.65,
+            duration: 180,
+            easing: Easing.out(Easing.cubic),
+            useNativeDriver: false,
+          }),
+          Animated.timing(widthScale, {
+            toValue: 1,
+            duration: 140,
+            easing: Easing.out(Easing.cubic),
+            useNativeDriver: false,
+          }),
+        ]),
       ]).start();
 
       return;
@@ -287,7 +304,10 @@ function TopNav() {
       styles.navUnderlineActive,
       trackWidth > 0
         ? {
-            width: stepWidth,
+            width: widthScale.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, stepWidth],
+            }),
             transform: [{ translateX }],
           }
         : {

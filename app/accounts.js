@@ -112,7 +112,7 @@ function TopNav() {
 
       Animated.sequence([
         Animated.timing(underlineAnim, {
-          toValue: currentIndex - 0.1,
+          toValue: currentIndex + 0.1,
           duration: 180,
           easing: Easing.out(Easing.cubic),
           useNativeDriver: false,
@@ -168,7 +168,7 @@ function TopNav() {
   const stepWidth = trackWidth / 5;
 
   const translateX = underlineAnim.interpolate({
-    inputRange: [-0.1, 0, 1, 2, 3, 4],
+    inputRange: [-0.1, 0, 1, 2, 3, 4, 4.1],
     outputRange: [
       -0.1 * stepWidth,
       0,
@@ -176,6 +176,7 @@ function TopNav() {
       2 * stepWidth,
       3 * stepWidth,
       4 * stepWidth,
+      4.1 * stepWidth,
     ],
   });
 

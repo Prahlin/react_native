@@ -2,9 +2,9 @@ import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
 import BottomNav from "../components/BottomNav";
 import HeaderBar from "../components/HeaderBar";
 import TopNav from "../components/TopNav";
-import styles from "../styles/statsStyles";
+import styles from "../styles/accountsStyles";
 
-export default function Stats() {
+export default function Accounts() {
   return (
     <View style={styles.screen}>
       <ScrollView
@@ -17,6 +17,10 @@ export default function Stats() {
           source={require("../assets/twirl-background-png-1.png")}
           resizeMode="cover"
         >
+          <View style={styles.bG} />
+          <View style={styles.time} />
+          <View style={styles.frame188} />
+
           <ImageBackground
             style={styles.twirlbackgroundPNG1}
             source={require("../assets/twirl-background-png-1.png")}
@@ -29,110 +33,95 @@ export default function Stats() {
           />
 
           <View style={styles.mainContent}>
-            <TopNav currentIndex={0} />
+            <TopNav currentIndex={4} />
 
-            <View style={styles.frameRewards}>
-              <View style={styles.heroWrap}>
+            <View style={styles.frameAccounts}>
+              <View style={styles.cardHeaderRow}>
+                <Text style={styles.sectionTitle}>Accounts</Text>
+                <Text style={styles.amountText}>13</Text>
+              </View>
+
+              <View style={styles.accountsImageWrap}>
                 <Image
-                  source={require("../assets/stats.png")}
-                  style={styles.heroImage}
+                  source={require("../assets/accounts.png")}
+                  style={{ width: 360, height: 240, resizeMode: "contain" }}
                 />
               </View>
 
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Membership Tier</Text>
-
-                <View style={styles.row}>
-                  <View>
-                    <Text style={styles.label}>Current tier</Text>
-                    <Text style={styles.label}>Starting tier</Text>
+              <View style={styles.accountsList}>
+                <View style={styles.accountRow}>
+                  <View style={styles.rowIconWrap}>
+                    <Image
+                      source={require("../assets/credit-cards.png")}
+                      style={{ width: 39, height: 39, resizeMode: "contain" }}
+                    />
                   </View>
-
-                  <View style={{ alignItems: "flex-end" }}>
-                    <Text style={styles.valuePrimary}>Exclusive</Text>
-                    <Text style={styles.valueSecondary}>Standard</Text>
+                  <View style={styles.accountCopy}>
+                    <Text style={styles.accountLabel}>Credit cards</Text>
+                    <Text style={styles.accountSubLabel}>9 accounts</Text>
                   </View>
+                  <Text style={styles.accountValue}>$17,691</Text>
+                </View>
+
+                <View style={styles.accountRow}>
+                  <View style={styles.rowIconWrap}>
+                    <Image
+                      source={require("../assets/debit-cards.png")}
+                      style={{ width: 39, height: 39, resizeMode: "contain" }}
+                    />
+                  </View>
+                  <View style={styles.accountCopy}>
+                    <Text style={styles.accountLabel}>Debit cards</Text>
+                    <Text style={styles.accountSubLabel}>2 accounts</Text>
+                  </View>
+                  <Text style={styles.accountValue}>$0</Text>
+                </View>
+
+                <View style={styles.accountRow}>
+                  <View style={styles.rowIconWrap}>
+                    <Image
+                      source={require("../assets/loans.png")}
+                      style={{ width: 39, height: 39, resizeMode: "contain" }}
+                    />
+                  </View>
+                  <View style={styles.accountCopy}>
+                    <Text style={styles.accountLabel}>Loans</Text>
+                    <Text style={styles.accountSubLabel}>1 account</Text>
+                  </View>
+                  <Text style={styles.accountValue}>$1,806</Text>
+                </View>
+
+                <View style={styles.accountRow}>
+                  <View style={styles.rowIconWrap}>
+                    <Image
+                      source={require("../assets/property.png")}
+                      style={{ width: 39, height: 39, resizeMode: "contain" }}
+                    />
+                  </View>
+                  <View style={styles.accountCopy}>
+                    <Text style={styles.accountLabel}>Property</Text>
+                    <Text style={styles.accountSubLabel}>1 account</Text>
+                  </View>
+                  <Text style={styles.accountValue}>$-</Text>
+                </View>
+
+                <View style={[styles.accountRow, styles.accountRowNoBorder]}>
+                  <View style={styles.rowIconWrap}>
+                    <Image
+                      source={require("../assets/other-assets.png")}
+                      style={{ width: 39, height: 39, resizeMode: "contain" }}
+                    />
+                  </View>
+                  <View style={styles.accountCopy}>
+                    <Text style={styles.accountLabel}>Other assets</Text>
+                    <Text style={styles.accountSubLabel}>0 account</Text>
+                  </View>
+                  <Text style={styles.accountValue}>$0</Text>
                 </View>
               </View>
 
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Membership Duration</Text>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Length as Exclusive</Text>
-                  <Text style={styles.value}>3 mts</Text>
-                </View>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Length as Standard</Text>
-                  <Text style={styles.value}>13 yrs</Text>
-                </View>
-              </View>
-
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Frequency of Use</Text>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>CreditKing App</Text>
-                  <Text style={styles.value}>High</Text>
-                </View>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>CreditKing.com</Text>
-                  <Text style={styles.value}>Medium</Text>
-                </View>
-              </View>
-
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Monthly Logins</Text>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Average</Text>
-                  <Text style={styles.value}>17 / mts</Text>
-                </View>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Median</Text>
-                  <Text style={styles.value}>15 / mts</Text>
-                </View>
-              </View>
-
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Linked Accounts</Text>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Credit cards</Text>
-                  <Text style={styles.value}>9</Text>
-                </View>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Debit cards</Text>
-                  <Text style={styles.value}>2</Text>
-                </View>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Loans</Text>
-                  <Text style={styles.value}>1</Text>
-                </View>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Property</Text>
-                  <Text style={styles.value}>1</Text>
-                </View>
-              </View>
-
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Cashback Accrued</Text>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Total cashback redemptions</Text>
-                  <Text style={styles.value}>67</Text>
-                </View>
-
-                <View style={styles.row}>
-                  <Text style={styles.label}>Total cashback redeemed</Text>
-                  <Text style={styles.value}>$459+</Text>
-                </View>
+              <View style={styles.outlineButton}>
+                <Text style={styles.outlineButtonText}>View details</Text>
               </View>
             </View>
           </View>
@@ -140,8 +129,7 @@ export default function Stats() {
       </ScrollView>
 
       <HeaderBar />
-
-      <BottomNav activeTab="stats" />
+      <BottomNav activeTab="accounts" />
     </View>
   );
 }

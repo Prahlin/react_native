@@ -182,7 +182,10 @@ export default function Debt() {
     <View style={styles.screen}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingTop: 64.5, paddingBottom: 110 },
+        ]}
       >
         <ImageBackground
           style={styles.dashboardHomeScreenContainer}
@@ -215,8 +218,7 @@ export default function Debt() {
       </ScrollView>
 
       <HeaderBar />
-
-      <BottomNav activeTab="home" />
+      <BottomNav activeTab="debt" />
     </View>
   );
 }

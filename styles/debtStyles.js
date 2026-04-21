@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 
   mainContent: {
-    paddingTop: 72,
+    paddingTop: 0,
     paddingHorizontal: 8,
     gap: 8,
     zIndex: 1,

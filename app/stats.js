@@ -1,22 +1,26 @@
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
 import BottomNav from "../components/BottomNav";
+import HeaderBar from "../components/HeaderBar";
 import TopNav from "../components/TopNav";
 import styles from "../styles/statsStyles";
 
 export default function Stats() {
   return (
     <View style={styles.screen}>
-<ScrollView
-  contentContainerStyle={styles.scrollContent}
-  showsVerticalScrollIndicator={false}
-  showsHorizontalScrollIndicator={false}
->
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      >
         <ImageBackground
           style={styles.dashboardHomeScreenContainer}
           source={require("../assets/twirl-background-png-1.png")}
           resizeMode="cover"
         >
-          {/* Background decorations */}
+          <View style={styles.bG} />
+          <View style={styles.time} />
+          <View style={styles.frame188} />
+
           <ImageBackground
             style={styles.twirlbackgroundPNG1}
             source={require("../assets/twirl-background-png-1.png")}
@@ -28,14 +32,10 @@ export default function Stats() {
             resizeMode="contain"
           />
 
-          {/* Main content */}
           <View style={styles.mainContent}>
             <TopNav currentIndex={0} />
 
-            {/* SINGLE CARD (matches rewards) */}
             <View style={styles.frameRewards}>
-              
-              {/* HERO IMAGE (now inside card) */}
               <View style={styles.heroWrap}>
                 <Image
                   source={require("../assets/stats.png")}
@@ -43,7 +43,6 @@ export default function Stats() {
                 />
               </View>
 
-              {/* Membership Tier */}
               <View style={styles.section}>
                 <Text style={styles.sectionHeader}>Membership Tier</Text>
 
@@ -60,7 +59,6 @@ export default function Stats() {
                 </View>
               </View>
 
-              {/* Membership Duration */}
               <View style={styles.section}>
                 <Text style={styles.sectionHeader}>Membership Duration</Text>
 
@@ -75,7 +73,6 @@ export default function Stats() {
                 </View>
               </View>
 
-              {/* Frequency of Use */}
               <View style={styles.section}>
                 <Text style={styles.sectionHeader}>Frequency of Use</Text>
 
@@ -90,7 +87,6 @@ export default function Stats() {
                 </View>
               </View>
 
-              {/* Monthly Logins */}
               <View style={styles.section}>
                 <Text style={styles.sectionHeader}>Monthly Logins</Text>
 
@@ -105,7 +101,6 @@ export default function Stats() {
                 </View>
               </View>
 
-              {/* Linked Accounts */}
               <View style={styles.section}>
                 <Text style={styles.sectionHeader}>Linked Accounts</Text>
 
@@ -130,7 +125,6 @@ export default function Stats() {
                 </View>
               </View>
 
-              {/* Cashback Accrued */}
               <View style={styles.section}>
                 <Text style={styles.sectionHeader}>Cashback Accrued</Text>
 
@@ -144,22 +138,13 @@ export default function Stats() {
                   <Text style={styles.value}>$459+</Text>
                 </View>
               </View>
-
             </View>
           </View>
         </ImageBackground>
       </ScrollView>
 
-      {/* Sticky Header */}
-      <View style={styles.stickyHeaderWrap}>
-        <View style={styles.welcomeSteve}>
-          <View style={styles.frame189}>
-            <Text style={styles._welcomeSteve}>Welcome, Steve</Text>
-          </View>
-        </View>
-      </View>
+      <HeaderBar />
 
-      {/* Bottom Nav */}
       <BottomNav activeTab="stats" />
     </View>
   );

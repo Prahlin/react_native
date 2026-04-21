@@ -26,32 +26,26 @@ dashboardHomeScreenContainer: {
     zIndex: 1,
   },
 
-  stickyHeaderWrap: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 20,
-  },
 
-  welcomeSteve: {
-    height: 68,
-    backgroundColor: "#97A2FE",
-  },
 
-  frame189: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
+  bG: {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  height: 0,
+  backgroundColor: "transparent",
+},
 
-  _welcomeSteve: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-  },
+time: {
+  display: "none",
+},
+
+frame188: {
+  display: "none",
+},
+
+
 
 frameRewards: {
   backgroundColor: "rgba(255, 255, 255, 0.6)",

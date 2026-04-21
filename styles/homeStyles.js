@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 
   mainContent: {
-    paddingTop: 72,
+    paddingTop: 0,
     paddingHorizontal: 8,
     gap: 8,
     zIndex: 1,
@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  /* CREDIT SCORE CARD */
   frameCreditScore: {
     backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
@@ -225,7 +224,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  /* SPENDING CARD */
   frameSpending: {
     backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
@@ -353,7 +351,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  /* CREDIT CARD OFFERS */
   frameCreditCards: {
     backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
@@ -459,7 +456,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  /* LOAN OFFERS */
   frame153: {
     backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
@@ -517,7 +513,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  /* BACKGROUND DECOR */
   twirlbackgroundPNG1: {
     position: "absolute",
     top: 70,
@@ -536,7 +531,6 @@ const styles = StyleSheet.create({
     opacity: 0.35,
   },
 
-  /* HEADER ICONS */
   notificationListAnimation: {
     width: 77,
     height: 18,

@@ -112,7 +112,10 @@ export default function Activity() {
     <View style={styles.screen}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingTop: 64, paddingBottom: 110 },
+        ]}
       >
         <ImageBackground
           style={styles.dashboardHomeScreenContainer}

@@ -117,13 +117,13 @@ function SpendingCard() {
           >
             <Svg width="36" height="32" viewBox="0 0 36 32" fill="none">
               <Path
-                d="M18 2 
-                   C18.6 2 19.1 2.3 19.5 3 
-                   L33 27 
-                   C33.7 28.2 32.8 30 31.4 30 
-                   H4.6 
-                   C3.2 30 2.3 28.2 3 27 
-                   L16.5 3 
+                d="M18 2
+                   C18.6 2 19.1 2.3 19.5 3
+                   L33 27
+                   C33.7 28.2 32.8 30 31.4 30
+                   H4.6
+                   C3.2 30 2.3 28.2 3 27
+                   L16.5 3
                    C16.9 2.3 17.4 2 18 2Z"
                 fill="#3CC85A"
               />
@@ -166,13 +166,13 @@ function SpendingCard() {
           >
             <Svg width="36" height="32" viewBox="0 0 36 32" fill="none">
               <Path
-                d="M18 30 
-                   C17.4 30 16.9 29.7 16.5 29 
-                   L3 5 
-                   C2.3 3.8 3.2 2 4.6 2 
-                   H31.4 
-                   C32.8 2 33.7 3.8 33 5 
-                   L19.5 29 
+                d="M18 30
+                   C17.4 30 16.9 29.7 16.5 29
+                   L3 5
+                   C2.3 3.8 3.2 2 4.6 2
+                   H31.4
+                   C32.8 2 33.7 3.8 33 5
+                   L19.5 29
                    C19.1 29.7 18.6 30 18 30Z"
                 fill="#FF463B"
               />
@@ -241,15 +241,12 @@ function CreditCardOffersCard() {
 export default function Home() {
   return (
     <View style={styles.screen}>
-      <HeaderBar />
-
-<ScrollView
-  showsVerticalScrollIndicator={false}
-  contentContainerStyle={[
-    styles.scrollContent,
-    { paddingTop: 46, paddingBottom: 110 },
-  ]}
->
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingTop: 64.5, paddingBottom: 110 },
+        ]}
       >
         <ImageBackground
           style={styles.dashboardHomeScreenContainer}
@@ -281,6 +278,7 @@ export default function Home() {
         </ImageBackground>
       </ScrollView>
 
+      <HeaderBar />
       <BottomNav activeTab="home" />
     </View>
   );

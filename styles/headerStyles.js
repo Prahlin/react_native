@@ -1,17 +1,182 @@
 import { StyleSheet } from "react-native";
 
+export const ICON_SIZE = 22;
+export const SIDE_PADDING = 18;
+export const TOP_PADDING = 22;
+export const MENU_RIGHT_INSET = 12;
+export const HEADER_TOTAL_HEIGHT = 64;
+
 export default StyleSheet.create({
-  container: {
-    height: 68,
-    backgroundColor: "#97A2FE",
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-    paddingBottom: 12,
+  root: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 1000,
+  },
+
+  header: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: HEADER_TOTAL_HEIGHT,
+    backgroundColor: "#8E95E8",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: SIDE_PADDING,
+    paddingTop: TOP_PADDING,
+    zIndex: 1002,
+    elevation: 999,
   },
 
   title: {
-    color: "#fff",
-    fontSize: 16,
+    color: "#FFFFFF",
+    fontSize: 20,
     fontWeight: "700",
+    lineHeight: ICON_SIZE,
+  },
+
+  bellButton: {
+    position: "absolute",
+    top: "66%",
+    marginTop: -ICON_SIZE / 2,
+    width: ICON_SIZE,
+    height: ICON_SIZE,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1003,
+  },
+
+  bellIcon: {
+    width: ICON_SIZE,
+    height: ICON_SIZE,
+  },
+
+  menuButton: {
+    position: "absolute",
+    right: MENU_RIGHT_INSET,
+    top: "66%",
+    marginTop: -ICON_SIZE / 2,
+    width: ICON_SIZE,
+    height: ICON_SIZE,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1003,
+  },
+
+  menuDots: {
+    color: "#FFFFFF",
+    fontSize: ICON_SIZE,
+    lineHeight: ICON_SIZE,
+    fontWeight: "700",
+  },
+
+  overlay: {
+    position: "absolute",
+    top: HEADER_TOTAL_HEIGHT,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.18)",
+    zIndex: 1001,
+  },
+
+  menu: {
+    position: "absolute",
+    top: 60,
+    right: 12,
+    width: 170,
+    backgroundColor: "#97A2FE",
+    borderRadius: 12,
+    paddingVertical: 6,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    zIndex: 1003,
+  },
+
+  arrowRight: {
+    position: "absolute",
+    top: -8,
+    right: 14,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
+    borderBottomWidth: 8,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#97A2FE",
+  },
+
+  item: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(255,255,255,0.45)",
+  },
+
+  itemText: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    fontWeight: "400",
+  },
+
+  notifications: {
+    position: "absolute",
+    top: 60,
+    right: 50,
+    width: 265,
+    backgroundColor: "#97A2FE",
+    borderRadius: 12,
+    paddingVertical: 6,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    zIndex: 1003,
+  },
+
+  notificationsArrow: {
+    position: "absolute",
+    top: -8,
+    right: 52,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
+    borderBottomWidth: 8,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#97A2FE",
+  },
+
+  notificationItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(255,255,255,0.45)",
+  },
+
+  star: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    marginRight: 8,
+    lineHeight: 16,
+  },
+
+  notificationText: {
+    flex: 1,
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "400",
+  },
+
+  last: {
+    borderBottomWidth: 0,
   },
 });

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 
   mainContent: {
-    paddingTop: 72,
+    paddingTop: 0,
     paddingHorizontal: 8,
     gap: 8,
     zIndex: 1,
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 
-  // ✅ THIS WAS MISSING — controls rewards.png size
   heroImage: {
     width: 144,
     height: 144,

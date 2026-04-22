@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 
   mainContent: {
-    paddingTop: 72,
+    paddingTop: 0,
     paddingHorizontal: 8,
     gap: 8,
     zIndex: 1,
@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  /* MAIN CARD (shared surface like other screens) */
   frameNotifications: {
     backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
@@ -83,7 +82,6 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
 
-  /* HERO (now inside the same card) */
   heroWrap: {
     alignItems: "center",
     justifyContent: "center",
@@ -97,7 +95,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
 
-  /* LIST */
   notificationList: {
     marginTop: 2,
   },
@@ -149,7 +146,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  /* BACKGROUND DECOR */
   twirlbackgroundPNG1: {
     position: "absolute",
     width: 220,
@@ -168,7 +164,6 @@ const styles = StyleSheet.create({
     opacity: 0.16,
   },
 
-  /* ICONS */
   notificationListAnimation: {
     width: 22,
     height: 22,

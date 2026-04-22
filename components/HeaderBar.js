@@ -1,27 +1,77 @@
-import { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { router } from "expo-router";
+import { useRef, useState } from "react";
+import {
+  Animated,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-const ICON_SIZE = 22;
+import styles from "../styles/headerStyles";
+
+let hasBellBeenClicked = false;
 
 export default function HeaderBar() {
-  const [isBellClicked, setIsBellClicked] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [bellClicked, setBellClicked] = useState(hasBellBeenClicked);
+
+  const menuScale = useRef(new Animated.Value(0.96)).current;
+  const notificationsScale = useRef(new Animated.Value(0.96)).current;
+
+  const notifications = [
+    "New software update",
+    "Credit score change",
+    "New CC offers available",
+    "T&C have changed",
+    "Credit score change",
+  ];
+
+  const openMenu = () => {
+    setNotificationsOpen(false);
+    setMenuOpen(true);
+
+    menuScale.setValue(0.96);
+    Animated.spring(menuScale, {
+      toValue: 1,
+      friction: 4,
+      tension: 140,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const openNotifications = () => {
+    hasBellBeenClicked = true;
+    setBellClicked(true);
+
+    setMenuOpen(false);
+    setNotificationsOpen(true);
+
+    notificationsScale.setValue(0.96);
+    Animated.spring(notificationsScale, {
+      toValue: 1,
+      friction: 4,
+      tension: 140,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const closeAll = () => {
+    setMenuOpen(false);
+    setNotificationsOpen(false);
+  };
 
   return (
-    <View style={styles.header}>
-      {/* LEFT */}
-      <Text style={styles.title}>Welcome, Steve</Text>
+    <View style={styles.root} pointerEvents="box-none">
+      <View style={styles.header}>
+        <Text style={styles.title}>Welcome, Steve</Text>
 
-      {/* RIGHT */}
-      <View style={styles.rightContainer}>
-        {/* Bell */}
-        <Pressable
-          onPress={() => setIsBellClicked(true)}
-          hitSlop={10}
-          style={styles.bellButton}
-        >
+        <Pressable style={styles.bellButton} onPress={openNotifications}>
           <Image
             source={
-              isBellClicked
+              bellClicked
                 ? require("../assets/bell-clicked.png")
                 : require("../assets/frame-223.png")
             }
@@ -30,70 +80,93 @@ export default function HeaderBar() {
           />
         </Pressable>
 
-        {/* Three dots */}
-        <Pressable hitSlop={10} style={styles.menuButton}>
+        <Pressable style={styles.menuButton} onPress={openMenu}>
           <Text style={styles.menuDots}>⋮</Text>
         </Pressable>
       </View>
+
+      {(menuOpen || notificationsOpen) && (
+        <Pressable style={styles.overlay} onPress={closeAll} />
+      )}
+
+      {menuOpen && (
+        <Animated.View
+          style={[
+            styles.menu,
+            {
+              transform: [{ scale: menuScale }],
+            },
+          ]}
+        >
+          <View style={styles.arrowRight} />
+
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {
+              closeAll();
+              router.push("/profile");
+            }}
+          >
+            <Text style={styles.itemText}>Profile</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {
+              closeAll();
+              router.push("/settings");
+            }}
+          >
+            <Text style={styles.itemText}>Settings</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {
+              closeAll();
+              router.push("/notifications");
+            }}
+          >
+            <Text style={styles.itemText}>Notifications</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.item, styles.last]}
+            onPress={() => {
+              closeAll();
+              router.push("/loadout");
+            }}
+          >
+            <Text style={styles.itemText}>Log out</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      )}
+
+      {notificationsOpen && (
+        <Animated.View
+          style={[
+            styles.notifications,
+            {
+              transform: [{ scale: notificationsScale }],
+            },
+          ]}
+        >
+          <View style={styles.notificationsArrow} />
+
+          {notifications.map((text, i) => (
+            <View
+              key={i}
+              style={[
+                styles.notificationItem,
+                i === notifications.length - 1 && styles.last,
+              ]}
+            >
+              <Text style={styles.star}>★</Text>
+              <Text style={styles.notificationText}>{text}</Text>
+            </View>
+          ))}
+        </Animated.View>
+      )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 64,
-    backgroundColor: "#8E95E8",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 18,
-
-    paddingTop: 22, // 👈 keeps everything slightly lower
-
-    zIndex: 999,
-    elevation: 999,
-  },
-
-  title: {
-    color: "#FFFFFF",
-    fontSize: 20,
-    fontWeight: "700",
-    lineHeight: ICON_SIZE,
-  },
-
-  rightContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  bellButton: {
-    width: ICON_SIZE,
-    height: ICON_SIZE,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 12,
-  },
-
-  bellIcon: {
-    width: ICON_SIZE,
-    height: ICON_SIZE,
-  },
-
-  menuButton: {
-    width: ICON_SIZE,
-    height: ICON_SIZE,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  menuDots: {
-    color: "#FFFFFF",
-    fontSize: ICON_SIZE,
-    lineHeight: ICON_SIZE,
-    fontWeight: "700",
-  },
-});

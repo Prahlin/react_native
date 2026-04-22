@@ -8,7 +8,10 @@ export default function Stats() {
   return (
     <View style={styles.screen}>
       <ScrollView
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingTop: 64, paddingBottom: 110 },
+        ]}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
@@ -40,6 +43,7 @@ export default function Stats() {
                 <Image
                   source={require("../assets/stats.png")}
                   style={styles.heroImage}
+                  resizeMode="contain"
                 />
               </View>
 

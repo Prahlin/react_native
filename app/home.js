@@ -1,4 +1,10 @@
-import { ImageBackground, ScrollView, Text, View } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import Svg, { Path } from "react-native-svg";
 import BottomNav from "../components/BottomNav";
 import HeaderBar from "../components/HeaderBar";
@@ -238,6 +244,53 @@ function CreditCardOffersCard() {
   );
 }
 
+function LoanOffersCard() {
+  const loans = [
+    {
+      name: "PNC Bank",
+      asset: require("../assets/pnc-bank-icon-1.png"),
+    },
+    {
+      name: "Chase Bank",
+      asset: require("../assets/chase-icon-1.png"),
+    },
+    {
+      name: "TD Bank",
+      asset: require("../assets/td-icon-1.png"),
+    },
+    {
+      name: "Wells Fargo",
+      asset: require("../assets/wells-fargo-icon-1.png"),
+    },
+  ];
+
+  return (
+    <View style={styles.frame153}>
+      <Text style={styles.sectionTitle}>Loan Offers</Text>
+      <Text style={styles.creditCardsSubtitle}>
+        *Based on your credit score
+      </Text>
+
+      <View style={styles.loanGrid}>
+        {loans.map((loan) => (
+          <View key={loan.name} style={styles.loanItem}>
+            <Text style={styles.loanLabel}>{loan.name}</Text>
+            <Image
+              source={loan.asset}
+              style={styles.loanIcon}
+              resizeMode="contain"
+            />
+          </View>
+        ))}
+      </View>
+
+      <View style={styles.primaryButton}>
+        <Text style={styles.primaryButtonText}>Find out more</Text>
+      </View>
+    </View>
+  );
+}
+
 export default function Home() {
   return (
     <View style={styles.screen}>
@@ -274,6 +327,7 @@ export default function Home() {
             <CreditScoreCard />
             <SpendingCard />
             <CreditCardOffersCard />
+            <LoanOffersCard />
           </View>
         </ImageBackground>
       </ScrollView>

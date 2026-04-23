@@ -489,11 +489,12 @@ const styles = StyleSheet.create({
     fontSize: 8,
     marginBottom: 8,
     textAlign: "center",
+    color: "#111111",
   },
 
   loanIcon: {
-    width: 44,
-    height: 44,
+    width: 40,
+    height: 40,
     resizeMode: "contain",
   },
 

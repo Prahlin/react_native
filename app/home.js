@@ -270,7 +270,7 @@ export default function Home() {
           />
 
           <View style={styles.mainContent}>
-            <TopNav currentIndex={0} />
+            <TopNav />
             <CreditScoreCard />
             <SpendingCard />
             <CreditCardOffersCard />
@@ -279,7 +279,7 @@ export default function Home() {
       </ScrollView>
 
       <HeaderBar />
-      <BottomNav activeTab="home" />
+      <BottomNav />
     </View>
   );
 }

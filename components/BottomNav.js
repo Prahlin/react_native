@@ -1,20 +1,31 @@
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import { Image, Pressable, View } from "react-native";
 import styles from "../styles/bottomNavStyles";
 
-export default function BottomNav({ activeTab = "home" }) {
+export default function BottomNav() {
+  const pathname = usePathname();
+
+  const activeTab = (() => {
+    if (pathname === "/home") return "home";
+    if (pathname === "/activity") return "activity";
+    if (pathname === "/notifications") return "notifications";
+    if (pathname === "/rewards") return "rewards";
+    if (pathname === "/stats") return "stats";
+    return "";
+  })();
+
   return (
     <View style={styles.bottomNav}>
-<Pressable style={styles.frame26} onPress={() => router.push("/home")}>
-  <Image
-    source={
-      activeTab === "home"
-        ? require("../assets/frame-26-blue.png")
-        : require("../assets/frame-26.png")
-    }
-    style={styles.bottomNavIcon}
-  />
-</Pressable>
+      <Pressable style={styles.frame26} onPress={() => router.push("/home")}>
+        <Image
+          source={
+            activeTab === "home"
+              ? require("../assets/frame-26-blue.png")
+              : require("../assets/frame-26.png")
+          }
+          style={styles.bottomNavIcon}
+        />
+      </Pressable>
 
       <Pressable style={styles.frame27} onPress={() => router.push("/activity")}>
         <Image
@@ -27,7 +38,10 @@ export default function BottomNav({ activeTab = "home" }) {
         />
       </Pressable>
 
-      <Pressable style={styles.frame28} onPress={() => router.push("/notifications")}>
+      <Pressable
+        style={styles.frame28}
+        onPress={() => router.push("/notifications")}
+      >
         <Image
           source={
             activeTab === "notifications"

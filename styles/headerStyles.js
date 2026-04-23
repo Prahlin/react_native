@@ -88,8 +88,7 @@ export default StyleSheet.create({
 
   menu: {
     position: "absolute",
-    top: 60,
-    right: 12,
+    top: 65,
     width: 170,
     backgroundColor: "#97A2FE",
     borderRadius: 12,
@@ -105,7 +104,34 @@ export default StyleSheet.create({
   arrowRight: {
     position: "absolute",
     top: -8,
-    right: 14,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
+    borderBottomWidth: 8,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#97A2FE",
+  },
+
+  notifications: {
+    position: "absolute",
+    top: 65,
+    width: 265,
+    backgroundColor: "#97A2FE",
+    borderRadius: 12,
+    paddingVertical: 6,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    zIndex: 1003,
+  },
+
+  notificationsArrow: {
+    position: "absolute",
+    top: -8,
     width: 0,
     height: 0,
     borderLeftWidth: 8,
@@ -127,36 +153,6 @@ export default StyleSheet.create({
     fontSize: 14,
     color: "#FFFFFF",
     fontWeight: "400",
-  },
-
-  notifications: {
-    position: "absolute",
-    top: 60,
-    right: 50,
-    width: 265,
-    backgroundColor: "#97A2FE",
-    borderRadius: 12,
-    paddingVertical: 6,
-    elevation: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-    zIndex: 1003,
-  },
-
-  notificationsArrow: {
-    position: "absolute",
-    top: -8,
-    right: 52,
-    width: 0,
-    height: 0,
-    borderLeftWidth: 8,
-    borderRightWidth: 8,
-    borderBottomWidth: 8,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "#97A2FE",
   },
 
   notificationItem: {

@@ -13,13 +13,21 @@ import styles from "../styles/headerStyles";
 
 let hasBellBeenClicked = false;
 
+const POPUP_RIGHT_OVERHANG = 27;
+
 export default function HeaderBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [bellClicked, setBellClicked] = useState(hasBellBeenClicked);
 
+  const [menuRight, setMenuRight] = useState(12);
+  const [notificationsRight, setNotificationsRight] = useState(12);
+
   const menuScale = useRef(new Animated.Value(0.96)).current;
   const notificationsScale = useRef(new Animated.Value(0.96)).current;
+
+  const bellRef = useRef(null);
+  const menuRef = useRef(null);
 
   const notifications = [
     "New software update",
@@ -31,31 +39,58 @@ export default function HeaderBar() {
 
   const openMenu = () => {
     setNotificationsOpen(false);
-    setMenuOpen(true);
 
-    menuScale.setValue(0.96);
-    Animated.spring(menuScale, {
-      toValue: 1,
-      friction: 4,
-      tension: 140,
-      useNativeDriver: true,
-    }).start();
+    if (menuRef.current?.measureInWindow) {
+      menuRef.current.measureInWindow((x, y, width) => {
+        const iconCenterX = x + width / 2;
+        const viewportWidth =
+          typeof window !== "undefined" ? window.innerWidth : 0;
+
+        const rightDistanceFromIconCenter = viewportWidth - iconCenterX;
+        const computedRight =
+          rightDistanceFromIconCenter - POPUP_RIGHT_OVERHANG;
+
+        setMenuRight(computedRight);
+        setMenuOpen(true);
+
+        menuScale.setValue(0.96);
+        Animated.spring(menuScale, {
+          toValue: 1,
+          friction: 4,
+          tension: 140,
+          useNativeDriver: true,
+        }).start();
+      });
+    }
   };
 
   const openNotifications = () => {
     hasBellBeenClicked = true;
     setBellClicked(true);
-
     setMenuOpen(false);
-    setNotificationsOpen(true);
 
-    notificationsScale.setValue(0.96);
-    Animated.spring(notificationsScale, {
-      toValue: 1,
-      friction: 4,
-      tension: 140,
-      useNativeDriver: true,
-    }).start();
+    if (bellRef.current?.measureInWindow) {
+      bellRef.current.measureInWindow((x, y, width) => {
+        const iconCenterX = x + width / 2;
+        const viewportWidth =
+          typeof window !== "undefined" ? window.innerWidth : 0;
+
+        const rightDistanceFromIconCenter = viewportWidth - iconCenterX;
+        const computedRight =
+          rightDistanceFromIconCenter - POPUP_RIGHT_OVERHANG;
+
+        setNotificationsRight(computedRight);
+        setNotificationsOpen(true);
+
+        notificationsScale.setValue(0.96);
+        Animated.spring(notificationsScale, {
+          toValue: 1,
+          friction: 4,
+          tension: 140,
+          useNativeDriver: true,
+        }).start();
+      });
+    }
   };
 
   const closeAll = () => {
@@ -71,7 +106,7 @@ export default function HeaderBar() {
         <View style={styles.middleSection}>
           <View style={styles.leftBellSpacer} />
 
-          <Pressable style={styles.bellButton} onPress={openNotifications}>
+          <Pressable ref={bellRef} style={styles.bellButton} onPress={openNotifications}>
             <Image
               source={
                 bellClicked
@@ -86,7 +121,7 @@ export default function HeaderBar() {
           <View style={styles.rightBellSpacer} />
         </View>
 
-        <Pressable style={styles.menuButton} onPress={openMenu}>
+        <Pressable ref={menuRef} style={styles.menuButton} onPress={openMenu}>
           <Text style={styles.menuDots}>⋮</Text>
         </Pressable>
       </View>
@@ -100,11 +135,17 @@ export default function HeaderBar() {
           style={[
             styles.menu,
             {
+              right: menuRight,
               transform: [{ scale: menuScale }],
             },
           ]}
         >
-          <View style={styles.arrowRight} />
+          <View
+            style={[
+              styles.arrowRight,
+              { right: POPUP_RIGHT_OVERHANG - 8 },
+            ]}
+          />
 
           <TouchableOpacity
             style={styles.item}
@@ -153,11 +194,17 @@ export default function HeaderBar() {
           style={[
             styles.notifications,
             {
+              right: notificationsRight,
               transform: [{ scale: notificationsScale }],
             },
           ]}
         >
-          <View style={styles.notificationsArrow} />
+          <View
+            style={[
+              styles.notificationsArrow,
+              { right: POPUP_RIGHT_OVERHANG - 5 },
+            ]}
+          />
 
           {notifications.map((text, i) => (
             <View

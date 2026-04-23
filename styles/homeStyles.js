@@ -6,17 +6,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
 
-  scrollContent: {
-    flexGrow: 1,
-  },
+scrollContent: {
+  paddingBottom: 110,
+},
 
-  dashboardHomeScreenContainer: {
-    width: "100%",
-    minHeight: "100%",
-    backgroundColor: "rgba(217, 217, 217, 0.5)",
-    overflow: "hidden",
-    paddingBottom: 90,
-  },
+bottomSpacer: {
+  height: 2, // match your card gap
+},
+
+  scrollView: {
+  backgroundColor: "#FFFFFF",
+},
+
+dashboardHomeScreenContainer: {
+  width: "100%",
+  backgroundColor: "rgba(217, 217, 217, 0.5)",
+  overflow: "hidden",
+},
 
   mainContent: {
     paddingTop: 0,

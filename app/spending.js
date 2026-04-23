@@ -154,6 +154,7 @@ function TrackSpendingCard() {
         {trackedAccounts.map((item) => (
           <View key={item.name} style={styles.accountRow}>
             <SmallBankLogo type={item.type} />
+
             <View style={styles.accountTextWrap}>
               <Text style={styles.accountName}>{item.name}</Text>
               <Text style={styles.accountSubtitle}>{item.subtitle}</Text>
@@ -173,10 +174,11 @@ export default function Spending() {
   return (
     <View style={styles.screen}>
       <ScrollView
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: 64, paddingBottom: 110 },
+          { paddingTop: 64.5 },
         ]}
       >
         <ImageBackground
@@ -184,34 +186,19 @@ export default function Spending() {
           source={require("../assets/twirl-background-png-1.png")}
           resizeMode="cover"
         >
-          <View style={styles.bG} />
-          <View style={styles.time} />
-          <View style={styles.frame188} />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG1}
-            source={require("../assets/twirl-background-png-1.png")}
-            resizeMode="contain"
-          />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG2}
-            source={require("../assets/twirl-background-png-2.png")}
-            resizeMode="contain"
-          />
-
           <View style={styles.mainContent}>
             <TopNav currentIndex={2} />
             <SpendingCard />
             <ExpenditureCard />
             <TrackSpendingCard />
+
+            <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>
       </ScrollView>
 
       <HeaderBar />
-
-      <BottomNav activeTab="home" />
+      <BottomNav activeTab="spending" />
     </View>
   );
 }

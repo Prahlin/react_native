@@ -71,42 +71,25 @@ export default function Rewards() {
   return (
     <View style={styles.screen}>
       <ScrollView
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingTop: 64, paddingBottom: 110 },
-        ]}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: 64 }]}
       >
         <ImageBackground
           style={styles.dashboardHomeScreenContainer}
           source={require("../assets/twirl-background-png-1.png")}
           resizeMode="cover"
         >
-          <View style={styles.bG} />
-          <View style={styles.time} />
-          <View style={styles.frame188} />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG1}
-            source={require("../assets/twirl-background-png-1.png")}
-            resizeMode="contain"
-          />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG2}
-            source={require("../assets/twirl-background-png-2.png")}
-            resizeMode="contain"
-          />
-
           <View style={styles.mainContent}>
             <TopNav currentIndex={0} />
             <RewardsCard />
+
+            <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>
       </ScrollView>
 
       <HeaderBar />
-
       <BottomNav activeTab="rewards" />
     </View>
   );

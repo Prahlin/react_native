@@ -8,9 +8,10 @@ export default function Accounts() {
   return (
     <View style={styles.screen}>
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: 64, paddingBottom: 110 },
+          { paddingTop: 64 },
         ]}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -20,21 +21,6 @@ export default function Accounts() {
           source={require("../assets/twirl-background-png-1.png")}
           resizeMode="cover"
         >
-          <View style={styles.bG} />
-          <View style={styles.time} />
-          <View style={styles.frame188} />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG1}
-            source={require("../assets/twirl-background-png-1.png")}
-            resizeMode="contain"
-          />
-          <ImageBackground
-            style={styles.twirlbackgroundPNG2}
-            source={require("../assets/twirl-background-png-2.png")}
-            resizeMode="contain"
-          />
-
           <View style={styles.mainContent}>
             <TopNav currentIndex={4} />
 
@@ -54,10 +40,7 @@ export default function Accounts() {
               <View style={styles.accountsList}>
                 <View style={styles.accountRow}>
                   <View style={styles.rowIconWrap}>
-                    <Image
-                      source={require("../assets/credit-cards.png")}
-                      style={{ width: 39, height: 39, resizeMode: "contain" }}
-                    />
+                    <Image source={require("../assets/credit-cards.png")} style={{ width: 39, height: 39, resizeMode: "contain" }} />
                   </View>
                   <View style={styles.accountCopy}>
                     <Text style={styles.accountLabel}>Credit cards</Text>
@@ -68,10 +51,7 @@ export default function Accounts() {
 
                 <View style={styles.accountRow}>
                   <View style={styles.rowIconWrap}>
-                    <Image
-                      source={require("../assets/debit-cards.png")}
-                      style={{ width: 39, height: 39, resizeMode: "contain" }}
-                    />
+                    <Image source={require("../assets/debit-cards.png")} style={{ width: 39, height: 39, resizeMode: "contain" }} />
                   </View>
                   <View style={styles.accountCopy}>
                     <Text style={styles.accountLabel}>Debit cards</Text>
@@ -82,10 +62,7 @@ export default function Accounts() {
 
                 <View style={styles.accountRow}>
                   <View style={styles.rowIconWrap}>
-                    <Image
-                      source={require("../assets/loans.png")}
-                      style={{ width: 39, height: 39, resizeMode: "contain" }}
-                    />
+                    <Image source={require("../assets/loans.png")} style={{ width: 39, height: 39, resizeMode: "contain" }} />
                   </View>
                   <View style={styles.accountCopy}>
                     <Text style={styles.accountLabel}>Loans</Text>
@@ -96,10 +73,7 @@ export default function Accounts() {
 
                 <View style={styles.accountRow}>
                   <View style={styles.rowIconWrap}>
-                    <Image
-                      source={require("../assets/property.png")}
-                      style={{ width: 39, height: 39, resizeMode: "contain" }}
-                    />
+                    <Image source={require("../assets/property.png")} style={{ width: 39, height: 39, resizeMode: "contain" }} />
                   </View>
                   <View style={styles.accountCopy}>
                     <Text style={styles.accountLabel}>Property</Text>
@@ -110,10 +84,7 @@ export default function Accounts() {
 
                 <View style={[styles.accountRow, styles.accountRowNoBorder]}>
                   <View style={styles.rowIconWrap}>
-                    <Image
-                      source={require("../assets/other-assets.png")}
-                      style={{ width: 39, height: 39, resizeMode: "contain" }}
-                    />
+                    <Image source={require("../assets/other-assets.png")} style={{ width: 39, height: 39, resizeMode: "contain" }} />
                   </View>
                   <View style={styles.accountCopy}>
                     <Text style={styles.accountLabel}>Other assets</Text>
@@ -127,6 +98,8 @@ export default function Accounts() {
                 <Text style={styles.outlineButtonText}>View details</Text>
               </View>
             </View>
+
+            <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>
       </ScrollView>

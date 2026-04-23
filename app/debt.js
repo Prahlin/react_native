@@ -7,22 +7,10 @@ import TopNav from "../components/TopNav";
 import styles from "../styles/debtStyles";
 
 const loanOffers = [
-  {
-    name: "PNC Bank",
-    image: require("../assets/pnc-bank-icon-1.png"),
-  },
-  {
-    name: "Chase Bank",
-    image: require("../assets/chase-icon-1.png"),
-  },
-  {
-    name: "TD Bank",
-    image: require("../assets/td-icon-1.png"),
-  },
-  {
-    name: "Wells Fargo",
-    image: require("../assets/wells-fargo-icon-1.png"),
-  },
+  { name: "PNC Bank", image: require("../assets/pnc-bank-icon-1.png") },
+  { name: "Chase Bank", image: require("../assets/chase-icon-1.png") },
+  { name: "TD Bank", image: require("../assets/td-icon-1.png") },
+  { name: "Wells Fargo", image: require("../assets/wells-fargo-icon-1.png") },
 ];
 
 const academyItems = [
@@ -44,7 +32,6 @@ function buildDebtPoints(chartWidth, chartHeight) {
 
   const usableWidth = right - left;
   const usableHeight = bottom - top;
-
   const xStep = usableWidth / 5;
 
   return [
@@ -90,9 +77,9 @@ function DebtCard() {
         >
           {chartWidth > 0 && (
             <Svg width="100%" height={chartHeight}>
-              <Line x1={left} y1={108} x2={right} y2={108} stroke="#ECEFF6" strokeWidth="1" />
-              <Line x1={left} y1={64} x2={right} y2={64} stroke="#ECEFF6" strokeWidth="1" />
-              <Line x1={left} y1={20} x2={right} y2={20} stroke="#ECEFF6" strokeWidth="1" />
+              <Line x1={left} y1={108} x2={right} y2={108} stroke="#ECEFF6" />
+              <Line x1={left} y1={64} x2={right} y2={64} stroke="#ECEFF6" />
+              <Line x1={left} y1={20} x2={right} y2={20} stroke="#ECEFF6" />
 
               <Path
                 d={linePath}
@@ -100,16 +87,13 @@ function DebtCard() {
                 stroke="#3E4BB5"
                 strokeWidth="2.5"
                 strokeLinecap="round"
-                strokeLinejoin="round"
               />
             </Svg>
           )}
 
           <View style={styles.monthRow}>
             {["May", "Jun", "July", "Aug", "Sep", "Oct"].map((m) => (
-              <Text key={m} style={styles.monthLabel}>
-                {m}
-              </Text>
+              <Text key={m} style={styles.monthLabel}>{m}</Text>
             ))}
           </View>
         </View>
@@ -127,21 +111,20 @@ function DebtCard() {
 function LoanOffersCard() {
   return (
     <View style={styles.frame153}>
-      <Text style={styles.loanOffers}>Loan Offers</Text>
-      <Text style={styles._basedonyourcreditscore}>*Based on your credit score</Text>
+      <Text style={styles.sectionTitle}>Loan Offers</Text>
+      <Text style={styles.creditCardsSubtitle}>*Based on your credit score</Text>
 
       <View style={styles.loanGrid}>
         {loanOffers.map((item) => (
           <View key={item.name} style={styles.loanItem}>
             <Text style={styles.loanLabel}>{item.name}</Text>
-
-            <Image source={item.image} style={styles.loanIcon} resizeMode="contain" />
+            <Image source={item.image} style={styles.loanIcon} />
           </View>
         ))}
       </View>
 
-      <View style={styles.__frame62}>
-        <Text style={styles._findoutmore}>Find out more</Text>
+      <View style={styles.primaryButton}>
+        <Text style={styles.primaryButtonText}>Find out more</Text>
       </View>
     </View>
   );
@@ -151,9 +134,9 @@ function AcademyCard() {
   return (
     <View style={styles.frameAcademy}>
       <Text style={styles.sectionTitle}>Borrowing Academy</Text>
+
       <Text style={styles.academyIntro}>
-        Find out all of the most important aspects of taking a personal loan,
-        including:
+        Find out all of the most important aspects of taking a personal loan, including:
       </Text>
 
       <View style={styles.academyList}>
@@ -166,12 +149,14 @@ function AcademyCard() {
 
         <View style={styles.academyRow}>
           <Text style={styles.starGold}>★</Text>
-          <Text style={styles.academyText}>Everything else you need to get started</Text>
+          <Text style={styles.academyText}>
+            Everything else you need to get started
+          </Text>
         </View>
       </View>
 
-      <View style={styles._frame62}>
-        <Text style={styles.seemoreoffers}>Take me now</Text>
+      <View style={styles.primaryButton}>
+        <Text style={styles.primaryButtonText}>Take me now</Text>
       </View>
     </View>
   );
@@ -181,10 +166,11 @@ export default function Debt() {
   return (
     <View style={styles.screen}>
       <ScrollView
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: 64.5, paddingBottom: 110 },
+          { paddingTop: 64.5 },
         ]}
       >
         <ImageBackground
@@ -192,27 +178,14 @@ export default function Debt() {
           source={require("../assets/twirl-background-png-1.png")}
           resizeMode="cover"
         >
-          <View style={styles.bG} />
-          <View style={styles.time} />
-          <View style={styles.frame188} />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG1}
-            source={require("../assets/twirl-background-png-1.png")}
-            resizeMode="contain"
-          />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG2}
-            source={require("../assets/twirl-background-png-2.png")}
-            resizeMode="contain"
-          />
-
           <View style={styles.mainContent}>
             <TopNav currentIndex={1} />
             <DebtCard />
             <LoanOffersCard />
             <AcademyCard />
+
+            {/* ✅ Bottom spacer */}
+            <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>
       </ScrollView>

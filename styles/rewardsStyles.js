@@ -7,15 +7,21 @@ const styles = StyleSheet.create({
   },
 
   scrollContent: {
-    flexGrow: 1,
+    paddingBottom: 110,
+  },
+
+  bottomSpacer: {
+    height: 3,
+  },
+
+  scrollView: {
+    backgroundColor: "#FFFFFF",
   },
 
   dashboardHomeScreenContainer: {
     width: "100%",
-    minHeight: "100%",
     backgroundColor: "rgba(217, 217, 217, 0.5)",
     overflow: "hidden",
-    paddingBottom: 90,
   },
 
   mainContent: {
@@ -199,7 +205,9 @@ const styles = StyleSheet.create({
   },
 
   ellipse16: {},
+
   ellipse17: {},
+
   ellipse18: {},
 });
 

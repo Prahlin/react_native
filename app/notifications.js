@@ -8,10 +8,8 @@ export default function Notifications() {
   return (
     <View style={styles.screen}>
       <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingTop: 64, paddingBottom: 110 },
-        ]}
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: 64 }]}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
@@ -20,21 +18,6 @@ export default function Notifications() {
           source={require("../assets/twirl-background-png-1.png")}
           resizeMode="cover"
         >
-          <View style={styles.bG} />
-          <View style={styles.time} />
-          <View style={styles.frame188} />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG1}
-            source={require("../assets/twirl-background-png-1.png")}
-            resizeMode="contain"
-          />
-          <ImageBackground
-            style={styles.twirlbackgroundPNG2}
-            source={require("../assets/twirl-background-png-2.png")}
-            resizeMode="contain"
-          />
-
           <View style={styles.mainContent}>
             <TopNav currentIndex={0} />
 
@@ -120,12 +103,13 @@ export default function Notifications() {
                 </View>
               </View>
             </View>
+
+            <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>
       </ScrollView>
 
       <HeaderBar />
-
       <BottomNav activeTab="notifications" />
     </View>
   );

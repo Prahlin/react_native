@@ -7,15 +7,21 @@ const styles = StyleSheet.create({
   },
 
   scrollContent: {
-    flexGrow: 1,
+    paddingBottom: 110,
+  },
+
+  bottomSpacer: {
+    height: 3,
+  },
+
+  scrollView: {
+    backgroundColor: "#FFFFFF",
   },
 
   dashboardHomeScreenContainer: {
     width: "100%",
-    minHeight: "100%",
     backgroundColor: "rgba(217, 217, 217, 0.5)",
     overflow: "hidden",
-    paddingBottom: 90,
   },
 
   mainContent: {
@@ -174,7 +180,7 @@ const styles = StyleSheet.create({
   },
 
   outlineButton: {
-    marginTop: 0,
+    marginTop: 12,
     borderWidth: 1,
     borderColor: "#3E4BB5",
     borderRadius: 8,

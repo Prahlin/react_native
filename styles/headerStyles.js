@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 export const ICON_SIZE = 22;
 export const SIDE_PADDING = 18;
 export const TOP_PADDING = 22;
-export const MENU_RIGHT_INSET = 12;
 export const HEADER_TOTAL_HEIGHT = 64;
 
 export default StyleSheet.create({
@@ -21,7 +20,6 @@ export default StyleSheet.create({
     backgroundColor: "#8E95E8",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     paddingHorizontal: SIDE_PADDING,
     paddingTop: TOP_PADDING,
     zIndex: 1002,
@@ -33,17 +31,29 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     lineHeight: ICON_SIZE,
+    flexShrink: 0,
+  },
+
+  middleSection: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    minWidth: 0,
+  },
+
+  leftBellSpacer: {
+    flex: 8,
+  },
+
+  rightBellSpacer: {
+    flex: 1,
   },
 
   bellButton: {
-    position: "absolute",
-    top: "66%",
-    marginTop: -ICON_SIZE / 2,
     width: ICON_SIZE,
     height: ICON_SIZE,
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 1003,
   },
 
   bellIcon: {
@@ -52,15 +62,11 @@ export default StyleSheet.create({
   },
 
   menuButton: {
-    position: "absolute",
-    right: MENU_RIGHT_INSET,
-    top: "66%",
-    marginTop: -ICON_SIZE / 2,
     width: ICON_SIZE,
     height: ICON_SIZE,
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 1003,
+    marginLeft: 8,
   },
 
   menuDots: {

@@ -68,17 +68,23 @@ export default function HeaderBar() {
       <View style={styles.header}>
         <Text style={styles.title}>Welcome, Steve</Text>
 
-        <Pressable style={styles.bellButton} onPress={openNotifications}>
-          <Image
-            source={
-              bellClicked
-                ? require("../assets/bell-clicked.png")
-                : require("../assets/frame-223.png")
-            }
-            style={styles.bellIcon}
-            resizeMode="contain"
-          />
-        </Pressable>
+        <View style={styles.middleSection}>
+          <View style={styles.leftBellSpacer} />
+
+          <Pressable style={styles.bellButton} onPress={openNotifications}>
+            <Image
+              source={
+                bellClicked
+                  ? require("../assets/bell-clicked.png")
+                  : require("../assets/frame-223.png")
+              }
+              style={styles.bellIcon}
+              resizeMode="contain"
+            />
+          </Pressable>
+
+          <View style={styles.rightBellSpacer} />
+        </View>
 
         <Pressable style={styles.menuButton} onPress={openMenu}>
           <Text style={styles.menuDots}>⋮</Text>

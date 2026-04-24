@@ -25,29 +25,217 @@ const styles = StyleSheet.create({
   },
 
   mainContent: {
+    paddingTop: 0,
     paddingHorizontal: 8,
     gap: 8,
+    zIndex: 1,
+  },
+
+  bG: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 0,
+    backgroundColor: "transparent",
+  },
+
+  time: {
+    display: "none",
+  },
+
+  frame188: {
+    display: "none",
   },
 
   frameCreditScore: {
-    backgroundColor: "rgba(255,255,255,0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
-    padding: 12,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 12,
   },
 
   frameImpact: {
-    backgroundColor: "rgba(255,255,255,0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderRadius: 6,
-    padding: 12,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 12,
   },
 
   sectionTitle: {
     fontSize: 12,
     fontWeight: "900",
+    color: "#111111",
+    marginBottom: 6, // ✅ added spacing under title
+  },
+
+  bureauSection: {
+    marginTop: 32, // ✅ increased separation between sections
+  },
+
+  bureauTitle: {
+    textAlign: "center",
+    fontSize: 12,
+    color: "#111111",
+    marginBottom: 10, // slightly increased
+  },
+
+bureauTopRow: {
+  alignItems: "center",
+  justifyContent: "center",
+},
+
+scoreCopyWrap: {
+  display: "none",
+},
+
+  currentScoreLabel: {
+    fontSize: 10,
+    color: "#222227",
+    marginBottom: 12, // ✅ increased spacing
+  },
+
+  currentScoreValue: {
+    fontSize: 16,
+    fontWeight: "900",
+    color: "#111111",
+  },
+
+scoreMeterWrap: {
+  width: "52%",
+  height: 40,
+  position: "relative",
+  marginTop: 2,
+  alignSelf: "center",
+},
+
+  scoreBarBase: {
+    position: "absolute",
+    top: 2,
+    left: 0,
+    right: 0,
+    height: 9,
+    backgroundColor: "#D9D9D9",
+    borderRadius: 10,
+  },
+
+  scoreBarMutedLeft: {
+    position: "absolute",
+    top: 2,
+    left: 0,
+    width: "26%",
+    height: 9,
+    backgroundColor: "#A9ADB6",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+
+  scoreBarLight: {
+    position: "absolute",
+    top: 2,
+    left: "26%",
+    width: "16%",
+    height: 9,
+    backgroundColor: "#D9D9D9",
+  },
+
+  scoreBarMid: {
+    position: "absolute",
+    top: 2,
+    left: "42%",
+    width: "16%",
+    height: 9,
+    backgroundColor: "#97A2FE",
+  },
+
+  scoreBarDark: {
+    position: "absolute",
+    top: 2,
+    left: "58%",
+    right: 0,
+    height: 9,
+    backgroundColor: "#3E4BB5",
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+
+scoreArrowLine: {
+  position: "absolute",
+  left: "50%",
+  top: 16,
+  transform: [{ translateX: -22 }], // half of SVG width (44 / 2)
+},
+
+  fairText: {
+    position: "absolute",
+    left: 6,
+    top: 20,
+    fontSize: 8,
+    color: "#222227",
+  },
+
+  excellentText: {
+    position: "absolute",
+    right: 0,
+    top: 20,
+    fontSize: 8,
+    color: "#222227",
+  },
+
+  scoreMarker: {
+    position: "absolute",
+    top: -1,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 5,
+    borderRightWidth: 5,
+    borderTopWidth: 0,
+    borderBottomWidth: 8,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#FFD700",
+  },
+
+  scoreChartWrap: {
+    marginTop: 12, // ✅ increased from 8
+    flexDirection: "row",
+    alignItems: "stretch",
+  },
+
+  scoreChartLeft: {
+    flex: 1,
+    minWidth: 0,
+  },
+
+  scoreChartAxis: {
+    width: 24,
+    justifyContent: "space-between",
+    paddingTop: 10,
+    paddingBottom: 26,
+    alignItems: "flex-end",
+  },
+
+  scoreAxisText: {
+    fontSize: 8,
+    color: "#222227",
+  },
+
+  scoreMonthsRow: {
+    marginTop: -4, // ✅ less cramped than -6
+    paddingHorizontal: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  scoreMonthText: {
+    fontSize: 7,
+    color: "#222227",
   },
 
   outlineButton: {
-    marginTop: 20,
+    marginTop: 16, // ✅ increased from 12
     borderWidth: 1,
     borderColor: "#3E4BB5",
     borderRadius: 8,
@@ -62,95 +250,40 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  scoreMeterWrap: {
-    height: 40,
-    marginTop: 10,
+  impactList: {
+    marginTop: 12, // slightly increased
+    gap: 12,
   },
 
-  scoreBarBase: {
-    height: 9,
-    backgroundColor: "#D9D9D9",
-    borderRadius: 10,
-  },
-
-  scoreBarMutedLeft: {
-    position: "absolute",
-    width: "26%",
-    height: 9,
-    backgroundColor: "#A9ADB6",
-  },
-
-  scoreBarLight: {
-    position: "absolute",
-    left: "26%",
-    width: "16%",
-    height: 9,
-    backgroundColor: "#D9D9D9",
-  },
-
-  scoreBarMid: {
-    position: "absolute",
-    left: "42%",
-    width: "16%",
-    height: 9,
-    backgroundColor: "#97A2FE",
-  },
-
-  scoreBarDark: {
-    position: "absolute",
-    left: "58%",
-    right: 0,
-    height: 9,
-    backgroundColor: "#3E4BB5",
-  },
-
-  scoreMarker: {
-    position: "absolute",
-    top: -1,
-    borderLeftWidth: 5,
-    borderRightWidth: 5,
-    borderBottomWidth: 8,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "#FFD700",
-  },
-
-  fairText: {
-    fontSize: 8,
-  },
-
-  excellentText: {
-    position: "absolute",
-    right: 0,
-    fontSize: 8,
-  },
-
-  scoreChartWrap: {
-    marginTop: 10,
+  impactRow: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
-  scoreChartLeft: {
+  impactLabel: {
+    fontSize: 10,
+    color: "#222227",
     flex: 1,
+    paddingRight: 10,
   },
 
-  scoreChartAxis: {
-    width: 24,
-    justifyContent: "space-between",
-    alignItems: "flex-end",
+  twirlbackgroundPNG1: {
+    position: "absolute",
+    top: 70,
+    left: -25,
+    width: 420,
+    height: 420,
+    opacity: 0.35,
   },
 
-  scoreAxisText: {
-    fontSize: 8,
-  },
-
-  scoreMonthsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-
-  scoreMonthText: {
-    fontSize: 7,
+  twirlbackgroundPNG2: {
+    position: "absolute",
+    top: 760,
+    left: -25,
+    width: 420,
+    height: 420,
+    opacity: 0.35,
   },
 });
 

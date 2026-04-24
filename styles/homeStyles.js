@@ -242,6 +242,12 @@ dashboardHomeScreenContainer: {
     marginBottom: 18,
   },
 
+  spendingArrowWrap: {
+  height: 96,              // matches blue bar height
+  justifyContent: "center",
+  alignItems: "center",
+},
+
   spendingChartWrap: {
     alignItems: "center",
     justifyContent: "center",
@@ -408,14 +414,13 @@ dashboardHomeScreenContainer: {
     justifyContent: "flex-start",
   },
 
-  cardItemTitle: {
-    fontSize: 8,
-    textAlign: "center",
-    marginBottom: 8,
-    width: 60,
-    alignSelf: "center",
-    color: "#111111",
-  },
+cardItemTitle: {
+  fontSize: 8,
+  fontWeight: "600",
+  color: "#111111",
+  textAlign: "center",
+  marginBottom: 8,
+},
 
   offerLabel: {
     fontSize: 8,

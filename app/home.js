@@ -99,7 +99,9 @@ function SpendingCard() {
 
       <View style={{ alignItems: "center", paddingVertical: 10 }}>
         <View style={{ flexDirection: "row", gap: 22 }}>
-          <View style={{ width: 36, height: 32 }}>
+          
+          {/* GREEN ARROW */}
+          <View style={styles.spendingArrowWrap}>
             <Svg width="36" height="32">
               <Path
                 d="M18 2 C18.6 2 19.1 2.3 19.5 3 L33 27 C33.7 28.2 32.8 30 31.4 30 H4.6 C3.2 30 2.3 28.2 3 27 L16.5 3 C16.9 2.3 17.4 2 18 2Z"
@@ -108,14 +110,28 @@ function SpendingCard() {
             </Svg>
           </View>
 
+          {/* BLUE BAR */}
           <View style={{ width: 30, alignItems: "center" }}>
-            <View style={{ width: 25, height: 96, backgroundColor: "#6A79D1" }} />
-            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: "900" }}>
+            <View
+              style={{
+                width: 25,
+                height: 96,
+                backgroundColor: "#6A79D1",
+              }}
+            />
+            <Text
+              style={{
+                marginTop: 8,
+                fontSize: 12,
+                fontWeight: "900",
+              }}
+            >
               Oct
             </Text>
           </View>
 
-          <View style={{ width: 36, height: 32 }}>
+          {/* RED ARROW */}
+          <View style={styles.spendingArrowWrap}>
             <Svg width="36" height="32">
               <Path
                 d="M18 30 C17.4 30 16.9 29.7 16.5 29 L3 5 C2.3 3.8 3.2 2 4.6 2 H31.4 C32.8 2 33.7 3.8 33 5 L19.5 29 C19.1 29.7 18.6 30 18 30Z"
@@ -123,6 +139,7 @@ function SpendingCard() {
               />
             </Svg>
           </View>
+
         </View>
       </View>
 
@@ -134,12 +151,42 @@ function SpendingCard() {
 }
 
 function CreditCardOffersCard() {
-  const cards = [
-    { name: "SavorOne", bank: "BOA Cash\nRewards", asset: require("../assets/capital-one-savorone-2.png") },
-    { name: "Discover IT", bank: "Wells Fargo\nActive Cash", asset: require("../assets/capital-one-savorone-1.png") },
-    { name: "PNC Cash Unlimited", bank: "PNC Unlimited", asset: require("../assets/pnc-cash-unlimited-1.png") },
-    { name: "TD Double Up", bank: "TD Double Up", asset: require("../assets/td-double-up-1.png") },
-  ];
+const cards = [
+  {
+    name: "SavorOne",
+    bank: "BOA Cash\nRewards",
+    asset: require("../assets/capital-one-savorone-2.png"),
+    hideBank: true,
+  },
+  {
+    name: "Discover IT",
+    bank: "Wells Fargo\nActive Cash",
+    asset: require("../assets/capital-one-savorone-1.png"),
+    hideBank: true,
+  },
+  {
+    name: "BOA Cash Rewards",
+    asset: require("../assets/bank-of-america-customized-cash-rewards-1.png"),
+    hideBank: true,
+  },
+  {
+    name: "Wells Fargo Active Cash",
+    asset: require("../assets/wells-fargo-active-cash-card-1.png"),
+    hideBank: true,
+  },
+  {
+    name: "PNC Cash Unlimited",
+    bank: "PNC Unlimited",
+    asset: require("../assets/pnc-cash-unlimited-1.png"),
+    hideBank: true,
+  },
+  {
+    name: "TD Double Up",
+    bank: "TD Double Up",
+    asset: require("../assets/td-double-up-1.png"),
+    hideBank: true,
+  },
+];
 
   return (
     <View style={styles.frameCreditCards}>
@@ -149,9 +196,21 @@ function CreditCardOffersCard() {
       <View style={styles.cardGrid}>
         {cards.map((card) => (
           <View key={card.name} style={styles.cardItem}>
-            <Text style={styles.cardItemTitle}>{card.name}</Text>
-            <ImageBackground source={card.asset} style={styles.cardOfferImage} resizeMode="contain" />
-            <Text style={styles.cardItemBank}>{card.bank}</Text>
+<Text
+  style={styles.cardItemTitle}
+  numberOfLines={1}
+  adjustsFontSizeToFit
+>
+  {card.name}
+</Text>
+            <ImageBackground
+              source={card.asset}
+              style={styles.cardOfferImage}
+              resizeMode="contain"
+            />
+{card.bank && !card.hideBank && (
+  <Text style={styles.cardItemBank}>{card.bank}</Text>
+)}
           </View>
         ))}
       </View>

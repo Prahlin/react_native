@@ -22,8 +22,8 @@ export default StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: SIDE_PADDING,
     paddingTop: TOP_PADDING,
-    zIndex: 1002,
-    elevation: 999,
+    zIndex: 1003,
+    elevation: 1003,
   },
 
   title: {
@@ -78,12 +78,13 @@ export default StyleSheet.create({
 
   overlay: {
     position: "absolute",
-    top: HEADER_TOTAL_HEIGHT,
+    top: HEADER_TOTAL_HEIGHT + 1,
     left: 0,
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0,0,0,0.18)",
     zIndex: 1001,
+    elevation: 1001,
   },
 
   menu: {
@@ -93,12 +94,12 @@ export default StyleSheet.create({
     backgroundColor: "#97A2FE",
     borderRadius: 12,
     paddingVertical: 6,
-    elevation: 8,
+    elevation: 1004,
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },
-    zIndex: 1003,
+    zIndex: 1004,
   },
 
   arrowRight: {
@@ -121,12 +122,12 @@ export default StyleSheet.create({
     backgroundColor: "#97A2FE",
     borderRadius: 12,
     paddingVertical: 6,
-    elevation: 8,
+    elevation: 1004,
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },
-    zIndex: 1003,
+    zIndex: 1004,
   },
 
   notificationsArrow: {

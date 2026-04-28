@@ -13,7 +13,12 @@ import styles from "../styles/headerStyles";
 
 let hasBellBeenClicked = false;
 
+export function resetBellClickedState() {
+  hasBellBeenClicked = false;
+}
+
 const POPUP_RIGHT_OVERHANG = 27;
+const CLOSE_GUARD_MS = 250;
 
 export default function HeaderBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,6 +31,8 @@ export default function HeaderBar() {
   const menuScale = useRef(new Animated.Value(0.96)).current;
   const notificationsScale = useRef(new Animated.Value(0.96)).current;
 
+  const closeAllowedAtRef = useRef(0);
+
   const bellRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -37,7 +44,12 @@ export default function HeaderBar() {
     "Credit score change",
   ];
 
+  const guardClose = () => {
+    closeAllowedAtRef.current = Date.now() + CLOSE_GUARD_MS;
+  };
+
   const openMenu = () => {
+    guardClose();
     setNotificationsOpen(false);
 
     if (menuRef.current?.measureInWindow) {
@@ -65,6 +77,7 @@ export default function HeaderBar() {
   };
 
   const openNotifications = () => {
+    guardClose();
     hasBellBeenClicked = true;
     setBellClicked(true);
     setMenuOpen(false);
@@ -94,6 +107,10 @@ export default function HeaderBar() {
   };
 
   const closeAll = () => {
+    if (Date.now() < closeAllowedAtRef.current) {
+      return;
+    }
+
     setMenuOpen(false);
     setNotificationsOpen(false);
   };
@@ -106,7 +123,11 @@ export default function HeaderBar() {
         <View style={styles.middleSection}>
           <View style={styles.leftBellSpacer} />
 
-          <Pressable ref={bellRef} style={styles.bellButton} onPress={openNotifications}>
+          <Pressable
+            ref={bellRef}
+            style={styles.bellButton}
+            onPress={openNotifications}
+          >
             <Image
               source={
                 bellClicked
@@ -150,6 +171,7 @@ export default function HeaderBar() {
           <TouchableOpacity
             style={styles.item}
             onPress={() => {
+              closeAllowedAtRef.current = 0;
               closeAll();
               router.push("/profile");
             }}
@@ -160,6 +182,7 @@ export default function HeaderBar() {
           <TouchableOpacity
             style={styles.item}
             onPress={() => {
+              closeAllowedAtRef.current = 0;
               closeAll();
               router.push("/settings");
             }}
@@ -170,6 +193,7 @@ export default function HeaderBar() {
           <TouchableOpacity
             style={styles.item}
             onPress={() => {
+              closeAllowedAtRef.current = 0;
               closeAll();
               router.push("/notifications");
             }}
@@ -180,6 +204,7 @@ export default function HeaderBar() {
           <TouchableOpacity
             style={[styles.item, styles.last]}
             onPress={() => {
+              closeAllowedAtRef.current = 0;
               closeAll();
               router.push("/loadout");
             }}

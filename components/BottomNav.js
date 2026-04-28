@@ -11,7 +11,7 @@ export default function BottomNav() {
     if (pathname === "/notifications") return "notifications";
     if (pathname === "/rewards") return "rewards";
     if (pathname === "/stats") return "stats";
-    return "";
+    return pathname === "/" || pathname === "/loadin" ? "home" : "";
   })();
 
   return (

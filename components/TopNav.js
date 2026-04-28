@@ -16,22 +16,18 @@ export default function TopNav() {
 
   const getIndexFromPath = () => {
     const foundIndex = tabs.findIndex((tab) => tab.route === pathname);
-    return foundIndex >= 0 ? foundIndex : -1;
+    return foundIndex >= 0 ? foundIndex : 0;
   };
 
   const currentIndex = getIndexFromPath();
-  const isTopNavRoute = currentIndex !== -1;
 
-  const underlineAnim = useRef(
-    new Animated.Value(isTopNavRoute ? currentIndex : 0)
-  ).current;
-  const widthScale = useRef(new Animated.Value(isTopNavRoute ? 1 : 0)).current;
+  // 🔥 instantly correct on mount (no delay)
+  const underlineAnim = useRef(new Animated.Value(currentIndex)).current;
+  const widthScale = useRef(new Animated.Value(1)).current;
 
-  const [selectedIndex, setSelectedIndex] = useState(
-    isTopNavRoute ? currentIndex : 0
-  );
+  const [selectedIndex, setSelectedIndex] = useState(currentIndex);
   const [selectedLetterCount, setSelectedLetterCount] = useState(
-    isTopNavRoute ? tabs[currentIndex].label.length : 0
+    tabs[currentIndex].label.length
   );
   const [selectedDirection, setSelectedDirection] = useState("ltr");
   const [trackWidth, setTrackWidth] = useState(0);
@@ -44,29 +40,16 @@ export default function TopNav() {
   };
 
   useEffect(() => {
-    Animated.parallel([
-      Animated.timing(underlineAnim, {
-        toValue: isTopNavRoute ? currentIndex : 0,
-        duration: 110,
-        easing: Easing.out(Easing.cubic),
-        useNativeDriver: false,
-      }),
-      Animated.timing(widthScale, {
-        toValue: isTopNavRoute ? 1 : 0,
-        duration: 110,
-        easing: Easing.out(Easing.cubic),
-        useNativeDriver: false,
-      }),
-    ]).start();
+    // 🔥 NO animation here — instant sync
+    underlineAnim.setValue(currentIndex);
+    widthScale.setValue(1);
 
-    setSelectedIndex(isTopNavRoute ? currentIndex : 0);
+    setSelectedIndex(currentIndex);
     setSelectedDirection("ltr");
-    setSelectedLetterCount(
-      isTopNavRoute ? tabs[currentIndex].label.length : 0
-    );
+    setSelectedLetterCount(tabs[currentIndex].label.length);
 
     return () => clearLetterTimers();
-  }, [currentIndex, isTopNavRoute, underlineAnim, widthScale]);
+  }, [currentIndex]);
 
   const animateLetters = (fromIndex, targetIndex, totalDuration) => {
     clearLetterTimers();
@@ -89,110 +72,10 @@ export default function TopNav() {
   };
 
   const goToTab = (index, route) => {
-    const fromIndex = isTopNavRoute ? currentIndex : 0;
-
-    if (isTopNavRoute && index === currentIndex) {
-      animateLetters(fromIndex, index, 320);
-
-      if (currentIndex === 0) {
-        Animated.parallel([
-          Animated.sequence([
-            Animated.timing(underlineAnim, {
-              toValue: -0.1,
-              duration: 180,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-            Animated.timing(underlineAnim, {
-              toValue: 0,
-              duration: 140,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-          ]),
-          Animated.sequence([
-            Animated.timing(widthScale, {
-              toValue: 0.65,
-              duration: 180,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-            Animated.timing(widthScale, {
-              toValue: 1,
-              duration: 140,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-          ]),
-        ]).start();
-      } else if (currentIndex === 4) {
-        Animated.parallel([
-          Animated.sequence([
-            Animated.timing(underlineAnim, {
-              toValue: currentIndex + 0.1,
-              duration: 180,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-            Animated.timing(underlineAnim, {
-              toValue: currentIndex,
-              duration: 140,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-          ]),
-          Animated.sequence([
-            Animated.timing(widthScale, {
-              toValue: 0.65,
-              duration: 180,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-            Animated.timing(widthScale, {
-              toValue: 1,
-              duration: 140,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-          ]),
-        ]).start();
-      } else {
-        Animated.parallel([
-          Animated.sequence([
-            Animated.timing(underlineAnim, {
-              toValue: currentIndex - 0.1,
-              duration: 180,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-            Animated.timing(underlineAnim, {
-              toValue: currentIndex,
-              duration: 140,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-          ]),
-          Animated.sequence([
-            Animated.timing(widthScale, {
-              toValue: 0.65,
-              duration: 180,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-            Animated.timing(widthScale, {
-              toValue: 1,
-              duration: 140,
-              easing: Easing.out(Easing.cubic),
-              useNativeDriver: false,
-            }),
-          ]),
-        ]).start();
-      }
-
-      return;
-    }
+    const fromIndex = currentIndex;
 
     const totalDuration = index === 0 ? 320 : 110;
+
     animateLetters(fromIndex, index, totalDuration);
 
     Animated.parallel([
@@ -216,57 +99,35 @@ export default function TopNav() {
   const stepWidth = trackWidth / 5;
 
   const translateX = underlineAnim.interpolate({
-    inputRange: [-0.1, 0, 1, 2, 3, 4, 4.1],
+    inputRange: [0, 1, 2, 3, 4],
     outputRange: [
-      -0.1 * stepWidth,
       0,
       1 * stepWidth,
       2 * stepWidth,
       3 * stepWidth,
       4 * stepWidth,
-      4.1 * stepWidth,
     ],
   });
 
   const renderAnimatedLabel = (label, tabIndex) => {
     const chars = label.split("");
-    const isCurrentTab = isTopNavRoute && tabIndex === currentIndex;
-    const isTargetTab = tabIndex === selectedIndex;
+    const isActive = tabIndex === selectedIndex;
 
     return (
       <View style={styles.dashboardLetterRow}>
-        {chars.map((char, charIndex) => {
-          let isBlue = false;
-
-          if (isCurrentTab || isTargetTab) {
-            if (selectedLetterCount >= chars.length && isTargetTab) {
-              isBlue = true;
-            } else if (isCurrentTab && !isTargetTab) {
-              isBlue = true;
-            } else if (isTargetTab) {
-              if (selectedDirection === "rtl") {
-                const fromRightIndex = chars.length - 1 - charIndex;
-                isBlue = fromRightIndex < selectedLetterCount;
-              } else {
-                isBlue = charIndex < selectedLetterCount;
-              }
-            }
-          }
-
-          return (
-            <Text
-              key={`${label}-${char}-${charIndex}`}
-              style={[
-                styles.dashboardLetter,
-                isBlue
-                  ? styles.dashboardLetterActive
-                  : styles.dashboardLetterInactive,
-              ]}
-            >
-              {char}
-            </Text>
-          );
-        })}
+        {chars.map((char, charIndex) => (
+          <Text
+            key={`${label}-${char}-${charIndex}`}
+            style={[
+              styles.dashboardLetter,
+              isActive
+                ? styles.dashboardLetterActive
+                : styles.dashboardLetterInactive,
+            ]}
+          >
+            {char}
+          </Text>
+        ))}
       </View>
     );
   };
@@ -292,18 +153,10 @@ export default function TopNav() {
         <Animated.View
           style={[
             styles.navUnderlineActive,
-            trackWidth > 0
-              ? {
-                  width: widthScale.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, stepWidth],
-                  }),
-                  transform: [{ translateX }],
-                }
-              : {
-                  width: isTopNavRoute ? "20%" : 0,
-                  left: isTopNavRoute ? `${currentIndex * 20}%` : "0%",
-                },
+            trackWidth > 0 && {
+              width: stepWidth,
+              transform: [{ translateX }],
+            },
           ]}
         />
       </View>

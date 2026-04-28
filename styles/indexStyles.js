@@ -14,6 +14,38 @@ export default StyleSheet.create({
     opacity: 0,
   },
 
+  coinInnerDotWrap: {
+  position: "absolute",
+  width: "100%",
+  height: "100%",
+  alignItems: "center",
+  justifyContent: "center",
+},
+
+coinDotsLayer: {
+  position: "absolute",
+  width: "100%",
+  height: "100%",
+  zIndex: 1,
+},
+
+coinDot: {
+  position: "absolute",
+  width: 3,
+  height: 3,
+  borderRadius: 1.5,
+  backgroundColor: "#3E4BB5",
+  transform: [{ scale: 0.5 }],
+},
+
+coinDot: {
+  position: "absolute",
+  width: 3,
+  height: 3,
+  borderRadius: 1.5,
+  backgroundColor: "#3E4BB5",
+},
+
   topBar: {
     height: 0,
     backgroundColor: "#7887E8",
@@ -284,6 +316,7 @@ export default StyleSheet.create({
     width: 70,
     height: 70,
     resizeMode: "contain",
+    zIndex: 1,
   },
 
   coinInner: {
@@ -293,6 +326,7 @@ export default StyleSheet.create({
     width: 80,
     height: 80,
     resizeMode: "contain",
+    zIndex: 1,
   },
 
   dollar: {
@@ -302,6 +336,7 @@ export default StyleSheet.create({
     width: 32,
     height: 42,
     resizeMode: "contain",
+    zIndex: 3,
   },
 
   crown: {
@@ -311,6 +346,7 @@ export default StyleSheet.create({
     width: 90,
     height: 52,
     resizeMode: "contain",
+    zIndex: 4,
   },
 
   logoTextGroup: {

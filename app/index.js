@@ -17,6 +17,7 @@ import styles from "../styles/indexStyles";
 export default function Index() {
   const [remember, setRemember] = useState(false);
   const [cardHeight, setCardHeight] = useState(0);
+  
 
   const dots = [
     [65, 51], [70, 51], [75, 51], [80, 51], [85, 51], [90, 51], [95, 51],
@@ -32,14 +33,34 @@ export default function Index() {
   ];
 
   // 🔵 BLUE GRADIENT (unchanged)
-  const renderGradientEllipse = (style, flip = false) => (
-    <LinearGradient
-      colors={["#97A2FE", "#3E4BB5"]}
-      start={flip ? { x: 1, y: 1 } : { x: 0, y: 1 }}
-      end={flip ? { x: 0, y: 0 } : { x: 1, y: 0 }}
-      style={style}
-    />
+const renderGradientEllipse = (style, flip = false) => {
+  const borderWidth = style.borderWidth ?? 3;
+  const borderRadius = style.borderRadius ?? 100;
+
+  return (
+    <View
+      style={[
+        style,
+        {
+          backgroundColor: "#3E4BB5",
+          borderWidth: 0,
+          padding: borderWidth,
+          overflow: "hidden",
+        },
+      ]}
+    >
+      <LinearGradient
+        colors={["#AAB4FF", "#5F6FE8"]}
+        start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
+        end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
+        style={{
+          flex: 1,
+          borderRadius: borderRadius - borderWidth,
+        }}
+      />
+    </View>
   );
+};
 
   // 🟡 YELLOW GRADIENT (VERTICAL FLIP SUPPORT)
   const renderYellowEllipse = (style, flipVertical = false) => (
@@ -60,16 +81,26 @@ export default function Index() {
       <View style={styles.stage}>
         
         {/* 🔵 BLUE BACKGROUND */}
-        {renderGradientEllipse(styles.bgEllipse1)}
-        {renderGradientEllipse(styles.bgEllipse2)}
-        {renderGradientEllipse(styles.bgEllipse3)}
-        {renderGradientEllipse(styles.bgEllipse4)}
+{/* 🔵 BLUE BACKGROUND */}
+{renderGradientEllipse(styles.bgEllipse1, true)}
+{renderGradientEllipse(styles.bgEllipse2)}
+
+{renderGradientEllipse(styles.bgEllipse3, true)}
+{renderGradientEllipse(styles.bgEllipse4)}
+
+<TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
+
+{renderGradientEllipse(styles.ellipseLeftSide, true)}
+{renderGradientEllipse(styles.ellipseRightSide)}
+
+{renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
+{renderGradientEllipse(styles.ellipseRightSideBottom)}
 
         <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
 
         {renderGradientEllipse(styles.ellipseLeftSide, true)}
         {renderGradientEllipse(styles.ellipseRightSide)}
-        {renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
+{renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
         {renderGradientEllipse(styles.ellipseRightSideBottom)}
 
         {/* 🟡 YELLOW ELLIPSES */}

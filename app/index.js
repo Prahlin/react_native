@@ -1,7 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
-import { useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useRef, useState } from "react";
 import {
+  Animated,
+  Dimensions,
   Image,
   Switch,
   Text,
@@ -17,7 +19,75 @@ import styles from "../styles/indexStyles";
 export default function Index() {
   const [remember, setRemember] = useState(false);
   const [cardHeight, setCardHeight] = useState(0);
-  
+
+  const { fromLoadout } = useLocalSearchParams();
+
+  const screenWidth = Dimensions.get("window").width;
+  const screenHeight = Dimensions.get("window").height;
+
+  // 🔹 Horizontal (used only after logout)
+  const slideXAnim = useRef(
+    new Animated.Value(fromLoadout === "1" ? screenWidth : 0)
+  ).current;
+
+  // 🔹 Vertical (used only on first app open)
+  const slideYAnim = useRef(
+    new Animated.Value(fromLoadout === "1" ? 0 : -screenHeight)
+  ).current;
+
+  useEffect(() => {
+    // 🔸 Logout → horizontal animation
+    if (fromLoadout === "1") {
+      Animated.sequence([
+        Animated.timing(slideXAnim, {
+          toValue: -18,
+          duration: 260,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideXAnim, {
+          toValue: 8,
+          duration: 90,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideXAnim, {
+          toValue: -4,
+          duration: 70,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideXAnim, {
+          toValue: 0,
+          duration: 80,
+          useNativeDriver: true,
+        }),
+      ]).start();
+
+      return;
+    }
+
+    // 🔸 First app open → vertical animation
+    Animated.sequence([
+      Animated.timing(slideYAnim, {
+        toValue: 18,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideYAnim, {
+        toValue: -8,
+        duration: 90,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideYAnim, {
+        toValue: 4,
+        duration: 70,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideYAnim, {
+        toValue: 0,
+        duration: 80,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [fromLoadout]);
 
   const dots = [
     [65, 51], [70, 51], [75, 51], [80, 51], [85, 51], [90, 51], [95, 51],
@@ -32,37 +102,35 @@ export default function Index() {
     [70, 96], [75, 96], [80, 96], [85, 96], [90, 96],
   ];
 
-  // 🔵 BLUE GRADIENT (unchanged)
-const renderGradientEllipse = (style, flip = false) => {
-  const borderWidth = style.borderWidth ?? 3;
-  const borderRadius = style.borderRadius ?? 100;
+  const renderGradientEllipse = (style, flip = false) => {
+    const borderWidth = style.borderWidth ?? 3;
+    const borderRadius = style.borderRadius ?? 100;
 
-  return (
-    <View
-      style={[
-        style,
-        {
-          backgroundColor: "#3E4BB5",
-          borderWidth: 0,
-          padding: borderWidth,
-          overflow: "hidden",
-        },
-      ]}
-    >
-      <LinearGradient
-        colors={["#AAB4FF", "#5F6FE8"]}
-        start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
-        end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
-        style={{
-          flex: 1,
-          borderRadius: borderRadius - borderWidth,
-        }}
-      />
-    </View>
-  );
-};
+    return (
+      <View
+        style={[
+          style,
+          {
+            backgroundColor: "#3E4BB5",
+            borderWidth: 0,
+            padding: borderWidth,
+            overflow: "hidden",
+          },
+        ]}
+      >
+        <LinearGradient
+          colors={["#AAB4FF", "#5F6FE8"]}
+          start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
+          end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
+          style={{
+            flex: 1,
+            borderRadius: borderRadius - borderWidth,
+          }}
+        />
+      </View>
+    );
+  };
 
-  // 🟡 YELLOW GRADIENT (VERTICAL FLIP SUPPORT)
   const renderYellowEllipse = (style, flipVertical = false) => (
     <LinearGradient
       colors={["#FFF200", "#FFC700"]}
@@ -73,164 +141,103 @@ const renderGradientEllipse = (style, flip = false) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Image source={require("../assets/bg.png")} style={styles.bgPattern} />
+    <Animated.View
+      style={{
+        flex: 1,
+        transform: [
+          { translateX: slideXAnim },
+          { translateY: slideYAnim },
+        ],
+      }}
+    >
+      <SafeAreaView style={styles.container}>
+        <Image source={require("../assets/bg.png")} style={styles.bgPattern} />
 
-      <View style={styles.topBar} />
+        <View style={styles.topBar} />
 
-      <View style={styles.stage}>
-        
-        {/* 🔵 BLUE BACKGROUND */}
-{/* 🔵 BLUE BACKGROUND */}
-{renderGradientEllipse(styles.bgEllipse1, true)}
-{renderGradientEllipse(styles.bgEllipse2)}
+        <View style={styles.stage}>
+          {renderGradientEllipse(styles.bgEllipse1, true)}
+          {renderGradientEllipse(styles.bgEllipse2)}
+          {renderGradientEllipse(styles.bgEllipse3, true)}
+          {renderGradientEllipse(styles.bgEllipse4)}
 
-{renderGradientEllipse(styles.bgEllipse3, true)}
-{renderGradientEllipse(styles.bgEllipse4)}
+          <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
 
-<TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
+          {renderGradientEllipse(styles.ellipseLeftSide, true)}
+          {renderGradientEllipse(styles.ellipseRightSide)}
+          {renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
+          {renderGradientEllipse(styles.ellipseRightSideBottom)}
 
-{renderGradientEllipse(styles.ellipseLeftSide, true)}
-{renderGradientEllipse(styles.ellipseRightSide)}
+          {renderYellowEllipse(styles.ellipseTop)}
+          {renderYellowEllipse(styles.ellipseTopLeft)}
 
-{renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
-{renderGradientEllipse(styles.ellipseRightSideBottom)}
+          {renderYellowEllipse([styles.ellipseMiddle, { top: cardHeight / 2 - 80 }])}
+          {renderYellowEllipse([styles.ellipseMiddleLeft, { top: cardHeight / 2 - 80 }])}
 
-        <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
+          {renderYellowEllipse(styles.ellipseBottom, true)}
+          {renderYellowEllipse(styles.ellipseBottomLeft, true)}
 
-        {renderGradientEllipse(styles.ellipseLeftSide, true)}
-        {renderGradientEllipse(styles.ellipseRightSide)}
-{renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
-        {renderGradientEllipse(styles.ellipseRightSideBottom)}
+          <View
+            style={styles.card}
+            onLayout={(e) => setCardHeight(e.nativeEvent.layout.height)}
+          >
+            <View style={{ flex: 1, justifyContent: "center" }}>
+              <View style={styles.logoContainer}>
+                <View style={styles.coinGroup}>
+                  <View style={styles.coinOuterCircle} />
 
-        {/* 🟡 YELLOW ELLIPSES */}
+                  <LinearGradient
+                    colors={["#97A2FE", "#3E4BB5"]}
+                    start={{ x: 0, y: 1 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.coinGradientCircle}
+                  />
 
-        {/* TOP */}
-        {renderYellowEllipse(styles.ellipseTop)}
-        {renderYellowEllipse(styles.ellipseTopLeft)}
+                  <View style={styles.coinDotsLayer}>
+                    {dots.map(([left, top], i) => (
+                      <View
+                        key={i}
+                        style={[
+                          styles.coinDot,
+                          { left: `${left}%`, top: `${top}%` },
+                        ]}
+                      />
+                    ))}
+                  </View>
 
-        {/* MIDDLE */}
-        {renderYellowEllipse(
-          [styles.ellipseMiddle, { top: cardHeight / 2 - 80 }]
-        )}
-        {renderYellowEllipse(
-          [styles.ellipseMiddleLeft, { top: cardHeight / 2 - 80 }]
-        )}
-
-        {/* BOTTOM (VERTICAL FLIP ✅) */}
-        {renderYellowEllipse(styles.ellipseBottom, true)}
-        {renderYellowEllipse(styles.ellipseBottomLeft, true)}
-
-        {/* CARD */}
-        <View
-          style={styles.card}
-          onLayout={(event) => {
-            const { height } = event.nativeEvent.layout;
-            setCardHeight(height);
-          }}
-        >
-          <View style={{ flex: 1, justifyContent: "center" }}>
-            
-            {/* LOGO */}
-            <View style={styles.logoContainer}>
-              <View style={styles.coinGroup}>
-
-                <View style={styles.coinOuterCircle} />
-
-                <LinearGradient
-                  colors={["#97A2FE", "#3E4BB5"]}
-                  start={{ x: 0, y: 1 }}
-                  end={{ x: 1, y: 0 }}
-                  style={styles.coinGradientCircle}
-                />
-
-                <View style={styles.coinDotsLayer} pointerEvents="none">
-                  {dots.map(([left, top], index) => (
-                    <View
-                      key={index}
-                      style={[
-                        styles.coinDot,
-                        {
-                          left: `${left}%`,
-                          top: `${top}%`,
-                          width: 1.5,
-                          height: 1.5,
-                          borderRadius: 0.75,
-                        },
-                      ]}
-                    />
-                  ))}
+                  <Image source={require("../assets/dollar.png")} style={styles.dollar} />
+                  <Image source={require("../assets/union.png")} style={styles.crown} />
                 </View>
 
-                {/* ICONS (UNCHANGED — restored) */}
-                <Image
-                  source={require("../assets/dollar.png")}
-                  style={styles.dollar}
-                />
-
-                <Image
-                  source={require("../assets/union.png")}
-                  style={styles.crown}
-                />
+                <View style={styles.logoTextGroup}>
+                  <Image source={require("../assets/credit.png")} style={styles.credit} />
+                  <Image source={require("../assets/king.png")} style={styles.king} />
+                </View>
               </View>
 
-              <View style={styles.logoTextGroup}>
-                <Image source={require("../assets/credit.png")} style={styles.credit} />
-                <Image source={require("../assets/king.png")} style={styles.king} />
+              <View style={styles.fieldRow}>
+                <TextInput placeholder="Username" style={styles.input} />
               </View>
+
+              <View style={styles.fieldRow}>
+                <TextInput placeholder="Password" secureTextEntry style={styles.input} />
+              </View>
+
+              <View style={styles.rememberRow}>
+                <Switch value={remember} onValueChange={setRemember} />
+                <Text style={styles.rememberText}>Remember me</Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.signInButton}
+                onPress={() => router.push("/loadin")}
+              >
+                <Text style={styles.signInText}>SIGN IN</Text>
+              </TouchableOpacity>
             </View>
-
-            {/* INPUTS */}
-            <View style={styles.fieldRow}>
-              <View style={styles.usernameIcon}>
-                <Image source={require("../assets/avatar.png")} style={styles.fieldIcon} />
-              </View>
-
-              <View style={{ width: "85%" }}>
-                <TextInput
-                  placeholder="Username"
-                  placeholderTextColor="#B7BBC5"
-                  style={styles.input}
-                />
-              </View>
-            </View>
-
-            <View style={styles.fieldRow}>
-              <View style={styles.lockIcon}>
-                <Image source={require("../assets/lock.png")} style={styles.fieldIcon} />
-              </View>
-
-              <View style={{ width: "85%" }}>
-                <TextInput
-                  placeholder="Password"
-                  placeholderTextColor="#B7BBC5"
-                  secureTextEntry
-                  style={styles.input}
-                />
-              </View>
-            </View>
-
-            <View style={styles.rememberRow}>
-              <Switch
-                value={remember}
-                onValueChange={setRemember}
-                trackColor={{ false: "#C7CBD6", true: "#8A96F0" }}
-                thumbColor="#FFFFFF"
-              />
-              <Text style={styles.rememberText}>Remember me</Text>
-            </View>
-
-            <TouchableOpacity
-              style={styles.signInButton}
-              onPress={() => router.push("/loadin")}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.signInText}>SIGN IN</Text>
-            </TouchableOpacity>
-
           </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Animated.View>
   );
 }

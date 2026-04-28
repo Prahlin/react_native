@@ -225,6 +225,8 @@ ellipseBottom: {
     marginBottom: 40,
   },
 
+
+
   input: {
     flex: 1,
     fontSize: 14,
@@ -336,15 +338,15 @@ ellipseBottom: {
     zIndex: 3,
   },
 
-  crown: {
-    position: "absolute",
-    left: 53,
-    top: 20,
-    width: 90,
-    height: 52,
-    resizeMode: "contain",
-    zIndex: 4,
-  },
+crown: {
+  position: "absolute",
+  left: 53,
+  top: 20,
+  width: 90,
+  height: 52,
+  resizeMode: "contain",
+  zIndex: 4,
+},
 
   logoTextGroup: {
     justifyContent: "center",

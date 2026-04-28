@@ -31,8 +31,8 @@ export default function Index() {
     [70, 96], [75, 96], [80, 96], [85, 96], [90, 96],
   ];
 
-  // 🔵 BLUE GRADIENT
-  const renderBlueEllipse = (style, flip = false) => (
+  // 🔵 BLUE GRADIENT (unchanged)
+  const renderGradientEllipse = (style, flip = false) => (
     <LinearGradient
       colors={["#97A2FE", "#3E4BB5"]}
       start={flip ? { x: 1, y: 1 } : { x: 0, y: 1 }}
@@ -41,15 +41,15 @@ export default function Index() {
     />
   );
 
-  // 🟡 YELLOW GRADIENT (Option 1 + flip support)
-const renderYellowEllipse = (style, flip = false) => (
-  <LinearGradient
-    colors={["#FFF200", "#FFC700"]}
-    start={flip ? { x: 1, y: 1 } : { x: 0, y: 1 }}
-    end={flip ? { x: 0, y: 0 } : { x: 1, y: 0 }}
-    style={style}
-  />
-);
+  // 🟡 YELLOW GRADIENT (VERTICAL FLIP SUPPORT)
+  const renderYellowEllipse = (style, flipVertical = false) => (
+    <LinearGradient
+      colors={["#FFF200", "#FFC700"]}
+      start={{ x: 0, y: flipVertical ? 0 : 1 }}
+      end={{ x: 0, y: flipVertical ? 1 : 0 }}
+      style={style}
+    />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -58,32 +58,36 @@ const renderYellowEllipse = (style, flip = false) => (
       <View style={styles.topBar} />
 
       <View style={styles.stage}>
-
-        {/* 🔵 BLUE ELLIPSES */}
-        {renderBlueEllipse(styles.bgEllipse1, true)}
-        {renderBlueEllipse(styles.bgEllipse2)}
-        {renderBlueEllipse(styles.bgEllipse3, true)}
-        {renderBlueEllipse(styles.bgEllipse4)}
+        
+        {/* 🔵 BLUE BACKGROUND */}
+        {renderGradientEllipse(styles.bgEllipse1)}
+        {renderGradientEllipse(styles.bgEllipse2)}
+        {renderGradientEllipse(styles.bgEllipse3)}
+        {renderGradientEllipse(styles.bgEllipse4)}
 
         <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
 
-        {renderBlueEllipse(styles.ellipseLeftSide, true)}
-        {renderBlueEllipse(styles.ellipseRightSide)}
-        {renderBlueEllipse(styles.ellipseLeftSideBottom, true)}
-        {renderBlueEllipse(styles.ellipseRightSideBottom)}
+        {renderGradientEllipse(styles.ellipseLeftSide, true)}
+        {renderGradientEllipse(styles.ellipseRightSide)}
+        {renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
+        {renderGradientEllipse(styles.ellipseRightSideBottom)}
 
         {/* 🟡 YELLOW ELLIPSES */}
+
+        {/* TOP */}
         {renderYellowEllipse(styles.ellipseTop)}
+        {renderYellowEllipse(styles.ellipseTopLeft)}
+
+        {/* MIDDLE */}
         {renderYellowEllipse(
           [styles.ellipseMiddle, { top: cardHeight / 2 - 80 }]
         )}
-        {renderYellowEllipse(styles.ellipseBottom)}
-
-        {renderYellowEllipse(styles.ellipseTopLeft, true)}
         {renderYellowEllipse(
-          [styles.ellipseMiddleLeft, { top: cardHeight / 2 - 80 }],
-          true
+          [styles.ellipseMiddleLeft, { top: cardHeight / 2 - 80 }]
         )}
+
+        {/* BOTTOM (VERTICAL FLIP ✅) */}
+        {renderYellowEllipse(styles.ellipseBottom, true)}
         {renderYellowEllipse(styles.ellipseBottomLeft, true)}
 
         {/* CARD */}
@@ -100,10 +104,8 @@ const renderYellowEllipse = (style, flip = false) => (
             <View style={styles.logoContainer}>
               <View style={styles.coinGroup}>
 
-                {/* OUTER COIN */}
                 <View style={styles.coinOuterCircle} />
 
-                {/* INNER COIN */}
                 <LinearGradient
                   colors={["#97A2FE", "#3E4BB5"]}
                   start={{ x: 0, y: 1 }}
@@ -111,7 +113,6 @@ const renderYellowEllipse = (style, flip = false) => (
                   style={styles.coinGradientCircle}
                 />
 
-                {/* DOTS */}
                 <View style={styles.coinDotsLayer} pointerEvents="none">
                   {dots.map(([left, top], index) => (
                     <View
@@ -130,7 +131,7 @@ const renderYellowEllipse = (style, flip = false) => (
                   ))}
                 </View>
 
-                {/* ICONS */}
+                {/* ICONS (UNCHANGED — restored) */}
                 <Image
                   source={require("../assets/dollar.png")}
                   style={styles.dollar}
@@ -143,24 +144,15 @@ const renderYellowEllipse = (style, flip = false) => (
               </View>
 
               <View style={styles.logoTextGroup}>
-                <Image
-                  source={require("../assets/credit.png")}
-                  style={styles.credit}
-                />
-                <Image
-                  source={require("../assets/king.png")}
-                  style={styles.king}
-                />
+                <Image source={require("../assets/credit.png")} style={styles.credit} />
+                <Image source={require("../assets/king.png")} style={styles.king} />
               </View>
             </View>
 
             {/* INPUTS */}
             <View style={styles.fieldRow}>
               <View style={styles.usernameIcon}>
-                <Image
-                  source={require("../assets/avatar.png")}
-                  style={styles.fieldIcon}
-                />
+                <Image source={require("../assets/avatar.png")} style={styles.fieldIcon} />
               </View>
 
               <View style={{ width: "85%" }}>
@@ -174,10 +166,7 @@ const renderYellowEllipse = (style, flip = false) => (
 
             <View style={styles.fieldRow}>
               <View style={styles.lockIcon}>
-                <Image
-                  source={require("../assets/lock.png")}
-                  style={styles.fieldIcon}
-                />
+                <Image source={require("../assets/lock.png")} style={styles.fieldIcon} />
               </View>
 
               <View style={{ width: "85%" }}>

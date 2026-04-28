@@ -14,7 +14,18 @@ export default StyleSheet.create({
     opacity: 0,
   },
 
-  coinInnerDotWrap: {
+coinInner: {
+  position: "absolute",
+  left: 68,
+  top: 40,
+  width: 80,
+  height: 80,
+  borderRadius: 40,
+  overflow: "hidden",
+  zIndex: 1,
+},
+
+coinInnerDotWrap: {
   position: "absolute",
   width: "100%",
   height: "100%",
@@ -22,11 +33,24 @@ export default StyleSheet.create({
   justifyContent: "center",
 },
 
+coinGradientCircle: {
+  position: "absolute",
+  left: 67,
+  top: 38,
+  width: 76,
+  height: 76,
+  borderRadius: 44,
+  borderWidth: 4,
+  borderColor: "#111111",
+  overflow: "hidden",
+  zIndex: 1,
+},
+
 coinDotsLayer: {
   position: "absolute",
   width: "100%",
   height: "100%",
-  zIndex: 1,
+  zIndex: 2,
 },
 
 coinDot: {
@@ -311,13 +335,29 @@ coinDot: {
 
   coinOuter: {
     position: "absolute",
-    left: 74,
-    top: 42,
-    width: 70,
-    height: 70,
+    left: 79,
+    top: 48,
+    width: 68,
+    height: 68,
     resizeMode: "contain",
     zIndex: 1,
   },
+
+  coinOuterCircle: {
+  position: "absolute",
+  left: 72,
+  top: 39,
+  width: 76,
+  height: 76,
+  borderRadius: 40,
+
+  borderWidth: 3.5,              
+  borderColor: "#000000",   
+
+  backgroundColor: "#7E8CF5",  
+
+  zIndex: 0,
+},
 
   coinInner: {
     position: "absolute",
@@ -331,7 +371,7 @@ coinDot: {
 
   dollar: {
     position: "absolute",
-    left: 88,
+    left: 89,
     top: 55,
     width: 32,
     height: 42,

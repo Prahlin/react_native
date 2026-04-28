@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -9,12 +10,35 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import TwirlBackground from "../components/TwirlBackground";
 import styles from "../styles/indexStyles";
 
 export default function Index() {
   const [remember, setRemember] = useState(false);
   const [cardHeight, setCardHeight] = useState(0);
+
+  const dots = [
+    [65, 51], [70, 51], [75, 51], [80, 51], [85, 51], [90, 51], [95, 51],
+
+    [65, 56], [70, 56], [75, 56], [80, 56], [85, 56], [90, 56], [95, 56], [100, 56],
+
+    [65, 61], [70, 61], [75, 61], [80, 61], [85, 61], [90, 61], [95, 61], [100, 61],
+
+    [60, 66], [65, 66], [70, 66], [75, 66], [80, 66], [85, 66], [90, 66], [95, 66], [100, 66],
+
+    [60, 71], [65, 71], [70, 71], [75, 71], [80, 71], [85, 71], [90, 71], [95, 71], [100, 71],
+
+    [60, 76], [65, 76], [70, 76], [75, 76], [80, 76], [85, 76], [90, 76], [95, 76], [100, 76],
+
+    [60, 81], [65, 81], [70, 81], [75, 81], [80, 81], [85, 81], [90, 81], [95, 81], [100, 81],
+
+    [65, 86], [70, 86], [75, 86], [80, 86], [85, 86], [90, 86], [95, 86], [100, 86],
+
+    [65, 91], [70, 91], [75, 91], [80, 91], [85, 91], [90, 91], [95, 91],
+
+    [70, 96], [75, 96], [80, 96], [85, 96], [90, 96],
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,7 +65,6 @@ export default function Index() {
         />
 
         <Image source={require("../assets/ellipse-13-2.png")} style={styles.ellipseBottom} />
-
         <Image source={require("../assets/ellipse-13.png")} style={styles.ellipseTopLeft} />
 
         <Image
@@ -50,7 +73,6 @@ export default function Index() {
         />
 
         <Image source={require("../assets/ellipse-13-2.png")} style={styles.ellipseBottomLeft} />
-
         <Image source={require("../assets/ellipse-14.png")} style={styles.ellipseLeftSideBottom} />
         <Image source={require("../assets/ellipse-14.png")} style={styles.ellipseRightSideBottom} />
 
@@ -66,56 +88,38 @@ export default function Index() {
             {/* LOGO */}
             <View style={styles.logoContainer}>
               <View style={styles.coinGroup}>
-                
-                <Image
-                  source={require("../assets/ellipse-4.png")}
-                  style={styles.coinOuter}
+
+                {/* OUTER COIN (now styled View) */}
+                <View style={styles.coinOuterCircle} />
+
+                {/* INNER GRADIENT COIN */}
+                <LinearGradient
+                  colors={["#97A2FE", "#3E4BB5"]}
+                  start={{ x: 0, y: 1 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.coinGradientCircle}
                 />
 
-                <Image
-                  source={require("../assets/ellipse-5.png")}
-                  style={styles.coinInner}
-                />
-
-                {/* DOTS (original layout restored) */}
+                {/* DOTS */}
                 <View style={styles.coinDotsLayer} pointerEvents="none">
-{[
-  [63, 49], [68, 49], [73, 49], [78, 49], [83, 49], [88, 49], [93, 49], 
-
-  [63, 54], [68, 54], [73, 54], [78, 54], [83, 54], [88, 54], [93, 54], [98, 54],
-
-  [63, 59], [68, 59], [73, 59], [78, 59], [83, 59], [88, 59], [93, 59], [98, 59],
-
-  [58, 64], [63, 64], [68, 64], [73, 64], [78, 64], [83, 64], [88, 64], [93, 64], [98, 64],
-
-  [58, 69], [63, 69], [68, 69], [73, 69], [78, 69], [83, 69], [88, 69], [93, 69], [98, 69],
-
-  [58, 74], [63, 74], [68, 74], [73, 74], [78, 74], [83, 74], [88, 74], [93, 74], [98, 74],
-
-  [58, 79], [63, 79], [68, 79], [73, 79], [78, 79], [83, 79], [88, 79], [93, 79], [98, 79],
-
-  [63, 84], [68, 84], [73, 84], [78, 84], [83, 84], [88, 84], [93, 84], [98, 84],
-
-  [63, 89], [68, 89], [73, 89], [78, 89], [83, 89], [88, 89], [93, 89],
-
-   [68, 94], [73, 94], [78, 94], [83, 94], [88, 94]
-].map(([left, top], index) => (
-<View
-  key={index}
-  style={[
-    styles.coinDot,
-{
-  left: `${left}%`,
-  top: `${top}%`,
-  width: 1.5,
-  height: 1.5,
-  borderRadius: 0.75,
-}
-  ]}
-/>
-))}
+                  {dots.map(([left, top], index) => (
+                    <View
+                      key={index}
+                      style={[
+                        styles.coinDot,
+                        {
+                          left: `${left}%`,
+                          top: `${top}%`,
+                          width: 1.5,
+                          height: 1.5,
+                          borderRadius: 0.75,
+                        },
+                      ]}
+                    />
+                  ))}
                 </View>
 
+                {/* ICONS */}
                 <Image
                   source={require("../assets/dollar.png")}
                   style={styles.dollar}

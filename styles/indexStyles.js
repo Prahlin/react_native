@@ -344,6 +344,7 @@ coinDot: {
   },
 
   coinOuterCircle: {
+  backgroundColor: "#7E8CF5",
   position: "absolute",
   left: 72,
   top: 39,

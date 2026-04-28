@@ -1,4 +1,3 @@
-
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
@@ -27,119 +26,88 @@ export default StyleSheet.create({
     overflow: "hidden",
   },
 
-  /* =========================
-     GRADIENT BACKGROUND CIRCLES (FIXED)
-  ========================= */
+  /* 🔵 BLUE ELLIPSES (already correct) */
 
- bgEllipse1: {
-  position: "absolute",
-  top: "2%",
-  left: "2%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
+  bgEllipse1: {
+    position: "absolute",
+    top: "2%",
+    left: "2%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+  },
 
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
+  bgEllipse2: {
+    position: "absolute",
+    top: "2%",
+    right: "2%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+  },
 
-bgEllipse2: {
-  position: "absolute",
-  top: "2%",
-  right: "2%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
+  bgEllipse3: {
+    position: "absolute",
+    bottom: "20%",
+    left: "3.5%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: -1,
+  },
 
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
+  bgEllipse4: {
+    position: "absolute",
+    bottom: "20%",
+    right: "3.5%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: -1,
+  },
 
-bgEllipse3: {
-  position: "absolute",
-  bottom: "20%",
-  left: "3.5%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: -1,
+  ellipseLeftSide: {
+    position: "absolute",
+    top: "25%",
+    left: "3.5%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: 1,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+  },
 
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
+  ellipseRightSide: {
+    position: "absolute",
+    top: "25%",
+    right: "3.5%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: 1,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+  },
 
-bgEllipse4: {
-  position: "absolute",
-  bottom: "20%",
-  right: "3.5%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: -1,
-
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
-
-ellipseLeftSide: {
-  position: "absolute",
-  top: "25%",
-  left: "3.5%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: 1,
-
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
-
-ellipseRightSide: {
-  position: "absolute",
-  top: "25%",
-  right: "3.5%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: 1,
-
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
-
-ellipseLeftSideBottom: {
-  position: "absolute",
-  bottom: "2%",
-  left: "2%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: -3,
-
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
-
-ellipseRightSideBottom: {
-  position: "absolute",
-  bottom: "2%",
-  right: "2%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: -3,
-
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
+  ellipseLeftSideBottom: {
+    position: "absolute",
+    bottom: "2%",
+    left: "2%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: -3,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+  },
 
   ellipseRightSideBottom: {
     position: "absolute",
@@ -150,103 +118,89 @@ ellipseRightSideBottom: {
     borderRadius: 100,
     overflow: "hidden",
     zIndex: -3,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
   },
 
-  /* =========================
-     ORIGINAL IMAGE ELLIPSES (UNCHANGED)
-  ========================= */
+  /* 🟡 YELLOW ELLIPSES — FIXED (THIS WAS YOUR ISSUE) */
 
-  ellipseTopLeft: {
-    position: "absolute",
-    top: "2%",
-    left: "2%",
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
-  },
+ ellipseTopLeft: {
+  position: "absolute",
+  top: "2%",
+  left: "2%",
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: "hidden",
+  borderWidth: 3,
+  borderColor: "#D4A017",
+},
 
-  ellipseTop: {
-    position: "absolute",
-    top: "2%",
-    right: "2%",
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
-  },
+ellipseTop: {
+  position: "absolute",
+  top: "2%",
+  right: "2%",
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: "hidden",
+  borderWidth: 3,
+  borderColor: "#D4A017",
+},
 
-  ellipseMiddleLeft: {
-    position: "absolute",
-    top: "26%",
-    left: "4%",
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
-    zIndex: 4,
-  },
+ellipseMiddleLeft: {
+  position: "absolute",
+  top: "26%",
+  left: "4%",
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: "hidden",
+  zIndex: 4,
+  borderWidth: 3,
+  borderColor: "#D4A017",
+},
 
-  ellipseMiddle: {
-    position: "absolute",
-    top: "26%",
-    right: "4%",
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
-    zIndex: 4,
-  },
+ellipseMiddle: {
+  position: "absolute",
+  top: "26%",
+  right: "4%",
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: "hidden",
+  zIndex: 4,
+  borderWidth: 3,
+  borderColor: "#D4A017",
+},
 
-  ellipseBottomLeft: {
-    position: "absolute",
-    bottom: "2%",
-    left: "2%",
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
-    zIndex: -2,
-  },
+ellipseBottomLeft: {
+  position: "absolute",
+  bottom: "2%",
+  left: "2%",
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: "hidden",
+  zIndex: -2,
+  borderWidth: 3,
+  borderColor: "#D4A017",
+},
 
-  ellipseBottom: {
-    position: "absolute",
-    bottom: "2%",
-    right: "2%",
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
-    zIndex: -2,
-  },
+ellipseBottom: {
+  position: "absolute",
+  bottom: "2%",
+  right: "2%",
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: "hidden",
+  zIndex: -2,
+  borderWidth: 3,
+  borderColor: "#D4A017",
+},
 
-  ellipseLeftSide2: {
-    position: "absolute",
-    top: "50%",
-    left: "2%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    zIndex: -1,
-  },
-
-  ellipseRightSide2: {
-    position: "absolute",
-    top: "50%",
-    right: "2%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    zIndex: -1,
-  },
-
-  ellipseMiddleLower: {
-    position: "absolute",
-    top: "50%",
-    right: "2%",
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
-    zIndex: -4,
-  },
-
-  /* =========================
-     CARD
-  ========================= */
+  /* CARD */
 
   card: {
     width: "80%",
@@ -263,9 +217,7 @@ ellipseRightSideBottom: {
     zIndex: 4,
   },
 
-  /* =========================
-     INPUTS
-  ========================= */
+  /* FORM */
 
   fieldRow: {
     flexDirection: "row",
@@ -313,9 +265,7 @@ ellipseRightSideBottom: {
     fontSize: 14,
   },
 
-  /* =========================
-     LOGO + COIN
-  ========================= */
+  /* LOGO */
 
   logoContainer: {
     width: "100%",
@@ -410,7 +360,6 @@ ellipseRightSideBottom: {
     width: 135,
     height: 40,
     resizeMode: "contain",
-    marginBottom: 4,
   },
 
   king: {
@@ -419,30 +368,4 @@ ellipseRightSideBottom: {
     height: 40,
     resizeMode: "contain",
   },
-
-  usernameIcon: {
-    width: 24,
-    height: 24,
-    marginLeft: 6,
-    marginRight: 8,
-    marginTop: 40,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  fieldIcon: {
-    width: "100%",
-    height: "100%",
-  },
-
-  lockIcon: {
-    width: 22,
-    height: 22,
-    marginLeft: 8,
-    marginRight: 8,
-    marginBottom: 2,
-    justifyContent: "center",
-    alignItems: "center",
-  },
 });
-

@@ -99,8 +99,6 @@ function SpendingCard() {
 
       <View style={{ alignItems: "center", paddingVertical: 10 }}>
         <View style={{ flexDirection: "row", gap: 22 }}>
-          
-          {/* GREEN ARROW */}
           <View style={styles.spendingArrowWrap}>
             <Svg width="36" height="32">
               <Path
@@ -110,7 +108,6 @@ function SpendingCard() {
             </Svg>
           </View>
 
-          {/* BLUE BAR */}
           <View style={{ width: 30, alignItems: "center" }}>
             <View
               style={{
@@ -119,18 +116,11 @@ function SpendingCard() {
                 backgroundColor: "#6A79D1",
               }}
             />
-            <Text
-              style={{
-                marginTop: 8,
-                fontSize: 12,
-                fontWeight: "900",
-              }}
-            >
+            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: "900" }}>
               Oct
             </Text>
           </View>
 
-          {/* RED ARROW */}
           <View style={styles.spendingArrowWrap}>
             <Svg width="36" height="32">
               <Path
@@ -139,7 +129,6 @@ function SpendingCard() {
               />
             </Svg>
           </View>
-
         </View>
       </View>
 
@@ -151,66 +140,37 @@ function SpendingCard() {
 }
 
 function CreditCardOffersCard() {
-const cards = [
-  {
-    name: "SavorOne",
-    bank: "BOA Cash\nRewards",
-    asset: require("../assets/capital-one-savorone-2.png"),
-    hideBank: true,
-  },
-  {
-    name: "Discover IT",
-    bank: "Wells Fargo\nActive Cash",
-    asset: require("../assets/capital-one-savorone-1.png"),
-    hideBank: true,
-  },
-  {
-    name: "BOA Cash Rewards",
-    asset: require("../assets/bank-of-america-customized-cash-rewards-1.png"),
-    hideBank: true,
-  },
-  {
-    name: "Wells Fargo Active Cash",
-    asset: require("../assets/wells-fargo-active-cash-card-1.png"),
-    hideBank: true,
-  },
-  {
-    name: "PNC Cash Unlimited",
-    bank: "PNC Unlimited",
-    asset: require("../assets/pnc-cash-unlimited-1.png"),
-    hideBank: true,
-  },
-  {
-    name: "TD Double Up",
-    bank: "TD Double Up",
-    asset: require("../assets/td-double-up-1.png"),
-    hideBank: true,
-  },
-];
+  const cards = [
+    { name: "SavorOne", asset: require("../assets/capital-one-savorone-2.png") },
+    { name: "Discover IT", asset: require("../assets/capital-one-savorone-1.png") },
+    { name: "BOA Cash Rewards", asset: require("../assets/bank-of-america-customized-cash-rewards-1.png") },
+    { name: "Wells Fargo Active Cash", asset: require("../assets/wells-fargo-active-cash-card-1.png") },
+    { name: "PNC Cash Unlimited", asset: require("../assets/pnc-cash-unlimited-1.png") },
+    { name: "TD Double Up", asset: require("../assets/td-double-up-1.png") },
+  ];
 
   return (
     <View style={styles.frameCreditCards}>
       <Text style={styles.sectionTitle}>Credit Card Offers</Text>
-      <Text style={styles.creditCardsSubtitle}>*Based on your credit score</Text>
+      <Text style={styles.creditCardsSubtitle}>
+        *Based on your credit score
+      </Text>
 
       <View style={styles.cardGrid}>
         {cards.map((card) => (
           <View key={card.name} style={styles.cardItem}>
-<Text
-  style={styles.cardItemTitle}
-  numberOfLines={1}
-  adjustsFontSizeToFit
->
-  {card.name}
-</Text>
+            <Text
+              style={styles.cardItemTitle}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
+              {card.name}
+            </Text>
             <ImageBackground
               source={card.asset}
               style={styles.cardOfferImage}
               resizeMode="contain"
             />
-{card.bank && !card.hideBank && (
-  <Text style={styles.cardItemBank}>{card.bank}</Text>
-)}
           </View>
         ))}
       </View>
@@ -229,13 +189,19 @@ function LoanOffersCard() {
   return (
     <View style={styles.frame153}>
       <Text style={styles.sectionTitle}>Loan Offers</Text>
-      <Text style={styles.creditCardsSubtitle}>*Based on your credit score</Text>
+      <Text style={styles.creditCardsSubtitle}>
+        *Based on your credit score
+      </Text>
 
       <View style={styles.loanGrid}>
         {loans.map((loan) => (
           <View key={loan.name} style={styles.loanItem}>
             <Text style={styles.loanLabel}>{loan.name}</Text>
-            <Image source={loan.asset} style={styles.loanIcon} resizeMode="contain" />
+            <Image
+              source={loan.asset}
+              style={styles.loanIcon}
+              resizeMode="contain"
+            />
           </View>
         ))}
       </View>
@@ -269,8 +235,6 @@ export default function Home() {
             <SpendingCard />
             <CreditCardOffersCard />
             <LoanOffersCard />
-
-            {/* ✅ Bottom spacer */}
             <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>

@@ -1,7 +1,8 @@
 import { router } from "expo-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Animated,
+  Dimensions,
   Easing,
   ScrollView,
   View,
@@ -9,13 +10,18 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import AvatarSpinner from "../components/AvatarSpinner";
 import TwirlBackground from "../components/TwirlBackground";
+import Home from "./home";
 
 const PULSE_MIN = 1;
 const PULSE_MAX = 1.08;
 const PULSE_DURATION = 1400;
 
+const SCREEN_WIDTH = Dimensions.get("window").width;
+
 export default function LoadIn() {
   const pulseValue = useRef(new Animated.Value(PULSE_MIN)).current;
+  const homeSlide = useRef(new Animated.Value(-SCREEN_WIDTH)).current;
+  const [showHomeOverlay, setShowHomeOverlay] = useState(false);
 
   useEffect(() => {
     pulseValue.stopAnimation();
@@ -43,7 +49,24 @@ export default function LoadIn() {
     pulseAnimation.start();
 
     const timeoutId = setTimeout(() => {
-      router.replace("/home");
+      setShowHomeOverlay(true);
+
+      Animated.sequence([
+        Animated.timing(homeSlide, {
+          toValue: 12,
+          duration: 360,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true,
+        }),
+        Animated.spring(homeSlide, {
+          toValue: 0,
+          friction: 4,
+          tension: 90,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        router.replace("/home");
+      });
     }, 3000);
 
     return () => {
@@ -52,7 +75,7 @@ export default function LoadIn() {
       pulseValue.stopAnimation();
       pulseValue.setValue(PULSE_MIN);
     };
-  }, [pulseValue]);
+  }, [pulseValue, homeSlide]);
 
   const textOpacity = pulseValue.interpolate({
     inputRange: [PULSE_MIN, PULSE_MAX],
@@ -108,6 +131,21 @@ export default function LoadIn() {
           </View>
         </View>
       </ScrollView>
+
+      {showHomeOverlay && (
+        <Animated.View
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            transform: [{ translateX: homeSlide }],
+          }}
+        >
+          <Home />
+        </Animated.View>
+      )}
     </SafeAreaView>
   );
 }

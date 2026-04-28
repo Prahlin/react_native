@@ -20,25 +20,34 @@ export default function Index() {
 
   const dots = [
     [65, 51], [70, 51], [75, 51], [80, 51], [85, 51], [90, 51], [95, 51],
-
     [65, 56], [70, 56], [75, 56], [80, 56], [85, 56], [90, 56], [95, 56], [100, 56],
-
     [65, 61], [70, 61], [75, 61], [80, 61], [85, 61], [90, 61], [95, 61], [100, 61],
-
     [60, 66], [65, 66], [70, 66], [75, 66], [80, 66], [85, 66], [90, 66], [95, 66], [100, 66],
-
     [60, 71], [65, 71], [70, 71], [75, 71], [80, 71], [85, 71], [90, 71], [95, 71], [100, 71],
-
     [60, 76], [65, 76], [70, 76], [75, 76], [80, 76], [85, 76], [90, 76], [95, 76], [100, 76],
-
     [60, 81], [65, 81], [70, 81], [75, 81], [80, 81], [85, 81], [90, 81], [95, 81], [100, 81],
-
     [65, 86], [70, 86], [75, 86], [80, 86], [85, 86], [90, 86], [95, 86], [100, 86],
-
     [65, 91], [70, 91], [75, 91], [80, 91], [85, 91], [90, 91], [95, 91],
-
     [70, 96], [75, 96], [80, 96], [85, 96], [90, 96],
   ];
+
+  // RIGHT side gradient (unchanged)
+  const rightGradient = {
+    colors: ["#97A2FE", "#3E4BB5"],
+    start: { x: 0, y: 1 },
+    end: { x: 1, y: 0 },
+  };
+
+  // LEFT side gradient (flipped horizontally)
+  const leftGradient = {
+    colors: ["#97A2FE", "#3E4BB5"],
+    start: { x: 1, y: 1 },
+    end: { x: 0, y: 0 },
+  };
+
+  const renderGradientEllipse = (style, gradient) => (
+    <LinearGradient {...gradient} style={style} />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,16 +56,20 @@ export default function Index() {
       <View style={styles.topBar} />
 
       <View style={styles.stage}>
-        <Image source={require("../assets/ellipse-14.png")} style={styles.bgEllipse1} />
-        <Image source={require("../assets/ellipse-14.png")} style={styles.bgEllipse2} />
-        <Image source={require("../assets/ellipse-14.png")} style={styles.bgEllipse3} />
-        <Image source={require("../assets/ellipse-14.png")} style={styles.bgEllipse4} />
+        {/* BACKGROUND BLUE GRADIENT ELLIPSES */}
+        {renderGradientEllipse(styles.bgEllipse1, leftGradient)}
+        {renderGradientEllipse(styles.bgEllipse2, rightGradient)}
+        {renderGradientEllipse(styles.bgEllipse3, leftGradient)}
+        {renderGradientEllipse(styles.bgEllipse4, rightGradient)}
 
         <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
 
-        <Image source={require("../assets/ellipse-14.png")} style={styles.ellipseLeftSide} />
-        <Image source={require("../assets/ellipse-14.png")} style={styles.ellipseRightSide} />
+        {renderGradientEllipse(styles.ellipseLeftSide, leftGradient)}
+        {renderGradientEllipse(styles.ellipseRightSide, rightGradient)}
+        {renderGradientEllipse(styles.ellipseLeftSideBottom, leftGradient)}
+        {renderGradientEllipse(styles.ellipseRightSideBottom, rightGradient)}
 
+        {/* YELLOW IMAGE ELLIPSES */}
         <Image source={require("../assets/ellipse-13.png")} style={styles.ellipseTop} />
 
         <Image
@@ -65,6 +78,7 @@ export default function Index() {
         />
 
         <Image source={require("../assets/ellipse-13-2.png")} style={styles.ellipseBottom} />
+
         <Image source={require("../assets/ellipse-13.png")} style={styles.ellipseTopLeft} />
 
         <Image
@@ -73,8 +87,6 @@ export default function Index() {
         />
 
         <Image source={require("../assets/ellipse-13-2.png")} style={styles.ellipseBottomLeft} />
-        <Image source={require("../assets/ellipse-14.png")} style={styles.ellipseLeftSideBottom} />
-        <Image source={require("../assets/ellipse-14.png")} style={styles.ellipseRightSideBottom} />
 
         <View
           style={styles.card}
@@ -89,10 +101,8 @@ export default function Index() {
             <View style={styles.logoContainer}>
               <View style={styles.coinGroup}>
 
-                {/* OUTER COIN (now styled View) */}
                 <View style={styles.coinOuterCircle} />
 
-                {/* INNER GRADIENT COIN */}
                 <LinearGradient
                   colors={["#97A2FE", "#3E4BB5"]}
                   start={{ x: 0, y: 1 }}
@@ -100,7 +110,6 @@ export default function Index() {
                   style={styles.coinGradientCircle}
                 />
 
-                {/* DOTS */}
                 <View style={styles.coinDotsLayer} pointerEvents="none">
                   {dots.map(([left, top], index) => (
                     <View
@@ -119,16 +128,8 @@ export default function Index() {
                   ))}
                 </View>
 
-                {/* ICONS */}
-                <Image
-                  source={require("../assets/dollar.png")}
-                  style={styles.dollar}
-                />
-
-                <Image
-                  source={require("../assets/union.png")}
-                  style={styles.crown}
-                />
+                <Image source={require("../assets/dollar.png")} style={styles.dollar} />
+                <Image source={require("../assets/union.png")} style={styles.crown} />
               </View>
 
               <View style={styles.logoTextGroup}>

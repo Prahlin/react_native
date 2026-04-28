@@ -1,3 +1,4 @@
+
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
@@ -14,62 +15,6 @@ export default StyleSheet.create({
     opacity: 0,
   },
 
-coinInner: {
-  position: "absolute",
-  left: 68,
-  top: 40,
-  width: 80,
-  height: 80,
-  borderRadius: 40,
-  overflow: "hidden",
-  zIndex: 1,
-},
-
-coinInnerDotWrap: {
-  position: "absolute",
-  width: "100%",
-  height: "100%",
-  alignItems: "center",
-  justifyContent: "center",
-},
-
-coinGradientCircle: {
-  position: "absolute",
-  left: 67,
-  top: 38,
-  width: 76,
-  height: 76,
-  borderRadius: 44,
-  borderWidth: 4,
-  borderColor: "#111111",
-  overflow: "hidden",
-  zIndex: 1,
-},
-
-coinDotsLayer: {
-  position: "absolute",
-  width: "100%",
-  height: "100%",
-  zIndex: 2,
-},
-
-coinDot: {
-  position: "absolute",
-  width: 3,
-  height: 3,
-  borderRadius: 1.5,
-  backgroundColor: "#3E4BB5",
-  transform: [{ scale: 0.5 }],
-},
-
-coinDot: {
-  position: "absolute",
-  width: 3,
-  height: 3,
-  borderRadius: 1.5,
-  backgroundColor: "#3E4BB5",
-},
-
   topBar: {
     height: 0,
     backgroundColor: "#7887E8",
@@ -82,43 +27,134 @@ coinDot: {
     overflow: "hidden",
   },
 
-  bgEllipse1: {
-    position: "absolute",
-    top: "2%",
-    left: "2%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-  },
+  /* =========================
+     GRADIENT BACKGROUND CIRCLES (FIXED)
+  ========================= */
 
-  bgEllipse2: {
+ bgEllipse1: {
+  position: "absolute",
+  top: "2%",
+  left: "2%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
+
+bgEllipse2: {
+  position: "absolute",
+  top: "2%",
+  right: "2%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
+
+bgEllipse3: {
+  position: "absolute",
+  bottom: "20%",
+  left: "3.5%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: -1,
+
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
+
+bgEllipse4: {
+  position: "absolute",
+  bottom: "20%",
+  right: "3.5%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: -1,
+
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
+
+ellipseLeftSide: {
+  position: "absolute",
+  top: "25%",
+  left: "3.5%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: 1,
+
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
+
+ellipseRightSide: {
+  position: "absolute",
+  top: "25%",
+  right: "3.5%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: 1,
+
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
+
+ellipseLeftSideBottom: {
+  position: "absolute",
+  bottom: "2%",
+  left: "2%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: -3,
+
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
+
+ellipseRightSideBottom: {
+  position: "absolute",
+  bottom: "2%",
+  right: "2%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: -3,
+
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
+
+  ellipseRightSideBottom: {
     position: "absolute",
-    top: "2%",
+    bottom: "2%",
     right: "2%",
     width: 200,
     height: 200,
-    resizeMode: "contain",
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: -3,
   },
 
-  bgEllipse3: {
-    position: "absolute",
-    bottom: "20%",
-    left: "3.5%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    zIndex: -1,
-  },
-
-  bgEllipse4: {
-    position: "absolute",
-    bottom: "20%",
-    right: "3.5%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    zIndex: -1,
-  },
+  /* =========================
+     ORIGINAL IMAGE ELLIPSES (UNCHANGED)
+  ========================= */
 
   ellipseTopLeft: {
     position: "absolute",
@@ -178,26 +214,6 @@ coinDot: {
     zIndex: -2,
   },
 
-  ellipseLeftSide: {
-    position: "absolute",
-    top: "25%",
-    left: "3.5%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    zIndex: 1,
-  },
-
-  ellipseRightSide: {
-    position: "absolute",
-    top: "25%",
-    right: "3.5%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    zIndex: 1,
-  },
-
   ellipseLeftSide2: {
     position: "absolute",
     top: "50%",
@@ -228,25 +244,9 @@ coinDot: {
     zIndex: -4,
   },
 
-  ellipseLeftSideBottom: {
-    position: "absolute",
-    bottom: "2%",
-    left: "2%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    zIndex: -3,
-  },
-
-  ellipseRightSideBottom: {
-    position: "absolute",
-    bottom: "2%",
-    right: "2%",
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    zIndex: -3,
-  },
+  /* =========================
+     CARD
+  ========================= */
 
   card: {
     width: "80%",
@@ -263,6 +263,10 @@ coinDot: {
     zIndex: 4,
   },
 
+  /* =========================
+     INPUTS
+  ========================= */
+
   fieldRow: {
     flexDirection: "row",
     alignItems: "flex-end",
@@ -276,18 +280,12 @@ coinDot: {
     borderBottomWidth: 2,
     borderBottomColor: "#D0D4DC",
     paddingBottom: 2,
-    paddingTop: 0,
     marginRight: 8,
   },
 
   rememberRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 0,
-  },
-
-  switchIcon: {
-    marginBottom: 40,
   },
 
   rememberText: {
@@ -315,6 +313,10 @@ coinDot: {
     fontSize: 14,
   },
 
+  /* =========================
+     LOGO + COIN
+  ========================= */
+
   logoContainer: {
     width: "100%",
     height: "40%",
@@ -333,41 +335,45 @@ coinDot: {
     marginTop: 60,
   },
 
-  coinOuter: {
+  coinOuterCircle: {
     position: "absolute",
-    left: 79,
-    top: 48,
-    width: 68,
-    height: 68,
-    resizeMode: "contain",
+    left: 72,
+    top: 39,
+    width: 76,
+    height: 76,
+    borderRadius: 38,
+    backgroundColor: "#7E8CF5",
+    borderWidth: 3.5,
+    borderColor: "#000000",
+    zIndex: 0,
+  },
+
+  coinGradientCircle: {
+    position: "absolute",
+    left: 67,
+    top: 38,
+    width: 76,
+    height: 76,
+    borderRadius: 38,
+    borderWidth: 4,
+    borderColor: "#111111",
+    overflow: "hidden",
     zIndex: 1,
   },
 
-  coinOuterCircle: {
-  backgroundColor: "#7E8CF5",
-  position: "absolute",
-  left: 72,
-  top: 39,
-  width: 76,
-  height: 76,
-  borderRadius: 40,
-
-  borderWidth: 3.5,              
-  borderColor: "#000000",   
-
-  backgroundColor: "#7E8CF5",  
-
-  zIndex: 0,
-},
-
-  coinInner: {
+  coinDotsLayer: {
     position: "absolute",
-    left: 68,
-    top: 40,
-    width: 80,
-    height: 80,
-    resizeMode: "contain",
-    zIndex: 1,
+    width: "100%",
+    height: "100%",
+    zIndex: 2,
+  },
+
+  coinDot: {
+    position: "absolute",
+    width: 3,
+    height: 3,
+    borderRadius: 1.5,
+    backgroundColor: "#3E4BB5",
   },
 
   dollar: {
@@ -439,3 +445,4 @@ coinDot: {
     alignItems: "center",
   },
 });
+

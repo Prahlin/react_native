@@ -3,7 +3,6 @@ import { ImageBackground, ScrollView, Text, View } from "react-native";
 import Svg, { Line, Path } from "react-native-svg";
 import BottomNav from "../components/BottomNav";
 import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
 import styles from "../styles/creditStyles";
 
 function buildCreditPoints(chartWidth, chartHeight, profile = "tu") {
@@ -195,7 +194,7 @@ export default function Credit() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: 64, paddingBottom: 110 },
+          { paddingTop: 151, paddingBottom: 110 },
         ]}
       >
         <ImageBackground
@@ -220,7 +219,7 @@ export default function Credit() {
           />
 
           <View style={styles.mainContent}>
-            <TopNav currentIndex={3} />
+
             <CreditScoreCard />
             <ImpactCard />
           </View>

@@ -47,12 +47,16 @@ const styles = StyleSheet.create({
 
   sectionTitle: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
-    color: "#111111",
+    color: "#000000",
+    letterSpacing: 0.6,
+    textTransform: "uppercase",
   },
 
   amountText: {
     fontSize: 16,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
@@ -94,6 +98,7 @@ const styles = StyleSheet.create({
   accountLabel: {
     fontSize: 12,
     bottom: 5,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
@@ -103,10 +108,13 @@ const styles = StyleSheet.create({
     bottom: 5,
     fontSize: 9,
     color: "#222227",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   accountValue: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
@@ -124,6 +132,7 @@ const styles = StyleSheet.create({
   outlineButtonText: {
     color: "#3E4BB5",
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 });

@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   _welcomeSteve: {
     color: "#fff",
     fontSize: 16,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -112,18 +113,23 @@ const styles = StyleSheet.create({
 
   sectionTitle: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
-    color: "#111111",
+    color: "#000000",
+    letterSpacing: 0.6,
+    textTransform: "uppercase",
   },
 
   amountText: {
     fontSize: 16,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
 
   sourcesText: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
@@ -159,12 +165,15 @@ const styles = StyleSheet.create({
     fontSize: 8,
     color: "#222227",
     textAlign: "center",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   monthLabelActive: {
     marginTop: 8,
     fontSize: 8,
     color: "#222227",
+    fontFamily: "Inter",
     fontWeight: "900",
     textAlign: "center",
   },
@@ -192,6 +201,7 @@ const styles = StyleSheet.create({
   outlineButtonText: {
     color: "#3E4BB5",
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -201,6 +211,8 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: "#444444",
     width: "72%",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   accountList: {
@@ -234,6 +246,7 @@ const styles = StyleSheet.create({
   trackLogoCitiText: {
     color: "#FFFFFF",
     fontSize: 8,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -245,6 +258,7 @@ const styles = StyleSheet.create({
   trackLogoCap1Text: {
     color: "#FFFFFF",
     fontSize: 4.8,
+    fontFamily: "Inter",
     fontWeight: "700",
     textAlign: "center",
   },
@@ -256,6 +270,7 @@ const styles = StyleSheet.create({
   trackLogoAmexText: {
     color: "#FFFFFF",
     fontSize: 8,
+    fontFamily: "Inter",
     fontWeight: "700",
     textAlign: "center",
     lineHeight: 8,
@@ -267,6 +282,7 @@ const styles = StyleSheet.create({
 
   accountName: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
@@ -275,6 +291,8 @@ const styles = StyleSheet.create({
     marginTop: 1,
     fontSize: 11,
     color: "#444444",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   twirlbackgroundPNG1: {
@@ -322,6 +340,7 @@ const styles = StyleSheet.create({
     left: 69,
     color: "#fff",
     fontSize: 10,
+    fontFamily: "Inter",
     fontWeight: "900",
   },
 

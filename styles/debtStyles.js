@@ -1,17 +1,17 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-  },
+screen: {
+  flex: 1,
+  backgroundColor: "rgba(217, 217, 217, 0.5)",
+},
 
   scrollContent: {
     paddingBottom: 110,
   },
 
   bottomSpacer: {
-    height: 3, // match your card gap
+    height: 3,
   },
 
   scrollView: {
@@ -43,13 +43,18 @@ const styles = StyleSheet.create({
 
   sectionTitle: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
-    color: "#111111",
+    color: "#000000",
+    letterSpacing: 0.6,
+    textTransform: "uppercase",
   },
 
   amountText: {
     fontSize: 16,
+    fontFamily: "Inter",
     fontWeight: "900",
+    color: "#111111",
   },
 
   chartWrap: {
@@ -75,16 +80,30 @@ const styles = StyleSheet.create({
 
   monthLabel: {
     fontSize: 8,
+    fontFamily: "Inter",
+    fontWeight: "400",
+    color: "#111111",
   },
 
   axisLabel: {
     fontSize: 8,
+    fontFamily: "Inter",
+    fontWeight: "400",
+    color: "#111111",
   },
 
   frame153: {
     backgroundColor: "rgba(255,255,255,0.6)",
     borderRadius: 6,
     padding: 12,
+  },
+
+  creditCardsSubtitle: {
+    marginTop: 4,
+    fontSize: 10,
+    color: "#111111",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   loanGrid: {
@@ -103,6 +122,9 @@ const styles = StyleSheet.create({
   loanLabel: {
     fontSize: 8,
     marginBottom: 8,
+    fontFamily: "Inter",
+    fontWeight: "400",
+    color: "#111111",
   },
 
   loanIcon: {
@@ -119,6 +141,9 @@ const styles = StyleSheet.create({
   academyIntro: {
     marginTop: 8,
     fontSize: 12,
+    fontFamily: "Inter",
+    fontWeight: "400",
+    color: "#111111",
   },
 
   academyList: {
@@ -134,17 +159,24 @@ const styles = StyleSheet.create({
     marginRight: 7,
     fontSize: 12,
     color: "#A9ADB6",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   starGold: {
     marginRight: 7,
     fontSize: 12,
     color: "#FFD700",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   academyText: {
     flex: 1,
     fontSize: 12,
+    fontFamily: "Inter",
+    fontWeight: "400",
+    color: "#111111",
   },
 
   primaryButton: {
@@ -160,6 +192,7 @@ const styles = StyleSheet.create({
   primaryButtonText: {
     color: "#3E4BB5",
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 });

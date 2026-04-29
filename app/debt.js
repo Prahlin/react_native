@@ -1,9 +1,6 @@
 import { useMemo, useState } from "react";
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
 import Svg, { Line, Path } from "react-native-svg";
-import BottomNav from "../components/BottomNav";
-import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
 import styles from "../styles/debtStyles";
 
 const loanOffers = [
@@ -168,10 +165,10 @@ export default function Debt() {
       <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingTop: 64.5 },
-        ]}
+contentContainerStyle={[
+  styles.scrollContent,
+  { paddingTop: 151 },
+]}
       >
         <ImageBackground
           style={styles.dashboardHomeScreenContainer}
@@ -179,7 +176,7 @@ export default function Debt() {
           resizeMode="cover"
         >
           <View style={styles.mainContent}>
-            <TopNav currentIndex={1} />
+
             <DebtCard />
             <LoanOffersCard />
             <AcademyCard />
@@ -190,8 +187,6 @@ export default function Debt() {
         </ImageBackground>
       </ScrollView>
 
-      <HeaderBar />
-      <BottomNav activeTab="debt" />
     </View>
   );
 }

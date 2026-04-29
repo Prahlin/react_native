@@ -1,22 +1,13 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-  },
+  screen: { flex: 1, backgroundColor: "#ffffff" },
 
-  scrollContent: {
-    paddingBottom: 110,
-  },
+  scrollContent: { paddingBottom: 110 },
 
-  bottomSpacer: {
-    height: 3,
-  },
+  bottomSpacer: { height: 3 },
 
-  scrollView: {
-    backgroundColor: "#FFFFFF",
-  },
+  scrollView: { backgroundColor: "#FFFFFF" },
 
   dashboardHomeScreenContainer: {
     width: "100%",
@@ -40,13 +31,9 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
 
-  time: {
-    display: "none",
-  },
+  time: { display: "none" },
 
-  frame188: {
-    display: "none",
-  },
+  frame188: { display: "none" },
 
   frameCreditScore: {
     backgroundColor: "rgba(255, 255, 255, 0.6)",
@@ -66,50 +53,58 @@ const styles = StyleSheet.create({
 
   sectionTitle: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
-    color: "#111111",
-    marginBottom: 6, // ✅ added spacing under title
+    color: "#000000",
+    letterSpacing: 0.6,
+    textTransform: "uppercase",
+    marginBottom: 6,
   },
 
   bureauSection: {
-    marginTop: 32, // ✅ increased separation between sections
+    marginTop: 32,
   },
 
   bureauTitle: {
     textAlign: "center",
     fontSize: 12,
     color: "#111111",
-    marginBottom: 10, // slightly increased
+    marginBottom: 10,
+    fontFamily: "Inter",
+    fontWeight: "700",
   },
 
-bureauTopRow: {
-  alignItems: "center",
-  justifyContent: "center",
-},
+  bureauTopRow: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-scoreCopyWrap: {
-  display: "none",
-},
+  scoreCopyWrap: {
+    display: "none",
+  },
 
   currentScoreLabel: {
     fontSize: 10,
     color: "#222227",
-    marginBottom: 12, // ✅ increased spacing
+    marginBottom: 12,
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   currentScoreValue: {
     fontSize: 16,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
 
-scoreMeterWrap: {
-  width: "52%",
-  height: 40,
-  position: "relative",
-  marginTop: 2,
-  alignSelf: "center",
-},
+  scoreMeterWrap: {
+    width: "52%",
+    height: 40,
+    position: "relative",
+    marginTop: 2,
+    alignSelf: "center",
+  },
 
   scoreBarBase: {
     position: "absolute",
@@ -161,12 +156,12 @@ scoreMeterWrap: {
     borderBottomRightRadius: 10,
   },
 
-scoreArrowLine: {
-  position: "absolute",
-  left: "50%",
-  top: 16,
-  transform: [{ translateX: -22 }], // half of SVG width (44 / 2)
-},
+  scoreArrowLine: {
+    position: "absolute",
+    left: "50%",
+    top: 16,
+    transform: [{ translateX: -22 }],
+  },
 
   fairText: {
     position: "absolute",
@@ -174,6 +169,8 @@ scoreArrowLine: {
     top: 20,
     fontSize: 8,
     color: "#222227",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   excellentText: {
@@ -182,6 +179,8 @@ scoreArrowLine: {
     top: 20,
     fontSize: 8,
     color: "#222227",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   scoreMarker: {
@@ -199,7 +198,7 @@ scoreArrowLine: {
   },
 
   scoreChartWrap: {
-    marginTop: 12, // ✅ increased from 8
+    marginTop: 12,
     flexDirection: "row",
     alignItems: "stretch",
   },
@@ -220,10 +219,12 @@ scoreArrowLine: {
   scoreAxisText: {
     fontSize: 8,
     color: "#222227",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   scoreMonthsRow: {
-    marginTop: -4, // ✅ less cramped than -6
+    marginTop: -4,
     paddingHorizontal: 12,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -232,10 +233,12 @@ scoreArrowLine: {
   scoreMonthText: {
     fontSize: 7,
     color: "#222227",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   outlineButton: {
-    marginTop: 16, // ✅ increased from 12
+    marginTop: 16,
     borderWidth: 1,
     borderColor: "#3E4BB5",
     borderRadius: 8,
@@ -247,11 +250,12 @@ scoreArrowLine: {
   outlineButtonText: {
     color: "#3E4BB5",
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
   impactList: {
-    marginTop: 12, // slightly increased
+    marginTop: 12,
     gap: 12,
   },
 
@@ -266,6 +270,8 @@ scoreArrowLine: {
     color: "#222227",
     flex: 1,
     paddingRight: 10,
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   twirlbackgroundPNG1: {

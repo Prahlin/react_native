@@ -10,9 +10,7 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
-import BottomNav from "../components/BottomNav";
-import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
+
 import styles from "../styles/homeStyles";
 
 //
@@ -197,7 +195,7 @@ Animated.sequence([
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: 64.5 },
+          { paddingTop: 151 },
         ]}
       >
         <ImageBackground
@@ -206,7 +204,7 @@ Animated.sequence([
           resizeMode="cover"
         >
           <View style={styles.mainContent}>
-            <TopNav />
+
             <CreditScoreCard />
             <SpendingCard />
             <CreditCardOffersCard />
@@ -216,8 +214,7 @@ Animated.sequence([
         </ImageBackground>
       </ScrollView>
 
-      <HeaderBar />
-      <BottomNav />
+
     </Animated.View>
   );
 }

@@ -1,7 +1,4 @@
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
-import BottomNav from "../components/BottomNav";
-import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
 import styles from "../styles/spendingStyles";
 
 const monthlyBars = [
@@ -178,7 +175,7 @@ export default function Spending() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: 64.5 },
+          { paddingTop: 151 },
         ]}
       >
         <ImageBackground
@@ -187,18 +184,13 @@ export default function Spending() {
           resizeMode="cover"
         >
           <View style={styles.mainContent}>
-            <TopNav currentIndex={2} />
             <SpendingCard />
             <ExpenditureCard />
             <TrackSpendingCard />
-
             <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>
       </ScrollView>
-
-      <HeaderBar />
-      <BottomNav activeTab="spending" />
     </View>
   );
 }

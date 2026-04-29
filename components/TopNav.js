@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import styles from "../styles/topNavStyles";
 
-// 🔥 FIX: give track width a stable starting value
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const ESTIMATED_TRACK_WIDTH = SCREEN_WIDTH - 36;
 
@@ -29,89 +28,44 @@ export default function TopNav() {
     const foundIndex = tabs.findIndex((tab) =>
       pathname.startsWith(tab.route)
     );
-    return foundIndex >= 0 ? foundIndex : -1;
+
+    return foundIndex >= 0 ? foundIndex : 0;
   };
 
-  const currentIndex = getIndexFromPath();
+  const routeIndex = getIndexFromPath();
 
-  const underlineAnim = useRef(
-    new Animated.Value(currentIndex >= 0 ? currentIndex : 0)
-  ).current;
-
-  const widthScale = useRef(new Animated.Value(1)).current;
-
-  const [selectedIndex, setSelectedIndex] = useState(currentIndex);
-  const [selectedLetterCount, setSelectedLetterCount] = useState(
-    currentIndex >= 0 ? tabs[currentIndex].label.length : 0
-  );
-  const [selectedDirection, setSelectedDirection] = useState("ltr");
-
-  // 🔥 FIX: start with estimated width instead of 0
+  const [activeIndex, setActiveIndex] = useState(routeIndex);
   const [trackWidth, setTrackWidth] = useState(ESTIMATED_TRACK_WIDTH);
 
-  const letterTimers = useRef([]);
-
-  const clearLetterTimers = () => {
-    letterTimers.current.forEach(clearTimeout);
-    letterTimers.current = [];
-  };
+  const underlineAnim = useRef(new Animated.Value(routeIndex)).current;
 
   useEffect(() => {
-    underlineAnim.setValue(currentIndex >= 0 ? currentIndex : 0);
-    widthScale.setValue(1);
+    setActiveIndex(routeIndex);
 
-    setSelectedIndex(currentIndex);
-    setSelectedDirection("ltr");
-    setSelectedLetterCount(
-      currentIndex >= 0 ? tabs[currentIndex].label.length : 0
-    );
-
-    return () => clearLetterTimers();
-  }, [currentIndex]);
-
-  const animateLetters = (fromIndex, targetIndex, totalDuration) => {
-    clearLetterTimers();
-
-    const direction = targetIndex > fromIndex ? "ltr" : "rtl";
-    const totalLetters = tabs[targetIndex].label.length;
-    const stepDuration = totalDuration / totalLetters;
-
-    setSelectedIndex(targetIndex);
-    setSelectedDirection(direction);
-    setSelectedLetterCount(0);
-
-    tabs[targetIndex].label.split("").forEach((_, index) => {
-      const timer = setTimeout(() => {
-        setSelectedLetterCount(index + 1);
-      }, stepDuration * index);
-
-      letterTimers.current.push(timer);
-    });
-  };
+    Animated.timing(underlineAnim, {
+      toValue: routeIndex,
+      duration: 120,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: false,
+    }).start();
+  }, [routeIndex]);
 
   const goToTab = (index, route) => {
-    const fromIndex = currentIndex >= 0 ? currentIndex : 0;
+    if (index === activeIndex) return;
 
-    const totalDuration = index === 0 ? 320 : 110;
+    // ✅ text changes immediately
+    setActiveIndex(index);
 
-    animateLetters(fromIndex, index, totalDuration);
+    // ✅ underline moves immediately
+    Animated.timing(underlineAnim, {
+      toValue: index,
+      duration: 120,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: false,
+    }).start();
 
-    Animated.parallel([
-      Animated.timing(underlineAnim, {
-        toValue: index,
-        duration: totalDuration,
-        easing: Easing.out(Easing.cubic),
-        useNativeDriver: false,
-      }),
-      Animated.timing(widthScale, {
-        toValue: 1,
-        duration: totalDuration,
-        easing: Easing.out(Easing.cubic),
-        useNativeDriver: false,
-      }),
-    ]).start(({ finished }) => {
-      if (finished) router.push(route);
-    });
+    // ✅ route changes without waiting for animation
+    router.replace(route);
   };
 
   const stepWidth = trackWidth / tabs.length;
@@ -120,35 +74,12 @@ export default function TopNav() {
     inputRange: [0, 1, 2, 3, 4],
     outputRange: [
       0,
-      1 * stepWidth,
-      2 * stepWidth,
-      3 * stepWidth,
-      4 * stepWidth,
+      stepWidth,
+      stepWidth * 2,
+      stepWidth * 3,
+      stepWidth * 4,
     ],
   });
-
-  const renderAnimatedLabel = (label, tabIndex) => {
-    const chars = label.split("");
-    const isActive = tabIndex === selectedIndex;
-
-    return (
-      <View style={styles.dashboardLetterRow}>
-        {chars.map((char, charIndex) => (
-          <Text
-            key={`${label}-${char}-${charIndex}`}
-            style={[
-              styles.dashboardLetter,
-              isActive
-                ? styles.dashboardLetterActive
-                : styles.dashboardLetterInactive,
-            ]}
-          >
-            {char}
-          </Text>
-        ))}
-      </View>
-    );
-  };
 
   return (
     <View style={styles.frame155}>
@@ -159,7 +90,16 @@ export default function TopNav() {
             style={styles.navTab}
             onPress={() => goToTab(index, tab.route)}
           >
-            {renderAnimatedLabel(tab.label, index)}
+            <Text
+              style={[
+                styles.dashboardLetter,
+                index === activeIndex
+                  ? styles.dashboardLetterActive
+                  : styles.dashboardLetterInactive,
+              ]}
+            >
+              {tab.label}
+            </Text>
           </Pressable>
         ))}
       </View>
@@ -168,17 +108,15 @@ export default function TopNav() {
         style={styles.navTrack}
         onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
       >
-        {currentIndex >= 0 && (
-          <Animated.View
-            style={[
-              styles.navUnderlineActive,
-              {
-                width: stepWidth,
-                transform: [{ translateX }],
-              },
-            ]}
-          />
-        )}
+        <Animated.View
+          style={[
+            styles.navUnderlineActive,
+            {
+              width: stepWidth,
+              transform: [{ translateX }],
+            },
+          ]}
+        />
       </View>
     </View>
   );

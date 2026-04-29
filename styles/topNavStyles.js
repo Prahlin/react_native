@@ -8,8 +8,11 @@ const styles = StyleSheet.create({
   },
 
   dashboardLetter: {
-    fontSize: 12,
-    fontWeight: "400",
+    fontSize: 13,
+    fontFamily: "Inter",
+    fontWeight: "700",
+    letterSpacing: 0.1,
+    includeFontPadding: false,
   },
 
   dashboardLetterInactive: {
@@ -20,16 +23,16 @@ const styles = StyleSheet.create({
     color: "#6A79D1",
   },
 
-  frame155: {
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    borderRadius: 6,
-    minHeight: 44,
-    paddingHorizontal: 10,
-    paddingTop: 10,
-    paddingBottom: 14,
-    position: "relative",
-    marginTop: 8,
-  },
+frame155: {
+  backgroundColor: "rgba(255, 255, 255, 1)",
+  borderRadius: 6,
+  minHeight: 53,
+  paddingHorizontal: 10,
+  paddingTop: 14,
+  paddingBottom: 15,
+  position: "relative",
+  marginTop: 0, // was 8
+},
 
   topNav: {
     flexDirection: "row",

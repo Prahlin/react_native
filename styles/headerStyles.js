@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native";
 
 export const ICON_SIZE = 22;
 export const SIDE_PADDING = 18;
-export const TOP_PADDING = 22;
-export const HEADER_TOTAL_HEIGHT = 64;
+export const TOP_PADDING = 40;
+export const HEADER_TOTAL_HEIGHT = 80;
 
 export default StyleSheet.create({
   root: {
@@ -29,6 +29,7 @@ export default StyleSheet.create({
   title: {
     color: "#FFFFFF",
     fontSize: 20,
+    fontFamily: "Inter",
     fontWeight: "700",
     lineHeight: ICON_SIZE,
     flexShrink: 0,
@@ -49,58 +50,89 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-bellButton: {
-  width: 44,
-  height: 44,
-  alignItems: "center",
-  justifyContent: "center",
-},
+  bellButton: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
   bellIcon: {
     width: ICON_SIZE,
     height: ICON_SIZE,
   },
 
-menuButton: {
-  width: 44,
-  height: 44,
-  alignItems: "center",
-  justifyContent: "center",
-  marginLeft: 8,
-},
-
-menuDots: {
-  color: "#FFFFFF",
-  fontSize: ICON_SIZE,
-  lineHeight: ICON_SIZE,
-  fontWeight: "700",
-},
-
-  overlay: {
-    position: "absolute",
-    top: HEADER_TOTAL_HEIGHT + 1,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0,0,0,0.18)",
-    zIndex: 1001,
-    elevation: 1001,
+  menuButton: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 8,
   },
 
-  menu: {
-    position: "absolute",
-    top: 65,
-    width: 170,
-    backgroundColor: "#97A2FE",
-    borderRadius: 12,
-    paddingVertical: 6,
-    elevation: 1004,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-    zIndex: 1004,
+  menuDots: {
+    color: "#FFFFFF",
+    fontSize: ICON_SIZE,
+    lineHeight: ICON_SIZE,
+    fontFamily: "Inter",
+    fontWeight: "700",
   },
+
+overlay: {
+  position: "absolute",
+  top: HEADER_TOTAL_HEIGHT + 1,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0,0,0,0.18)",
+  zIndex: 1001,
+  elevation: 1001,
+},
+
+menu: {
+  position: "absolute",
+  top: HEADER_TOTAL_HEIGHT + 1,
+  width: 170,
+  backgroundColor: "#97A2FE",
+  borderRadius: 12,
+  paddingVertical: 6,
+  elevation: 1004,
+  shadowColor: "#000",
+  shadowOpacity: 0.2,
+  shadowRadius: 10,
+  shadowOffset: { width: 0, height: 4 },
+  zIndex: 1004,
+},
+
+notifications: {
+  position: "absolute",
+  top: HEADER_TOTAL_HEIGHT + 1,
+  width: 265,
+  backgroundColor: "#97A2FE",
+  borderRadius: 12,
+  paddingVertical: 6,
+  elevation: 1004,
+  shadowColor: "#000",
+  shadowOpacity: 0.2,
+  shadowRadius: 10,
+  shadowOffset: { width: 0, height: 4 },
+  zIndex: 1004,
+},
+
+menu: {
+  position: "absolute",
+  top: HEADER_TOTAL_HEIGHT + 1,
+  width: 170,
+  backgroundColor: "#97A2FE",
+  borderRadius: 12,
+  paddingVertical: 6,
+  elevation: 1004,
+  shadowColor: "#000",
+  shadowOpacity: 0.2,
+  shadowRadius: 10,
+  shadowOffset: { width: 0, height: 4 },
+  zIndex: 1004,
+},
 
   arrowRight: {
     position: "absolute",
@@ -115,20 +147,20 @@ menuDots: {
     borderBottomColor: "#97A2FE",
   },
 
-  notifications: {
-    position: "absolute",
-    top: 65,
-    width: 265,
-    backgroundColor: "#97A2FE",
-    borderRadius: 12,
-    paddingVertical: 6,
-    elevation: 1004,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-    zIndex: 1004,
-  },
+notifications: {
+  position: "absolute",
+  top: HEADER_TOTAL_HEIGHT + 1,
+  width: 265,
+  backgroundColor: "#97A2FE",
+  borderRadius: 12,
+  paddingVertical: 6,
+  elevation: 1004,
+  shadowColor: "#000",
+  shadowOpacity: 0.2,
+  shadowRadius: 10,
+  shadowOffset: { width: 0, height: 4 },
+  zIndex: 1004,
+},
 
   notificationsArrow: {
     position: "absolute",
@@ -153,6 +185,7 @@ menuDots: {
   itemText: {
     fontSize: 14,
     color: "#FFFFFF",
+    fontFamily: "Inter",
     fontWeight: "400",
   },
 
@@ -170,12 +203,15 @@ menuDots: {
     fontSize: 14,
     marginRight: 8,
     lineHeight: 16,
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   notificationText: {
     flex: 1,
     color: "#FFFFFF",
     fontSize: 14,
+    fontFamily: "Inter",
     fontWeight: "400",
   },
 

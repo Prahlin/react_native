@@ -11,23 +11,12 @@ export default function BottomNav() {
     if (pathname === "/notifications") return "notifications";
     if (pathname === "/rewards") return "rewards";
     if (pathname === "/stats") return "stats";
-
-    // TopNav pages should NOT make Home blue
-    if (
-      pathname === "/debt" ||
-      pathname === "/spending" ||
-      pathname === "/credit" ||
-      pathname === "/accounts"
-    ) {
-      return "";
-    }
-
     return "";
   })();
 
   return (
     <View style={styles.bottomNav}>
-      <Pressable style={styles.frame26} onPress={() => router.push("/home")}>
+      <Pressable onPress={() => router.replace("/home")}>
         <Image
           source={
             activeTab === "home"
@@ -38,7 +27,7 @@ export default function BottomNav() {
         />
       </Pressable>
 
-      <Pressable style={styles.frame27} onPress={() => router.push("/activity")}>
+      <Pressable onPress={() => router.replace("/activity")}>
         <Image
           source={
             activeTab === "activity"
@@ -49,10 +38,7 @@ export default function BottomNav() {
         />
       </Pressable>
 
-      <Pressable
-        style={styles.frame28}
-        onPress={() => router.push("/notifications")}
-      >
+      <Pressable onPress={() => router.replace("/notifications")}>
         <Image
           source={
             activeTab === "notifications"
@@ -63,7 +49,7 @@ export default function BottomNav() {
         />
       </Pressable>
 
-      <Pressable style={styles.frame29} onPress={() => router.push("/rewards")}>
+      <Pressable onPress={() => router.replace("/rewards")}>
         <Image
           source={
             activeTab === "rewards"
@@ -74,7 +60,7 @@ export default function BottomNav() {
         />
       </Pressable>
 
-      <Pressable style={styles.frame31} onPress={() => router.push("/stats")}>
+      <Pressable onPress={() => router.replace("/stats")}>
         <Image
           source={
             activeTab === "stats"

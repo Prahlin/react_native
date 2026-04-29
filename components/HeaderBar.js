@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  useWindowDimensions,
 } from "react-native";
 
 import styles from "../styles/headerStyles";
@@ -20,7 +21,13 @@ export function resetBellClickedState() {
 const POPUP_RIGHT_OVERHANG = 27;
 const CLOSE_GUARD_MS = 250;
 
+const MENU_WIDTH = 170;
+const NOTIFICATIONS_WIDTH = 265;
+const SCREEN_MARGIN = 8;
+
 export default function HeaderBar() {
+  const { width: screenWidth } = useWindowDimensions();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [bellClicked, setBellClicked] = useState(hasBellBeenClicked);
@@ -44,6 +51,15 @@ export default function HeaderBar() {
     "Credit score change",
   ];
 
+  const getPopupRight = (iconCenterX, popupWidth) => {
+    const rawRight = screenWidth - iconCenterX - POPUP_RIGHT_OVERHANG;
+
+    const minRight = SCREEN_MARGIN;
+    const maxRight = screenWidth - popupWidth - SCREEN_MARGIN;
+
+    return Math.max(minRight, Math.min(rawRight, maxRight));
+  };
+
   const guardClose = () => {
     closeAllowedAtRef.current = Date.now() + CLOSE_GUARD_MS;
   };
@@ -52,28 +68,20 @@ export default function HeaderBar() {
     guardClose();
     setNotificationsOpen(false);
 
-    if (menuRef.current?.measureInWindow) {
-      menuRef.current.measureInWindow((x, y, width) => {
-        const iconCenterX = x + width / 2;
-        const viewportWidth =
-          typeof window !== "undefined" ? window.innerWidth : 0;
+    menuRef.current?.measureInWindow?.((x, y, width) => {
+      const iconCenterX = x + width / 2;
 
-        const rightDistanceFromIconCenter = viewportWidth - iconCenterX;
-        const computedRight =
-          rightDistanceFromIconCenter - POPUP_RIGHT_OVERHANG;
+      setMenuRight(getPopupRight(iconCenterX, MENU_WIDTH));
+      setMenuOpen(true);
 
-        setMenuRight(computedRight);
-        setMenuOpen(true);
-
-        menuScale.setValue(0.96);
-        Animated.spring(menuScale, {
-          toValue: 1,
-          friction: 4,
-          tension: 140,
-          useNativeDriver: true,
-        }).start();
-      });
-    }
+      menuScale.setValue(0.96);
+      Animated.spring(menuScale, {
+        toValue: 1,
+        friction: 4,
+        tension: 140,
+        useNativeDriver: true,
+      }).start();
+    });
   };
 
   const openNotifications = () => {
@@ -82,34 +90,24 @@ export default function HeaderBar() {
     setBellClicked(true);
     setMenuOpen(false);
 
-    if (bellRef.current?.measureInWindow) {
-      bellRef.current.measureInWindow((x, y, width) => {
-        const iconCenterX = x + width / 2;
-        const viewportWidth =
-          typeof window !== "undefined" ? window.innerWidth : 0;
+    bellRef.current?.measureInWindow?.((x, y, width) => {
+      const iconCenterX = x + width / 2;
 
-        const rightDistanceFromIconCenter = viewportWidth - iconCenterX;
-        const computedRight =
-          rightDistanceFromIconCenter - POPUP_RIGHT_OVERHANG;
+      setNotificationsRight(getPopupRight(iconCenterX, NOTIFICATIONS_WIDTH));
+      setNotificationsOpen(true);
 
-        setNotificationsRight(computedRight);
-        setNotificationsOpen(true);
-
-        notificationsScale.setValue(0.96);
-        Animated.spring(notificationsScale, {
-          toValue: 1,
-          friction: 4,
-          tension: 140,
-          useNativeDriver: true,
-        }).start();
-      });
-    }
+      notificationsScale.setValue(0.96);
+      Animated.spring(notificationsScale, {
+        toValue: 1,
+        friction: 4,
+        tension: 140,
+        useNativeDriver: true,
+      }).start();
+    });
   };
 
   const closeAll = () => {
-    if (Date.now() < closeAllowedAtRef.current) {
-      return;
-    }
+    if (Date.now() < closeAllowedAtRef.current) return;
 
     setMenuOpen(false);
     setNotificationsOpen(false);

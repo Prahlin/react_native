@@ -1,28 +1,28 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: "#ffffff",
+screen: {
+  flex: 1,
+  backgroundColor: "rgba(217, 217, 217, 0.5)",
+},
+
+  scrollContent: {
+    paddingBottom: 110,
   },
 
-scrollContent: {
-  paddingBottom: 110,
-},
-
-bottomSpacer: {
-  height: 2, // match your card gap
-},
+  bottomSpacer: {
+    height: 2,
+  },
 
   scrollView: {
-  backgroundColor: "#FFFFFF",
-},
+    backgroundColor: "#FFFFFF",
+  },
 
-dashboardHomeScreenContainer: {
-  width: "100%",
-  backgroundColor: "rgba(217, 217, 217, 0.5)",
-  overflow: "hidden",
-},
+  dashboardHomeScreenContainer: {
+    width: "100%",
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
+    overflow: "hidden",
+  },
 
   mainContent: {
     paddingTop: 0,
@@ -74,6 +74,8 @@ dashboardHomeScreenContainer: {
   statusText: {
     color: "#222227",
     fontSize: 8,
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   frame189: {
@@ -88,13 +90,17 @@ dashboardHomeScreenContainer: {
   _welcomeSteve: {
     color: "#fff",
     fontSize: 16,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
   sectionTitle: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
-    color: "#111111",
+    color: "#000000",
+    letterSpacing: 0.6,
+    textTransform: "uppercase",
   },
 
   primaryButton: {
@@ -110,6 +116,7 @@ dashboardHomeScreenContainer: {
   primaryButtonText: {
     color: "#3E4BB5",
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -121,6 +128,7 @@ dashboardHomeScreenContainer: {
 
   creditScore: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     marginBottom: 12,
   },
@@ -140,10 +148,13 @@ dashboardHomeScreenContainer: {
     fontSize: 12,
     color: "#111111",
     marginBottom: 2,
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   creditValue: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
     marginBottom: 8,
@@ -222,6 +233,8 @@ dashboardHomeScreenContainer: {
   creditRangeLabel: {
     fontSize: 10,
     color: "#111111",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   creditArrowWrap: {
@@ -238,15 +251,16 @@ dashboardHomeScreenContainer: {
 
   _spending: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     marginBottom: 18,
   },
 
   spendingArrowWrap: {
-  height: 96,              // matches blue bar height
-  justifyContent: "center",
-  alignItems: "center",
-},
+    height: 96,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
   spendingChartWrap: {
     alignItems: "center",
@@ -299,6 +313,7 @@ dashboardHomeScreenContainer: {
   spendingMonth: {
     marginTop: 8,
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
@@ -344,6 +359,7 @@ dashboardHomeScreenContainer: {
 
   oct: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
   },
 
@@ -360,6 +376,7 @@ dashboardHomeScreenContainer: {
   viewdetails: {
     color: "#3E4BB5",
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -371,6 +388,7 @@ dashboardHomeScreenContainer: {
 
   creditCardOffers: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
   },
 
@@ -378,11 +396,15 @@ dashboardHomeScreenContainer: {
     marginTop: 4,
     fontSize: 10,
     color: "#111111",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   basedonyourcreditscore: {
     marginTop: 4,
     fontSize: 10,
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   cardGrid: {
@@ -414,13 +436,14 @@ dashboardHomeScreenContainer: {
     justifyContent: "flex-start",
   },
 
-cardItemTitle: {
-  fontSize: 8,
-  fontWeight: "600",
-  color: "#111111",
-  textAlign: "center",
-  marginBottom: 8,
-},
+  cardItemTitle: {
+    fontSize: 8,
+    fontFamily: "Inter",
+    fontWeight: "600",
+    color: "#111111",
+    textAlign: "center",
+    marginBottom: 8,
+  },
 
   offerLabel: {
     fontSize: 8,
@@ -428,6 +451,8 @@ cardItemTitle: {
     marginBottom: 8,
     width: 60,
     alignSelf: "center",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   cardOfferImage: {
@@ -449,6 +474,8 @@ cardItemTitle: {
     marginTop: 8,
     textAlign: "center",
     color: "#111111",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   _frame62: {
@@ -464,6 +491,7 @@ cardItemTitle: {
   seemoreoffers: {
     color: "#3E4BB5",
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -475,12 +503,15 @@ cardItemTitle: {
 
   loanOffers: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
   },
 
   _basedonyourcreditscore: {
     marginTop: 4,
     fontSize: 10,
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   loanGrid: {
@@ -501,6 +532,8 @@ cardItemTitle: {
     marginBottom: 8,
     textAlign: "center",
     color: "#111111",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   loanIcon: {
@@ -522,6 +555,7 @@ cardItemTitle: {
   _findoutmore: {
     color: "#3E4BB5",
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -570,6 +604,7 @@ cardItemTitle: {
     left: 69,
     color: "#fff",
     fontSize: 10,
+    fontFamily: "Inter",
     fontWeight: "900",
   },
 

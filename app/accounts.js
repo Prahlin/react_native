@@ -1,7 +1,6 @@
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
 import BottomNav from "../components/BottomNav";
 import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
 import styles from "../styles/accountsStyles";
 
 export default function Accounts() {
@@ -11,7 +10,7 @@ export default function Accounts() {
         style={styles.scrollView}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: 64 },
+          { paddingTop: 151 },
         ]}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -22,7 +21,7 @@ export default function Accounts() {
           resizeMode="cover"
         >
           <View style={styles.mainContent}>
-            <TopNav currentIndex={4} />
+
 
             <View style={styles.frameAccounts}>
               <View style={styles.cardHeaderRow}>

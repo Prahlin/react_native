@@ -1,7 +1,18 @@
 import { router, usePathname } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { Animated, Easing, Pressable, Text, View } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import styles from "../styles/topNavStyles";
+
+// 🔥 FIX: give track width a stable starting value
+const SCREEN_WIDTH = Dimensions.get("window").width;
+const ESTIMATED_TRACK_WIDTH = SCREEN_WIDTH - 36;
 
 export default function TopNav() {
   const pathname = usePathname();
@@ -14,7 +25,6 @@ export default function TopNav() {
     { label: "Accounts", route: "/accounts" },
   ];
 
-  // ✅ updated to support nested routes + allow "no active tab"
   const getIndexFromPath = () => {
     const foundIndex = tabs.findIndex((tab) =>
       pathname.startsWith(tab.route)
@@ -24,7 +34,10 @@ export default function TopNav() {
 
   const currentIndex = getIndexFromPath();
 
-  const underlineAnim = useRef(new Animated.Value(currentIndex >= 0 ? currentIndex : 0)).current;
+  const underlineAnim = useRef(
+    new Animated.Value(currentIndex >= 0 ? currentIndex : 0)
+  ).current;
+
   const widthScale = useRef(new Animated.Value(1)).current;
 
   const [selectedIndex, setSelectedIndex] = useState(currentIndex);
@@ -32,7 +45,9 @@ export default function TopNav() {
     currentIndex >= 0 ? tabs[currentIndex].label.length : 0
   );
   const [selectedDirection, setSelectedDirection] = useState("ltr");
-  const [trackWidth, setTrackWidth] = useState(0);
+
+  // 🔥 FIX: start with estimated width instead of 0
+  const [trackWidth, setTrackWidth] = useState(ESTIMATED_TRACK_WIDTH);
 
   const letterTimers = useRef([]);
 
@@ -153,12 +168,11 @@ export default function TopNav() {
         style={styles.navTrack}
         onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
       >
-        {/* ✅ ONLY SHOW underline if a top tab is active */}
         {currentIndex >= 0 && (
           <Animated.View
             style={[
               styles.navUnderlineActive,
-              trackWidth > 0 && {
+              {
                 width: stepWidth,
                 transform: [{ translateX }],
               },

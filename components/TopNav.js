@@ -14,20 +14,22 @@ export default function TopNav() {
     { label: "Accounts", route: "/accounts" },
   ];
 
+  // ✅ updated to support nested routes + allow "no active tab"
   const getIndexFromPath = () => {
-    const foundIndex = tabs.findIndex((tab) => tab.route === pathname);
-    return foundIndex >= 0 ? foundIndex : 0;
+    const foundIndex = tabs.findIndex((tab) =>
+      pathname.startsWith(tab.route)
+    );
+    return foundIndex >= 0 ? foundIndex : -1;
   };
 
   const currentIndex = getIndexFromPath();
 
-  // 🔥 instantly correct on mount (no delay)
-  const underlineAnim = useRef(new Animated.Value(currentIndex)).current;
+  const underlineAnim = useRef(new Animated.Value(currentIndex >= 0 ? currentIndex : 0)).current;
   const widthScale = useRef(new Animated.Value(1)).current;
 
   const [selectedIndex, setSelectedIndex] = useState(currentIndex);
   const [selectedLetterCount, setSelectedLetterCount] = useState(
-    tabs[currentIndex].label.length
+    currentIndex >= 0 ? tabs[currentIndex].label.length : 0
   );
   const [selectedDirection, setSelectedDirection] = useState("ltr");
   const [trackWidth, setTrackWidth] = useState(0);
@@ -40,13 +42,14 @@ export default function TopNav() {
   };
 
   useEffect(() => {
-    // 🔥 NO animation here — instant sync
-    underlineAnim.setValue(currentIndex);
+    underlineAnim.setValue(currentIndex >= 0 ? currentIndex : 0);
     widthScale.setValue(1);
 
     setSelectedIndex(currentIndex);
     setSelectedDirection("ltr");
-    setSelectedLetterCount(tabs[currentIndex].label.length);
+    setSelectedLetterCount(
+      currentIndex >= 0 ? tabs[currentIndex].label.length : 0
+    );
 
     return () => clearLetterTimers();
   }, [currentIndex]);
@@ -72,7 +75,7 @@ export default function TopNav() {
   };
 
   const goToTab = (index, route) => {
-    const fromIndex = currentIndex;
+    const fromIndex = currentIndex >= 0 ? currentIndex : 0;
 
     const totalDuration = index === 0 ? 320 : 110;
 
@@ -96,7 +99,7 @@ export default function TopNav() {
     });
   };
 
-  const stepWidth = trackWidth / 5;
+  const stepWidth = trackWidth / tabs.length;
 
   const translateX = underlineAnim.interpolate({
     inputRange: [0, 1, 2, 3, 4],
@@ -150,15 +153,18 @@ export default function TopNav() {
         style={styles.navTrack}
         onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
       >
-        <Animated.View
-          style={[
-            styles.navUnderlineActive,
-            trackWidth > 0 && {
-              width: stepWidth,
-              transform: [{ translateX }],
-            },
-          ]}
-        />
+        {/* ✅ ONLY SHOW underline if a top tab is active */}
+        {currentIndex >= 0 && (
+          <Animated.View
+            style={[
+              styles.navUnderlineActive,
+              trackWidth > 0 && {
+                width: stepWidth,
+                transform: [{ translateX }],
+              },
+            ]}
+          />
+        )}
       </View>
     </View>
   );

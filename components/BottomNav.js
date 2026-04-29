@@ -11,7 +11,18 @@ export default function BottomNav() {
     if (pathname === "/notifications") return "notifications";
     if (pathname === "/rewards") return "rewards";
     if (pathname === "/stats") return "stats";
-    return pathname === "/" || pathname === "/loadin" ? "home" : "";
+
+    // TopNav pages should NOT make Home blue
+    if (
+      pathname === "/debt" ||
+      pathname === "/spending" ||
+      pathname === "/credit" ||
+      pathname === "/accounts"
+    ) {
+      return "";
+    }
+
+    return "";
   })();
 
   return (

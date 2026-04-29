@@ -49,32 +49,32 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  bellButton: {
-    width: ICON_SIZE,
-    height: ICON_SIZE,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+bellButton: {
+  width: 44,
+  height: 44,
+  alignItems: "center",
+  justifyContent: "center",
+},
 
   bellIcon: {
     width: ICON_SIZE,
     height: ICON_SIZE,
   },
 
-  menuButton: {
-    width: ICON_SIZE,
-    height: ICON_SIZE,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 8,
-  },
+menuButton: {
+  width: 44,
+  height: 44,
+  alignItems: "center",
+  justifyContent: "center",
+  marginLeft: 8,
+},
 
-  menuDots: {
-    color: "#FFFFFF",
-    fontSize: ICON_SIZE,
-    lineHeight: ICON_SIZE,
-    fontWeight: "700",
-  },
+menuDots: {
+  color: "#FFFFFF",
+  fontSize: ICON_SIZE,
+  lineHeight: ICON_SIZE,
+  fontWeight: "700",
+},
 
   overlay: {
     position: "absolute",

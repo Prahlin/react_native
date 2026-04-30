@@ -26,59 +26,59 @@ export default StyleSheet.create({
     overflow: "hidden",
   },
 
-  /* 🔵 BLUE ELLIPSES (already correct) */
+  /* 🔵 BLUE ELLIPSES */
 
   bgEllipse1: {
-  position: "absolute",
-  top: "2%",
-  left: "2%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  borderWidth: 3,
-  zIndex: -5,
-  borderColor: "#3E4BB5",
-},
+    position: "absolute",
+    top: "2%",
+    left: "2%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    borderWidth: 3,
+    zIndex: -5,
+    borderColor: "#3E4BB5",
+  },
 
-bgEllipse2: {
-  position: "absolute",
-  top: "2%",
-  right: "2%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  borderWidth: 3,
-  zIndex: -5,
-  borderColor: "#3E4BB5",
-},
+  bgEllipse2: {
+    position: "absolute",
+    top: "2%",
+    right: "2%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    borderWidth: 3,
+    zIndex: -5,
+    borderColor: "#3E4BB5",
+  },
 
-bgEllipse3: {
-  position: "absolute",
-  bottom: "20%",
-  left: "3.5%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: -5,
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
+  bgEllipse3: {
+    position: "absolute",
+    bottom: "20%",
+    left: "3.5%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: -5,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+  },
 
-bgEllipse4: {
-  position: "absolute",
-  bottom: "20%",
-  right: "3.5%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: -5,
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-},
+  bgEllipse4: {
+    position: "absolute",
+    bottom: "20%",
+    right: "3.5%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: -5,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+  },
 
   ellipseLeftSide: {
     position: "absolute",
@@ -132,35 +132,35 @@ bgEllipse4: {
     borderColor: "#3E4BB5",
   },
 
-  /* 🟡 YELLOW ELLIPSES — FIXED (THIS WAS YOUR ISSUE) */
+  /* 🟡 YELLOW ELLIPSES */
 
- ellipseTopLeft: {
-  position: "absolute",
-  top: "2%",
-  left: "2%",
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  overflow: "hidden",
-  borderWidth: 3,
-  borderColor: "#D4A017",
-},
+  ellipseTopLeft: {
+    position: "absolute",
+    top: "2%",
+    left: "2%",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "#D4A017",
+  },
 
-ellipseTop: {
-  position: "absolute",
-  top: "2%",
-  right: "2%",
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  overflow: "hidden",
-  borderWidth: 3,
-  borderColor: "#D4A017",
-},
+  ellipseTop: {
+    position: "absolute",
+    top: "2%",
+    right: "2%",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "#D4A017",
+  },
 
 ellipseMiddleLeft: {
   position: "absolute",
-  top: "26%",
+  top: "34%",
   left: "4%",
   width: 300,
   height: 300,
@@ -173,7 +173,7 @@ ellipseMiddleLeft: {
 
 ellipseMiddle: {
   position: "absolute",
-  top: "26%",
+  top: "34%",
   right: "4%",
   width: 300,
   height: 300,
@@ -184,33 +184,51 @@ ellipseMiddle: {
   borderColor: "#D4A017",
 },
 
-ellipseBottomLeft: {
-  position: "absolute",
-  bottom: "2%",
-  left: "2%",
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  overflow: "hidden",
-  zIndex: -2,
-  borderWidth: 3,
-  borderColor: "#D4A017",
-},
+  ellipseBottomLeft: {
+    position: "absolute",
+    bottom: "2%",
+    left: "2%",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    overflow: "hidden",
+    zIndex: -2,
+    borderWidth: 3,
+    borderColor: "#D4A017",
+  },
 
-ellipseBottom: {
-  position: "absolute",
-  bottom: "2%",
-  right: "2%",
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  overflow: "hidden",
-  zIndex: -2,
-  borderWidth: 3,
-  borderColor: "#D4A017",
-},
+  ellipseBottom: {
+    position: "absolute",
+    bottom: "2%",
+    right: "2%",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    overflow: "hidden",
+    zIndex: -2,
+    borderWidth: 3,
+    borderColor: "#D4A017",
+  },
 
-  /* CARD */
+  /* 🔹 DOT LAYER (NEUTRAL — COLOR COMES FROM index.js) */
+
+  ellipseDotsLayer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+
+  ellipseDot: {
+    position: "absolute",
+    width: 3,
+    height: 3,
+    borderRadius: 1.5,
+    opacity: 0.1,
+  },
+
+  /* 🔲 CARD */
 
   card: {
     width: "80%",
@@ -234,8 +252,6 @@ ellipseBottom: {
     alignItems: "flex-end",
     marginBottom: 40,
   },
-
-
 
   input: {
     flex: 1,
@@ -277,7 +293,7 @@ ellipseBottom: {
     fontSize: 14,
   },
 
-  /* LOGO */
+  /* 🔰 LOGO (UNCHANGED) */
 
   logoContainer: {
     width: "100%",
@@ -349,15 +365,15 @@ ellipseBottom: {
     zIndex: 3,
   },
 
-crown: {
-  position: "absolute",
-  left: 53,
-  top: 20,
-  width: 90,
-  height: 52,
-  resizeMode: "contain",
-  zIndex: 4,
-},
+  crown: {
+    position: "absolute",
+    left: 53,
+    top: 20,
+    width: 90,
+    height: 52,
+    resizeMode: "contain",
+    zIndex: 4,
+  },
 
   logoTextGroup: {
     justifyContent: "center",

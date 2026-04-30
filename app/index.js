@@ -18,25 +18,21 @@ import styles from "../styles/indexStyles";
 
 export default function Index() {
   const [remember, setRemember] = useState(false);
-  const [cardHeight, setCardHeight] = useState(0);
 
   const { fromLoadout } = useLocalSearchParams();
 
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;
 
-  // 🔹 Horizontal (used only after logout)
   const slideXAnim = useRef(
     new Animated.Value(fromLoadout === "1" ? screenWidth : 0)
   ).current;
 
-  // 🔹 Vertical (used only on first app open)
   const slideYAnim = useRef(
     new Animated.Value(fromLoadout === "1" ? 0 : -screenHeight)
   ).current;
 
   useEffect(() => {
-    // 🔸 Logout → horizontal animation
     if (fromLoadout === "1") {
       Animated.sequence([
         Animated.timing(slideXAnim, {
@@ -64,7 +60,6 @@ export default function Index() {
       return;
     }
 
-    // 🔸 First app open → vertical animation
     Animated.sequence([
       Animated.timing(slideYAnim, {
         toValue: 18,
@@ -87,7 +82,7 @@ export default function Index() {
         useNativeDriver: true,
       }),
     ]).start();
-  }, [fromLoadout]);
+  }, [fromLoadout, slideXAnim, slideYAnim]);
 
   const dots = [
     [65, 51], [70, 51], [75, 51], [80, 51], [85, 51], [90, 51], [95, 51],
@@ -102,43 +97,72 @@ export default function Index() {
     [70, 96], [75, 96], [80, 96], [85, 96], [90, 96],
   ];
 
-  const renderGradientEllipse = (style, flip = false) => {
-    const borderWidth = style.borderWidth ?? 3;
-    const borderRadius = style.borderRadius ?? 100;
+  const DOT_GAP = 5;
+
+  const EllipseDots = ({ width, height, color }) => {
+    const arr = [];
+
+    for (let y = 0; y <= height; y += DOT_GAP) {
+      for (let x = 0; x <= width; x += DOT_GAP) {
+        arr.push(
+          <View
+            key={`${x}-${y}`}
+            pointerEvents="none"
+            style={[
+              styles.ellipseDot,
+              {
+                left: x,
+                top: y,
+                backgroundColor: color,
+              },
+            ]}
+          />
+        );
+      }
+    }
 
     return (
-      <View
-        style={[
-          style,
-          {
-            backgroundColor: "#3E4BB5",
-            borderWidth: 0,
-            padding: borderWidth,
-            overflow: "hidden",
-          },
-        ]}
-      >
-        <LinearGradient
-          colors={["#AAB4FF", "#5F6FE8"]}
-          start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
-          end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
-          style={{
-            flex: 1,
-            borderRadius: borderRadius - borderWidth,
-          }}
-        />
+      <View pointerEvents="none" style={styles.ellipseDotsLayer}>
+        {arr}
       </View>
     );
   };
 
-  const renderYellowEllipse = (style, flipVertical = false) => (
-    <LinearGradient
-      colors={["#FFF200", "#FFC700"]}
-      start={{ x: 0, y: flipVertical ? 0 : 1 }}
-      end={{ x: 0, y: flipVertical ? 1 : 0 }}
-      style={style}
-    />
-  );
+  const renderGradientEllipse = (style, flip = false) => {
+    const width = style.width ?? 200;
+    const height = style.height ?? 200;
+
+    return (
+      <View pointerEvents="none" style={[style, { overflow: "hidden" }]}>
+        <LinearGradient
+          pointerEvents="none"
+          colors={["#AAB4FF", "#5F6FE8"]}
+          start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
+          end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
+          style={{ flex: 1 }}
+        >
+          <EllipseDots width={width} height={height} color="#3E4BB5" />
+        </LinearGradient>
+      </View>
+    );
+  };
+
+  const renderYellowEllipse = (style, flipVertical = false) => {
+    const width = style.width ?? 300;
+    const height = style.height ?? 300;
+
+    return (
+      <LinearGradient
+        pointerEvents="none"
+        colors={["#FFF200", "#FFC700"]}
+        start={{ x: 0, y: flipVertical ? 0 : 1 }}
+        end={{ x: 0, y: flipVertical ? 1 : 0 }}
+        style={[style, { overflow: "hidden" }]}
+      >
+        <EllipseDots width={width} height={height} color="#8C6A00" />
+      </LinearGradient>
+    );
+  };
 
   return (
     <Animated.View
@@ -171,16 +195,13 @@ export default function Index() {
           {renderYellowEllipse(styles.ellipseTop)}
           {renderYellowEllipse(styles.ellipseTopLeft)}
 
-          {renderYellowEllipse([styles.ellipseMiddle, { top: cardHeight / 2 - 80 }])}
-          {renderYellowEllipse([styles.ellipseMiddleLeft, { top: cardHeight / 2 - 80 }])}
+          {renderYellowEllipse(styles.ellipseMiddle)}
+          {renderYellowEllipse(styles.ellipseMiddleLeft)}
 
           {renderYellowEllipse(styles.ellipseBottom, true)}
           {renderYellowEllipse(styles.ellipseBottomLeft, true)}
 
-          <View
-            style={styles.card}
-            onLayout={(e) => setCardHeight(e.nativeEvent.layout.height)}
-          >
+          <View style={styles.card}>
             <View style={{ flex: 1, justifyContent: "center" }}>
               <View style={styles.logoContainer}>
                 <View style={styles.coinGroup}>
@@ -199,7 +220,10 @@ export default function Index() {
                         key={i}
                         style={[
                           styles.coinDot,
-                          { left: `${left}%`, top: `${top}%` },
+                          {
+                            left: `${left}%`,
+                            top: `${top}%`,
+                          },
                         ]}
                       />
                     ))}

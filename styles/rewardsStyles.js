@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
   },
 
   scrollContent: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
   },
 
   dashboardHomeScreenContainer: {
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   _welcomeSteve: {
     color: "#fff",
     fontSize: 16,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -123,15 +124,20 @@ const styles = StyleSheet.create({
   star: {
     color: "#FFD700",
     fontSize: 12,
+    fontFamily: "Inter",
+    fontWeight: "700",
   },
 
   dateText: {
     fontSize: 10,
     color: "#444444",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   titleText: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
@@ -141,6 +147,8 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 16,
     color: "#444444",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   linkText: {
@@ -148,6 +156,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#6A79D1",
     textAlign: "center",
+    fontFamily: "Inter",
     fontWeight: "500",
   },
 
@@ -194,6 +203,7 @@ const styles = StyleSheet.create({
     top: -1,
     color: "#FFFFFF",
     fontSize: 8,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 
@@ -205,9 +215,7 @@ const styles = StyleSheet.create({
   },
 
   ellipse16: {},
-
   ellipse17: {},
-
   ellipse18: {},
 });
 

@@ -1,7 +1,4 @@
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
-import BottomNav from "../components/BottomNav";
-import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
 import styles from "../styles/rewardsStyles";
 
 const rewardItems = [
@@ -73,7 +70,7 @@ export default function Rewards() {
       <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: 64 }]}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: 151 }]}
       >
         <ImageBackground
           style={styles.dashboardHomeScreenContainer}
@@ -81,16 +78,11 @@ export default function Rewards() {
           resizeMode="cover"
         >
           <View style={styles.mainContent}>
-            <TopNav currentIndex={0} />
             <RewardsCard />
-
             <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>
       </ScrollView>
-
-      <HeaderBar />
-      <BottomNav activeTab="rewards" />
     </View>
   );
 }

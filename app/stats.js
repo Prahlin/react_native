@@ -1,7 +1,4 @@
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
-import BottomNav from "../components/BottomNav";
-import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
 import styles from "../styles/statsStyles";
 
 export default function Stats() {
@@ -9,7 +6,7 @@ export default function Stats() {
     <View style={styles.screen}>
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: 64 }]}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: 151 }]}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
@@ -19,8 +16,6 @@ export default function Stats() {
           resizeMode="cover"
         >
           <View style={styles.mainContent}>
-            <TopNav currentIndex={0} />
-
             <View style={styles.frameRewards}>
               <View style={styles.heroWrap}>
                 <Image
@@ -131,9 +126,6 @@ export default function Stats() {
           </View>
         </ImageBackground>
       </ScrollView>
-
-      <HeaderBar />
-      <BottomNav activeTab="stats" />
     </View>
   );
 }

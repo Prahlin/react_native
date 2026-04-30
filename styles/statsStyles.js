@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
   },
 
   scrollContent: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
   },
 
   dashboardHomeScreenContainer: {
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
 
   sectionHeader: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#000000",
     textAlign: "center",
@@ -91,12 +92,14 @@ const styles = StyleSheet.create({
 
   label: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "400",
     color: "#000000",
   },
 
   value: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "400",
     color: "#000000",
     textAlign: "right",
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
 
   valuePrimary: {
     fontSize: 18,
+    fontFamily: "Inter",
     fontWeight: "400",
     color: "#000000",
     textAlign: "right",
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
 
   valueSecondary: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "400",
     color: "#000000",
     textAlign: "right",

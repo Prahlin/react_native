@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
   },
 
   scrollContent: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
   },
 
   dashboardHomeScreenContainer: {
@@ -29,55 +29,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     gap: 8,
     zIndex: 1,
-  },
-
-  stickyHeaderWrap: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 20,
-  },
-
-  welcomeSteve: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 68,
-    backgroundColor: "#97A2FE",
-  },
-
-  bG: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 0,
-    backgroundColor: "transparent",
-  },
-
-  time: {
-    display: "none",
-  },
-
-  frame188: {
-    display: "none",
-  },
-
-  frame189: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-
-  _welcomeSteve: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
   },
 
   frameNotifications: {
@@ -124,15 +75,20 @@ const styles = StyleSheet.create({
   star: {
     color: "#A9ADB6",
     fontSize: 12,
+    fontFamily: "Inter",
+    fontWeight: "700",
   },
 
   dateText: {
     fontSize: 10,
     color: "#444444",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   titleText: {
     fontSize: 12,
+    fontFamily: "Inter",
     fontWeight: "900",
     color: "#111111",
   },
@@ -142,6 +98,8 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 16,
     color: "#444444",
+    fontFamily: "Inter",
+    fontWeight: "400",
   },
 
   linkText: {
@@ -149,8 +107,11 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#6A79D1",
     textAlign: "center",
+    fontFamily: "Inter",
     fontWeight: "500",
   },
+
+  /* background twirls (unchanged but cleaned) */
 
   twirlbackgroundPNG1: {
     position: "absolute",
@@ -169,6 +130,8 @@ const styles = StyleSheet.create({
     right: -70,
     opacity: 0.16,
   },
+
+  /* notification icon animation bits */
 
   notificationListAnimation: {
     width: 22,
@@ -195,6 +158,7 @@ const styles = StyleSheet.create({
     top: -1,
     color: "#FFFFFF",
     fontSize: 8,
+    fontFamily: "Inter",
     fontWeight: "700",
   },
 

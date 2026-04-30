@@ -19,9 +19,10 @@ export default function RootLayout() {
       {/* 🔵 HEADER */}
       {!hideNav && <HeaderBar />}
 
-      {/* 🔵 TOP NAV (overlay, no white gap) */}
+      {/* 🔵 TOP NAV (fixed overlay) */}
       {!hideNav && (
         <View
+          pointerEvents="box-none" // ✅ IMPORTANT FIX
           style={{
             position: "absolute",
             top: 80,

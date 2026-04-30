@@ -29,7 +29,8 @@ export default function TopNav() {
       pathname.startsWith(tab.route)
     );
 
-    return foundIndex >= 0 ? foundIndex : 0;
+    // 🔴 KEY FIX: return -1 instead of 0
+    return foundIndex >= 0 ? foundIndex : -1;
   };
 
   const routeIndex = getIndexFromPath();
@@ -37,26 +38,28 @@ export default function TopNav() {
   const [activeIndex, setActiveIndex] = useState(routeIndex);
   const [trackWidth, setTrackWidth] = useState(ESTIMATED_TRACK_WIDTH);
 
-  const underlineAnim = useRef(new Animated.Value(routeIndex)).current;
+  const underlineAnim = useRef(
+    new Animated.Value(routeIndex >= 0 ? routeIndex : 0)
+  ).current;
 
   useEffect(() => {
     setActiveIndex(routeIndex);
 
-    Animated.timing(underlineAnim, {
-      toValue: routeIndex,
-      duration: 120,
-      easing: Easing.out(Easing.cubic),
-      useNativeDriver: false,
-    }).start();
+    if (routeIndex >= 0) {
+      Animated.timing(underlineAnim, {
+        toValue: routeIndex,
+        duration: 120,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: false,
+      }).start();
+    }
   }, [routeIndex]);
 
   const goToTab = (index, route) => {
     if (index === activeIndex) return;
 
-    // ✅ text changes immediately
     setActiveIndex(index);
 
-    // ✅ underline moves immediately
     Animated.timing(underlineAnim, {
       toValue: index,
       duration: 120,
@@ -64,7 +67,6 @@ export default function TopNav() {
       useNativeDriver: false,
     }).start();
 
-    // ✅ route changes without waiting for animation
     router.replace(route);
   };
 
@@ -83,6 +85,7 @@ export default function TopNav() {
 
   return (
     <View style={styles.frame155}>
+      {/* 🔵 Tabs */}
       <View style={styles.topNav}>
         {tabs.map((tab, index) => (
           <Pressable
@@ -104,19 +107,22 @@ export default function TopNav() {
         ))}
       </View>
 
+      {/* 🔵 Underline */}
       <View
         style={styles.navTrack}
         onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
       >
-        <Animated.View
-          style={[
-            styles.navUnderlineActive,
-            {
-              width: stepWidth,
-              transform: [{ translateX }],
-            },
-          ]}
-        />
+        {activeIndex >= 0 && (
+          <Animated.View
+            style={[
+              styles.navUnderlineActive,
+              {
+                width: stepWidth,
+                transform: [{ translateX }],
+              },
+            ]}
+          />
+        )}
       </View>
     </View>
   );

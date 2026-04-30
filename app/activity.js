@@ -1,53 +1,16 @@
 import { ImageBackground, ScrollView, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import BottomNav from "../components/BottomNav";
-import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
 import styles from "../styles/activityStyles";
 
 const activityItems = [
-  {
-    date: "Oct 31",
-    title: "TransUnion credit score decreased",
-    value: "-2",
-    tone: "down",
-  },
-  {
-    date: "Oct 30",
-    title: "Credit card debt increased",
-    value: "$263",
-    tone: "up",
-  },
-  {
-    date: "Oct 28",
-    title: "Credit limit increase approved",
-    value: "Chase",
-    tone: "star",
-  },
-  {
-    date: "Oct 26",
-    title: "Credit card debt decreased",
-    value: "$141",
-    tone: "downGood",
-  },
-  {
-    date: "Oct 25",
-    title: "Equifax credit score decreased",
-    value: "-3",
-    tone: "down",
-  },
-  {
-    date: "Oct 22",
-    title: "Credit card debt decreased",
-    value: "$288",
-    tone: "downGood",
-  },
-  {
-    date: "Oct 21",
-    title: "Property loan approved",
-    value: "Citibank",
-    tone: "star",
-  },
+  { date: "Oct 31", title: "TransUnion credit score decreased", value: "-2", tone: "down" },
+  { date: "Oct 30", title: "Credit card debt increased", value: "$263", tone: "up" },
+  { date: "Oct 28", title: "Credit limit increase approved", value: "Chase", tone: "star" },
+  { date: "Oct 26", title: "Credit card debt decreased", value: "$141", tone: "downGood" },
+  { date: "Oct 25", title: "Equifax credit score decreased", value: "-3", tone: "down" },
+  { date: "Oct 22", title: "Credit card debt decreased", value: "$288", tone: "downGood" },
+  { date: "Oct 21", title: "Property loan approved", value: "Citibank", tone: "star" },
 ];
 
 function PulseIcon() {
@@ -65,10 +28,7 @@ function PulseIcon() {
 }
 
 function TrendMarker({ tone }) {
-  if (tone === "up") {
-    return <Text style={styles.markerUp}>▲</Text>;
-  }
-
+  if (tone === "up") return <Text style={styles.markerUp}>▲</Text>;
   if (tone === "down" || tone === "downGood") {
     return (
       <Text style={tone === "downGood" ? styles.markerDownGood : styles.markerDown}>
@@ -76,7 +36,6 @@ function TrendMarker({ tone }) {
       </Text>
     );
   }
-
   return <Text style={styles.markerStar}>★</Text>;
 }
 
@@ -115,7 +74,7 @@ export default function Activity() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: 64 },
+          { paddingTop: 151 }, // matches layout overlay
         ]}
       >
         <ImageBackground
@@ -124,15 +83,13 @@ export default function Activity() {
           resizeMode="cover"
         >
           <View style={styles.mainContent}>
-            <TopNav currentIndex={0} />
             <ActivityCard />
-
             <View style={styles.bottomSpacer} />
           </View>
         </ImageBackground>
       </ScrollView>
 
-      <HeaderBar />
+      {/* ✅ ONLY bottom nav lives here */}
       <BottomNav activeTab="activity" />
     </View>
   );

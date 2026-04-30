@@ -1,5 +1,5 @@
 import { Slot, usePathname } from "expo-router";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import BottomNav from "../components/BottomNav";
 import HeaderBar from "../components/HeaderBar";
 import TopNav from "../components/TopNav";
@@ -22,7 +22,7 @@ export default function RootLayout() {
       {/* 🔵 TOP NAV (fixed overlay) */}
       {!hideNav && (
         <View
-          pointerEvents="box-none" // ✅ IMPORTANT FIX
+          pointerEvents="box-none"
           style={{
             position: "absolute",
             top: 80,
@@ -40,7 +40,14 @@ export default function RootLayout() {
       )}
 
       {/* 🔵 SCREEN CONTENT */}
-      <Slot />
+      <View
+        style={{
+          flex: 1,
+          paddingTop: !hideNav && Platform.OS === "web" ? 10 : 0,
+        }}
+      >
+        <Slot />
+      </View>
 
       {/* 🔵 BOTTOM NAV */}
       {!hideNav && <BottomNav />}

@@ -304,7 +304,7 @@ ellipseBottom: {
     width: 76,
     height: 76,
     borderRadius: 38,
-    backgroundColor: "#7E8CF5",
+    backgroundColor: "#3E4BB5",
     borderWidth: 3.5,
     borderColor: "#000000",
     zIndex: 0,
@@ -336,7 +336,7 @@ ellipseBottom: {
     height: 3,
     borderRadius: 1.5,
     backgroundColor: "#3E4BB5",
-    opacity: 0.5,
+    opacity: 0.2,
   },
 
   dollar: {

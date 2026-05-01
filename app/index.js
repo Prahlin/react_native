@@ -98,6 +98,7 @@ export default function Index() {
   ];
 
   const DOT_GAP = 5;
+  const OUTER_BORDER_WIDTH = 3;
 
   const EllipseDots = ({ width, height, color }) => {
     const arr = [];
@@ -128,22 +129,47 @@ export default function Index() {
     );
   };
 
+const renderBlackOuterBorder = (style) => {
+  const scaleX = (style.width + OUTER_BORDER_WIDTH * 2) / style.width;
+  const scaleY = (style.height + OUTER_BORDER_WIDTH * 2) / style.height;
+
+  return (
+    <View
+      pointerEvents="none"
+      style={[
+        style,
+        {
+          backgroundColor: "transparent",
+          borderWidth: OUTER_BORDER_WIDTH,
+          borderColor: "rgba(17,17,17,0.7)",
+          zIndex: (style.zIndex ?? 0) - 1,
+          transform: [{ scaleX }, { scaleY }],
+        },
+      ]}
+    />
+  );
+};
+
   const renderGradientEllipse = (style, flip = false) => {
     const width = style.width ?? 200;
     const height = style.height ?? 200;
 
     return (
-      <View pointerEvents="none" style={[style, { overflow: "hidden" }]}>
-        <LinearGradient
-          pointerEvents="none"
-          colors={["#AAB4FF", "#5F6FE8"]}
-          start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
-          end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
-          style={{ flex: 1 }}
-        >
-          <EllipseDots width={width} height={height} color="#3E4BB5" />
-        </LinearGradient>
-      </View>
+      <>
+        {renderBlackOuterBorder(style)}
+
+        <View pointerEvents="none" style={[style, { overflow: "hidden" }]}>
+          <LinearGradient
+            pointerEvents="none"
+            colors={["#AAB4FF", "#5F6FE8"]}
+            start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
+            end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
+            style={{ flex: 1 }}
+          >
+            <EllipseDots width={width} height={height} color="#3E4BB5" />
+          </LinearGradient>
+        </View>
+      </>
     );
   };
 
@@ -152,15 +178,19 @@ export default function Index() {
     const height = style.height ?? 300;
 
     return (
-      <LinearGradient
-        pointerEvents="none"
-        colors={["#FFF200", "#FFC700"]}
-        start={{ x: 0, y: flipVertical ? 0 : 1 }}
-        end={{ x: 0, y: flipVertical ? 1 : 0 }}
-        style={[style, { overflow: "hidden" }]}
-      >
-        <EllipseDots width={width} height={height} color="#8C6A00" />
-      </LinearGradient>
+      <>
+        {renderBlackOuterBorder(style)}
+
+        <LinearGradient
+          pointerEvents="none"
+          colors={["#FFF200", "#FFC700"]}
+          start={{ x: 0, y: flipVertical ? 0 : 1 }}
+          end={{ x: 0, y: flipVertical ? 1 : 0 }}
+          style={[style, { overflow: "hidden" }]}
+        >
+          <EllipseDots width={width} height={height} color="#8C6A00" />
+        </LinearGradient>
+      </>
     );
   };
 

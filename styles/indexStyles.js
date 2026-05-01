@@ -2,11 +2,6 @@ import { Platform, StyleSheet } from "react-native";
 
 const isWeb = Platform.OS === "web";
 
-/*
-  WEB = midpoint version.
-  ANDROID / IOS = previous more-inward version.
-*/
-
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -61,54 +56,54 @@ export default StyleSheet.create({
     borderColor: "#3E4BB5",
   },
 
-  bgEllipse3: {
-    position: "absolute",
-    bottom: isWeb ? "16.75%" : "13.5%",
-    left: isWeb ? "5.125%" : "6.75%",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    overflow: "hidden",
-    zIndex: -5,
-    borderWidth: 3,
-    borderColor: "#3E4BB5",
-  },
+bgEllipse3: {
+  position: "absolute",
+  bottom: isWeb ? "16.75%" : "27.5%",
+  left: isWeb ? "5.125%" : "6.75%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: -5,
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
 
-  bgEllipse4: {
-    position: "absolute",
-    bottom: isWeb ? "16.75%" : "13.5%",
-    right: isWeb ? "5.125%" : "6.75%",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    overflow: "hidden",
-    zIndex: -5,
-    borderWidth: 3,
-    borderColor: "#3E4BB5",
-  },
+bgEllipse4: {
+  position: "absolute",
+  bottom: isWeb ? "16.75%" : "27.5%",
+  right: isWeb ? "5.125%" : "6.75%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: -5,
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+},
 
   ellipseLeftSide: {
     position: "absolute",
-    top: "25%",
+    top: isWeb ? "16.75%" : "13.5%",
     left: isWeb ? "5.125%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
     overflow: "hidden",
-    zIndex: 1,
+    zIndex: -5,
     borderWidth: 3,
     borderColor: "#3E4BB5",
   },
 
   ellipseRightSide: {
     position: "absolute",
-    top: "25%",
+    top: isWeb ? "16.75%" : "13.5%",
     right: isWeb ? "5.125%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
     overflow: "hidden",
-    zIndex: 1,
+    zIndex: -5,
     borderWidth: 3,
     borderColor: "#3E4BB5",
   },
@@ -121,7 +116,7 @@ export default StyleSheet.create({
     height: 200,
     borderRadius: 100,
     overflow: "hidden",
-    zIndex: -3,
+    zIndex: -5,
     borderWidth: 3,
     borderColor: "#3E4BB5",
   },
@@ -134,7 +129,7 @@ export default StyleSheet.create({
     height: 200,
     borderRadius: 100,
     overflow: "hidden",
-    zIndex: -3,
+    zIndex: -5,
     borderWidth: 3,
     borderColor: "#3E4BB5",
   },
@@ -167,7 +162,7 @@ export default StyleSheet.create({
 
   ellipseMiddleLeft: {
     position: "absolute",
-    top: "34%",
+    top: "50%",
     left: isWeb ? "5.5%" : "7%",
     width: 300,
     height: 300,
@@ -176,11 +171,12 @@ export default StyleSheet.create({
     zIndex: 4,
     borderWidth: 3,
     borderColor: "#D4A017",
+    transform: [{ translateY: -150 }],
   },
 
   ellipseMiddle: {
     position: "absolute",
-    top: "34%",
+    top: "50%",
     right: isWeb ? "5.5%" : "7%",
     width: 300,
     height: 300,
@@ -189,6 +185,7 @@ export default StyleSheet.create({
     zIndex: 4,
     borderWidth: 3,
     borderColor: "#D4A017",
+    transform: [{ translateY: -150 }],
   },
 
   ellipseBottomLeft: {
@@ -199,7 +196,6 @@ export default StyleSheet.create({
     height: 300,
     borderRadius: 150,
     overflow: "hidden",
-    zIndex: -2,
     borderWidth: 3,
     borderColor: "#D4A017",
   },
@@ -212,12 +208,11 @@ export default StyleSheet.create({
     height: 300,
     borderRadius: 150,
     overflow: "hidden",
-    zIndex: -2,
     borderWidth: 3,
     borderColor: "#D4A017",
   },
 
-  /* 🔹 DOT LAYER */
+  /* DOTS */
 
   ellipseDotsLayer: {
     position: "absolute",
@@ -235,7 +230,7 @@ export default StyleSheet.create({
     opacity: 0.1,
   },
 
-  /* 🔲 CARD */
+  /* CARD */
 
   card: {
     width: "80%",
@@ -297,8 +292,6 @@ export default StyleSheet.create({
     fontWeight: "800",
     fontSize: 14,
   },
-
-  /* 🔰 LOGO */
 
   logoContainer: {
     width: "100%",

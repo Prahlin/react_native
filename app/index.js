@@ -143,7 +143,11 @@ export default function Index() {
             borderWidth: OUTER_BORDER_WIDTH,
             borderColor: "rgba(17,17,17,0.7)",
             zIndex: (style.zIndex ?? 0) - 1,
-            transform: [{ scaleX }, { scaleY }],
+            transform: [
+              ...(style.transform || []),
+              { scaleX },
+              { scaleY },
+            ],
           },
         ]}
       />

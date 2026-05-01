@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Dimensions,
@@ -8,16 +8,95 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Svg, { Circle, Defs, Pattern, Rect } from "react-native-svg";
 
 import TwirlBackground from "../components/TwirlBackground";
 import styles from "../styles/indexStyles";
 
-export default function Index() {
-  const [remember, setRemember] = useState(false);
+const DOT_GAP = 5;
+const OUTER_BORDER_WIDTH = 3;
 
+const EllipseDots = memo(({ color }) => {
+  return (
+    <View pointerEvents="none" style={styles.ellipseDotsLayer}>
+      <Svg width="100%" height="100%">
+        <Defs>
+          <Pattern
+            id="ellipseDotPattern"
+            x="0"
+            y="0"
+            width={DOT_GAP}
+            height={DOT_GAP}
+            patternUnits="userSpaceOnUse"
+          >
+            <Circle cx="1.5" cy="1.5" r="1.5" fill={color} opacity="0.1" />
+          </Pattern>
+        </Defs>
+
+        <Rect width="100%" height="100%" fill="url(#ellipseDotPattern)" />
+      </Svg>
+    </View>
+  );
+});
+
+const CustomSwitch = memo(() => {
+  const [checked, setChecked] = useState(false);
+  const switchAnim = useRef(new Animated.Value(0)).current;
+
+  const toggleSwitch = () => {
+    const next = !checked;
+    setChecked(next);
+
+    Animated.timing(switchAnim, {
+      toValue: next ? 1 : 0,
+      duration: 90,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={toggleSwitch}
+      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      style={{
+        width: 35,
+        height: 16,
+        borderRadius: 8,
+        backgroundColor: checked ? "#8D98F0" : "#D0D4DC",
+        justifyContent: "center",
+        zIndex: 20,
+        elevation: 20,
+      }}
+    >
+      <Animated.View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          width: 19,
+          height: 19,
+          borderRadius: 9.5,
+          backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
+          top: -1.6,
+          left: -1.6,
+          transform: [
+            {
+              translateX: switchAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 16],
+              }),
+            },
+          ],
+        }}
+      />
+    </TouchableOpacity>
+  );
+});
+
+export default function Index() {
   const { fromLoadout } = useLocalSearchParams();
 
   const screenWidth = Dimensions.get("window").width;
@@ -96,38 +175,6 @@ export default function Index() {
     [70, 96], [75, 96], [80, 96], [85, 96], [90, 96],
   ];
 
-  const DOT_GAP = 5;
-  const OUTER_BORDER_WIDTH = 3;
-
-  const EllipseDots = ({ width, height, color }) => {
-    const arr = [];
-
-    for (let y = 0; y <= height; y += DOT_GAP) {
-      for (let x = 0; x <= width; x += DOT_GAP) {
-        arr.push(
-          <View
-            key={`${x}-${y}`}
-            pointerEvents="none"
-            style={[
-              styles.ellipseDot,
-              {
-                left: x,
-                top: y,
-                backgroundColor: color,
-              },
-            ]}
-          />
-        );
-      }
-    }
-
-    return (
-      <View pointerEvents="none" style={styles.ellipseDotsLayer}>
-        {arr}
-      </View>
-    );
-  };
-
   const renderBlackOuterBorder = (style) => {
     const scaleX = (style.width + OUTER_BORDER_WIDTH * 2) / style.width;
     const scaleY = (style.height + OUTER_BORDER_WIDTH * 2) / style.height;
@@ -142,11 +189,7 @@ export default function Index() {
             borderWidth: OUTER_BORDER_WIDTH,
             borderColor: "rgba(17,17,17,0.7)",
             zIndex: (style.zIndex ?? 0) - 1,
-            transform: [
-              ...(style.transform || []),
-              { scaleX },
-              { scaleY },
-            ],
+            transform: [...(style.transform || []), { scaleX }, { scaleY }],
           },
         ]}
       />
@@ -154,9 +197,6 @@ export default function Index() {
   };
 
   const renderGradientEllipse = (style, flip = false) => {
-    const width = style.width ?? 200;
-    const height = style.height ?? 200;
-
     return (
       <>
         {renderBlackOuterBorder(style)}
@@ -169,7 +209,7 @@ export default function Index() {
             end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
             style={{ flex: 1 }}
           >
-            <EllipseDots width={width} height={height} color="#3E4BB5" />
+            <EllipseDots color="#3E4BB5" />
           </LinearGradient>
         </View>
       </>
@@ -177,9 +217,6 @@ export default function Index() {
   };
 
   const renderYellowEllipse = (style, flipVertical = false) => {
-    const width = style.width ?? 300;
-    const height = style.height ?? 300;
-
     return (
       <>
         {renderBlackOuterBorder(style)}
@@ -191,7 +228,7 @@ export default function Index() {
           end={{ x: 0, y: flipVertical ? 1 : 0 }}
           style={[style, { overflow: "hidden" }]}
         >
-          <EllipseDots width={width} height={height} color="#8C6A00" />
+          <EllipseDots color="#8C6A00" />
         </LinearGradient>
       </>
     );
@@ -281,7 +318,7 @@ export default function Index() {
               </View>
 
               <View style={styles.rememberRow}>
-<CustomSwitch value={remember} onValueChange={setRemember} />
+                <CustomSwitch />
                 <Text style={styles.rememberText}>Remember me</Text>
               </View>
 

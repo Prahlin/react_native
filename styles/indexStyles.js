@@ -273,6 +273,7 @@ rememberText: {
   marginLeft: 7,
   fontSize: 14,
   color: "#A5AAB4",
+  lineHeight: 20,
 },
 
   signInButton: {

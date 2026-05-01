@@ -1,6 +1,7 @@
 import { Platform, StyleSheet } from "react-native";
 
 const isWeb = Platform.OS === "web";
+const S = isWeb ? 1.35 : 1;
 
 export default StyleSheet.create({
   container: {
@@ -21,66 +22,65 @@ export default StyleSheet.create({
     backgroundColor: "#7887E8",
   },
 
-  stage: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-  },
+stage: {
+  flex: 1,
+  alignItems: "center",
+  justifyContent: "flex-end", // ⬅️ anchor card to bottom
+  paddingBottom: 40,          // ⬅️ keeps your original bottom gap
+  overflow: "hidden",
+},
 
-  /* 🔵 BLUE ELLIPSES */
-
-  bgEllipse1: {
-    position: "absolute",
-    top: isWeb ? "2.75%" : "3.5%",
-    left: isWeb ? "4.375%" : "6.75%",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    overflow: "hidden",
-    borderWidth: 3,
-    zIndex: -5,
-    borderColor: "#3E4BB5",
-  },
-
-  bgEllipse2: {
-    position: "absolute",
-    top: isWeb ? "2.75%" : "3.5%",
-    right: isWeb ? "4.375%" : "6.75%",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    overflow: "hidden",
-    borderWidth: 3,
-    zIndex: -5,
-    borderColor: "#3E4BB5",
-  },
-
-bgEllipse3: {
+bgEllipse1: {
   position: "absolute",
-  bottom: isWeb ? "16.75%" : "27.5%",
-  left: isWeb ? "5.125%" : "6.75%",
+  top: isWeb ? "12.75%" : "13.5%",
+  left: isWeb ? "4.375%" : "6.75%",
   width: 200,
   height: 200,
   borderRadius: 100,
   overflow: "hidden",
-  zIndex: -5,
   borderWidth: 3,
+  zIndex: -5,
   borderColor: "#3E4BB5",
 },
 
-bgEllipse4: {
+bgEllipse2: {
   position: "absolute",
-  bottom: isWeb ? "16.75%" : "27.5%",
-  right: isWeb ? "5.125%" : "6.75%",
+  top: isWeb ? "12.75%" : "13.5%",
+  right: isWeb ? "4.375%" : "6.75%",
   width: 200,
   height: 200,
   borderRadius: 100,
   overflow: "hidden",
-  zIndex: -5,
   borderWidth: 3,
+  zIndex: -5,
   borderColor: "#3E4BB5",
 },
+
+  bgEllipse3: {
+    position: "absolute",
+    bottom: "27.5%",
+    left: isWeb ? "5.125%" : "6.75%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: -5,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+  },
+
+  bgEllipse4: {
+    position: "absolute",
+    bottom: "27.5%",
+    right: isWeb ? "5.125%" : "6.75%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: -5,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+  },
 
   ellipseLeftSide: {
     position: "absolute",
@@ -134,31 +134,29 @@ bgEllipse4: {
     borderColor: "#3E4BB5",
   },
 
-  /* 🟡 YELLOW ELLIPSES */
+ellipseTopLeft: {
+  position: "absolute",
+  top: isWeb ? "12.75%" : "13.5%",
+  left: isWeb ? "4%" : "6%",
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: "hidden",
+  borderWidth: 3,
+  borderColor: "#D4A017",
+},
 
-  ellipseTopLeft: {
-    position: "absolute",
-    top: isWeb ? "2.75%" : "3.5%",
-    left: isWeb ? "4%" : "6%",
-    width: 300,
-    height: 300,
-    borderRadius: 150,
-    overflow: "hidden",
-    borderWidth: 3,
-    borderColor: "#D4A017",
-  },
-
-  ellipseTop: {
-    position: "absolute",
-    top: isWeb ? "2.75%" : "3.5%",
-    right: isWeb ? "4%" : "6%",
-    width: 300,
-    height: 300,
-    borderRadius: 150,
-    overflow: "hidden",
-    borderWidth: 3,
-    borderColor: "#D4A017",
-  },
+ellipseTop: {
+  position: "absolute",
+  top: isWeb ? "12.75%" : "13.5%",
+  right: isWeb ? "4%" : "6%",
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: "hidden",
+  borderWidth: 3,
+  borderColor: "#D4A017",
+},
 
   ellipseMiddleLeft: {
     position: "absolute",
@@ -212,8 +210,6 @@ bgEllipse4: {
     borderColor: "#D4A017",
   },
 
-  /* DOTS */
-
   ellipseDotsLayer: {
     position: "absolute",
     top: 0,
@@ -230,109 +226,62 @@ bgEllipse4: {
     opacity: 0.1,
   },
 
-  /* CARD */
-
-  card: {
-    width: "80%",
-    height: "90%",
-    backgroundColor: "#F7F7F7",
-    borderRadius: 28,
-    borderWidth: 1.5,
-    borderColor: "#C6C6C6",
-    paddingTop: 40,
-    paddingHorizontal: "8%",
-    paddingBottom: 40,
-    justifyContent: "center",
-    overflow: "hidden",
-    zIndex: 4,
-  },
-
-  fieldRow: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    marginBottom: 40,
-  },
-
-  input: {
-    flex: 1,
-    fontSize: 14,
-    color: "#808690",
-    borderBottomWidth: 2,
-    borderBottomColor: "#D0D4DC",
-    paddingBottom: 2,
-    marginRight: 8,
-  },
-
-rememberRow: {
-  flexDirection: "row",
-  alignItems: "center",
-  marginBottom: 40,
+card: {
+  width: "80%",
+  height: "80%", // ⬅️ was 90% → smaller = more top gap ONLY
+  backgroundColor: "#F7F7F7",
+  borderRadius: 28,
+  borderWidth: 1.5,
+  borderColor: "#C6C6C6",
+  paddingTop: 40,
+  paddingHorizontal: "8%",
+  paddingBottom: 40,
+  justifyContent: "center",
+  overflow: "hidden",
+  zIndex: 4,
 },
-
-rememberText: {
-  marginLeft: 7,
-  fontSize: 14,
-  color: "#A5AAB4",
-  lineHeight: 20,
-},
-
-  signInButton: {
-    alignSelf: "center",
-    width: "100%",
-    backgroundColor: "#8D98F0",
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: "#4E5DC8",
-    paddingVertical: 16,
-    alignItems: "center",
-    marginBottom: "4%",
-  },
-
-  signInText: {
-    color: "#FFFFFF",
-    fontWeight: "800",
-    fontSize: 14,
-  },
 
   logoContainer: {
     width: "100%",
-    height: "40%",
+    height: isWeb ? "38%" : "24%",
     alignSelf: "center",
-    marginBottom: "5.5%",
+    marginBottom: isWeb ? "5.5%" : "8%",
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
+    paddingTop: isWeb ? 18 : 0,
+    transform: [{ translateX: isWeb ? -10 : -6 }],
   },
 
   coinGroup: {
-    width: 130,
-    height: 108,
+    width: 91 * S * 1.4,
+    height: 76 * S * 1.4,
     position: "relative",
-    marginRight: 20,
-    marginTop: 60,
+    marginRight: isWeb ? 28 * S : 12,
+    marginTop: isWeb ? -8 * S : -22,
   },
 
   coinOuterCircle: {
     position: "absolute",
-    left: 72,
-    top: 39,
-    width: 76,
-    height: 76,
-    borderRadius: 38,
+    left: 50 * S * 1.4,
+    top: 27 * S * 1.4,
+    width: 53 * S * 1.4,
+    height: 53 * S * 1.4,
+    borderRadius: 26.5 * S * 1.4,
     backgroundColor: "#3E4BB5",
-    borderWidth: 3.5,
+    borderWidth: 2.5 * S,
     borderColor: "#000000",
     zIndex: 0,
   },
 
   coinGradientCircle: {
     position: "absolute",
-    left: 67,
-    top: 38,
-    width: 76,
-    height: 76,
-    borderRadius: 38,
-    borderWidth: 4,
+    left: 47 * S * 1.4,
+    top: 26 * S * 1.4,
+    width: 53 * S * 1.4,
+    height: 53 * S * 1.4,
+    borderRadius: 26.5 * S * 1.4,
+    borderWidth: 3 * S,
     borderColor: "#111111",
     overflow: "hidden",
     zIndex: 1,
@@ -356,20 +305,20 @@ rememberText: {
 
   dollar: {
     position: "absolute",
-    left: 89,
-    top: 55,
-    width: 32,
-    height: 42,
+    left: 62 * S * 1.4,
+    top: 38 * S * 1.4,
+    width: 22 * S * 1.4,
+    height: 29 * S * 1.4,
     resizeMode: "contain",
     zIndex: 3,
   },
 
   crown: {
     position: "absolute",
-    left: 53,
-    top: 20,
-    width: 90,
-    height: 52,
+    left: 37 * S * 1.4,
+    top: 14 * S * 1.4,
+    width: 63 * S * 1.4,
+    height: 36 * S * 1.4,
     resizeMode: "contain",
     zIndex: 4,
   },
@@ -377,23 +326,100 @@ rememberText: {
   logoTextGroup: {
     justifyContent: "center",
     alignItems: "flex-start",
-    width: 150,
-    marginLeft: 12,
-    marginTop: 40,
+    width: 105 * S * 1.4,
+    marginLeft: isWeb ? 2 * S : 18,
+    marginTop: isWeb ? 7 * S : -7,
   },
 
   credit: {
-    marginLeft: -20,
-    marginTop: 60,
-    width: 135,
-    height: 40,
+    marginLeft: -14 * S,
+    marginTop: 14 * S,
+    width: 95 * S * 1.4,
+    height: 28 * S * 1.4,
     resizeMode: "contain",
   },
 
   king: {
-    marginLeft: -10,
-    width: 110,
-    height: 40,
+    marginLeft: -7 * S,
+    width: 77 * S * 1.4,
+    height: 28 * S * 1.4,
     resizeMode: "contain",
   },
+
+fieldIcon: {
+  width: 19.36 * S,
+  height: 19.36 * S,
+  resizeMode: "contain",
+  marginRight: 10 * S,
+  marginBottom: 4,
+  opacity: 1,
+},
+
+avatarIcon: {
+  width: 23 * S,
+  height: 23 * S,
+  transform: [{ translateX: -2 }], // tweak: -1, -2, or -3 depending on perfection
+},
+
+  fieldRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    marginBottom: 32 * S,
+  },
+
+  input: {
+    flex: 1,
+    fontSize: 14 * S,
+    lineHeight: 18 * S,
+    height: 28 * S,
+    color: "#808690",
+    borderBottomWidth: 2,
+    borderBottomColor: "#D0D4DC",
+    paddingTop: 0,
+    paddingBottom: 2,
+    paddingVertical: 0,
+    marginRight: 6 * S,
+    includeFontPadding: false,
+  },
+
+  rememberRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 24 * S,
+    marginBottom: 24 * S,
+  },
+
+rememberText: {
+  marginLeft: 10 * S,
+  marginBottom: 24 * S,
+  marginTop: 0,
+  fontSize: 12.5 * S,
+  color: "#A5AAB4",
+  lineHeight: 16 * S,
+transform: [{ translateY: isWeb ? 15 : 12 }], // tighter
+},
+
+signInButton: {
+  alignSelf: "center",
+  width: "102%",
+  transform: [{ translateX: -1 }], // keep your current centering tweak
+
+  backgroundColor: "#8D98F0",
+  borderRadius: 9 * S,
+  borderWidth: 2,
+  borderColor: "#4E5DC8",
+
+  paddingVertical: 13.2 * S, // was 11 → +20%
+  alignItems: "center",
+
+  marginTop: 24 * S,
+  marginBottom: 0,
+},
+
+signInText: {
+  color: "#FFFFFF",
+  fontWeight: "800",
+  fontSize: 12 * S, // was 10 → +20%
+},
+
 });

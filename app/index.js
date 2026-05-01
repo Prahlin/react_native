@@ -63,9 +63,9 @@ const CustomSwitch = memo(() => {
       onPress={toggleSwitch}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       style={{
-        width: 35,
-        height: 16,
-        borderRadius: 8,
+        width: 44,
+        height: 20,
+        borderRadius: 10,
         backgroundColor: checked ? "#8D98F0" : "#D0D4DC",
         justifyContent: "center",
         zIndex: 20,
@@ -76,17 +76,17 @@ const CustomSwitch = memo(() => {
         pointerEvents="none"
         style={{
           position: "absolute",
-          width: 19,
-          height: 19,
-          borderRadius: 9.5,
+          width: 24,
+          height: 24,
+          borderRadius: 12,
           backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
-          top: -1.6,
-          left: -1.6,
+          top: -2,
+          left: -2,
           transform: [
             {
               translateX: switchAnim.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, 16],
+                outputRange: [0, 20],
               }),
             },
           ],
@@ -309,13 +309,24 @@ export default function Index() {
                 </View>
               </View>
 
-              <View style={styles.fieldRow}>
-                <TextInput placeholder="Username" style={styles.input} />
-              </View>
+<View style={styles.fieldRow}>
+  <Image
+    source={require("../assets/avatar.png")}
+    style={[styles.fieldIcon, styles.avatarIcon]}
+  />
+<TextInput
+  placeholder="Username"
+  style={[styles.input, styles.usernameInput]}
+/>
+</View>
 
-              <View style={styles.fieldRow}>
-                <TextInput placeholder="Password" secureTextEntry style={styles.input} />
-              </View>
+<View style={styles.fieldRow}>
+  <Image
+    source={require("../assets/lock.png")}
+    style={styles.fieldIcon}
+  />
+  <TextInput placeholder="Password" secureTextEntry style={styles.input} />
+</View>
 
               <View style={styles.rememberRow}>
                 <CustomSwitch />

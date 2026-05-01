@@ -1,4 +1,11 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
+
+const isWeb = Platform.OS === "web";
+
+/*
+  WEB = midpoint version.
+  ANDROID / IOS = previous more-inward version.
+*/
 
 export default StyleSheet.create({
   container: {
@@ -30,8 +37,8 @@ export default StyleSheet.create({
 
   bgEllipse1: {
     position: "absolute",
-    top: "2%",
-    left: "2%",
+    top: isWeb ? "2.75%" : "3.5%",
+    left: isWeb ? "4.375%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -43,8 +50,8 @@ export default StyleSheet.create({
 
   bgEllipse2: {
     position: "absolute",
-    top: "2%",
-    right: "2%",
+    top: isWeb ? "2.75%" : "3.5%",
+    right: isWeb ? "4.375%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -56,8 +63,8 @@ export default StyleSheet.create({
 
   bgEllipse3: {
     position: "absolute",
-    bottom: "20%",
-    left: "3.5%",
+    bottom: isWeb ? "16.75%" : "13.5%",
+    left: isWeb ? "5.125%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -69,8 +76,8 @@ export default StyleSheet.create({
 
   bgEllipse4: {
     position: "absolute",
-    bottom: "20%",
-    right: "3.5%",
+    bottom: isWeb ? "16.75%" : "13.5%",
+    right: isWeb ? "5.125%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -83,7 +90,7 @@ export default StyleSheet.create({
   ellipseLeftSide: {
     position: "absolute",
     top: "25%",
-    left: "3.5%",
+    left: isWeb ? "5.125%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -96,7 +103,7 @@ export default StyleSheet.create({
   ellipseRightSide: {
     position: "absolute",
     top: "25%",
-    right: "3.5%",
+    right: isWeb ? "5.125%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -108,8 +115,8 @@ export default StyleSheet.create({
 
   ellipseLeftSideBottom: {
     position: "absolute",
-    bottom: "2%",
-    left: "2%",
+    bottom: isWeb ? "2.75%" : "3.5%",
+    left: isWeb ? "4.375%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -121,8 +128,8 @@ export default StyleSheet.create({
 
   ellipseRightSideBottom: {
     position: "absolute",
-    bottom: "2%",
-    right: "2%",
+    bottom: isWeb ? "2.75%" : "3.5%",
+    right: isWeb ? "4.375%" : "6.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -136,8 +143,8 @@ export default StyleSheet.create({
 
   ellipseTopLeft: {
     position: "absolute",
-    top: "2%",
-    left: "2%",
+    top: isWeb ? "2.75%" : "3.5%",
+    left: isWeb ? "4%" : "6%",
     width: 300,
     height: 300,
     borderRadius: 150,
@@ -148,8 +155,8 @@ export default StyleSheet.create({
 
   ellipseTop: {
     position: "absolute",
-    top: "2%",
-    right: "2%",
+    top: isWeb ? "2.75%" : "3.5%",
+    right: isWeb ? "4%" : "6%",
     width: 300,
     height: 300,
     borderRadius: 150,
@@ -158,36 +165,36 @@ export default StyleSheet.create({
     borderColor: "#D4A017",
   },
 
-ellipseMiddleLeft: {
-  position: "absolute",
-  top: "34%",
-  left: "4%",
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  overflow: "hidden",
-  zIndex: 4,
-  borderWidth: 3,
-  borderColor: "#D4A017",
-},
+  ellipseMiddleLeft: {
+    position: "absolute",
+    top: "34%",
+    left: isWeb ? "5.5%" : "7%",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    overflow: "hidden",
+    zIndex: 4,
+    borderWidth: 3,
+    borderColor: "#D4A017",
+  },
 
-ellipseMiddle: {
-  position: "absolute",
-  top: "34%",
-  right: "4%",
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  overflow: "hidden",
-  zIndex: 4,
-  borderWidth: 3,
-  borderColor: "#D4A017",
-},
+  ellipseMiddle: {
+    position: "absolute",
+    top: "34%",
+    right: isWeb ? "5.5%" : "7%",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    overflow: "hidden",
+    zIndex: 4,
+    borderWidth: 3,
+    borderColor: "#D4A017",
+  },
 
   ellipseBottomLeft: {
     position: "absolute",
-    bottom: "2%",
-    left: "2%",
+    bottom: isWeb ? "2.75%" : "3.5%",
+    left: isWeb ? "4%" : "6%",
     width: 300,
     height: 300,
     borderRadius: 150,
@@ -199,8 +206,8 @@ ellipseMiddle: {
 
   ellipseBottom: {
     position: "absolute",
-    bottom: "2%",
-    right: "2%",
+    bottom: isWeb ? "2.75%" : "3.5%",
+    right: isWeb ? "4%" : "6%",
     width: 300,
     height: 300,
     borderRadius: 150,
@@ -210,7 +217,7 @@ ellipseMiddle: {
     borderColor: "#D4A017",
   },
 
-  /* 🔹 DOT LAYER (NEUTRAL — COLOR COMES FROM index.js) */
+  /* 🔹 DOT LAYER */
 
   ellipseDotsLayer: {
     position: "absolute",
@@ -244,8 +251,6 @@ ellipseMiddle: {
     overflow: "hidden",
     zIndex: 4,
   },
-
-  /* FORM */
 
   fieldRow: {
     flexDirection: "row",
@@ -293,7 +298,7 @@ ellipseMiddle: {
     fontSize: 14,
   },
 
-  /* 🔰 LOGO (UNCHANGED) */
+  /* 🔰 LOGO */
 
   logoContainer: {
     width: "100%",

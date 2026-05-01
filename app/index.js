@@ -129,26 +129,26 @@ export default function Index() {
     );
   };
 
-const renderBlackOuterBorder = (style) => {
-  const scaleX = (style.width + OUTER_BORDER_WIDTH * 2) / style.width;
-  const scaleY = (style.height + OUTER_BORDER_WIDTH * 2) / style.height;
+  const renderBlackOuterBorder = (style) => {
+    const scaleX = (style.width + OUTER_BORDER_WIDTH * 2) / style.width;
+    const scaleY = (style.height + OUTER_BORDER_WIDTH * 2) / style.height;
 
-  return (
-    <View
-      pointerEvents="none"
-      style={[
-        style,
-        {
-          backgroundColor: "transparent",
-          borderWidth: OUTER_BORDER_WIDTH,
-          borderColor: "rgba(17,17,17,0.7)",
-          zIndex: (style.zIndex ?? 0) - 1,
-          transform: [{ scaleX }, { scaleY }],
-        },
-      ]}
-    />
-  );
-};
+    return (
+      <View
+        pointerEvents="none"
+        style={[
+          style,
+          {
+            backgroundColor: "transparent",
+            borderWidth: OUTER_BORDER_WIDTH,
+            borderColor: "rgba(17,17,17,0.7)",
+            zIndex: (style.zIndex ?? 0) - 1,
+            transform: [{ scaleX }, { scaleY }],
+          },
+        ]}
+      />
+    );
+  };
 
   const renderGradientEllipse = (style, flip = false) => {
     const width = style.width ?? 200;

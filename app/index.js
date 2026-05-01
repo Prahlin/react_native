@@ -5,11 +5,10 @@ import {
   Animated,
   Dimensions,
   Image,
-  Switch,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -282,7 +281,7 @@ export default function Index() {
               </View>
 
               <View style={styles.rememberRow}>
-                <Switch value={remember} onValueChange={setRemember} />
+<CustomSwitch value={remember} onValueChange={setRemember} />
                 <Text style={styles.rememberText}>Remember me</Text>
               </View>
 

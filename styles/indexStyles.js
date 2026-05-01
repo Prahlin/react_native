@@ -263,17 +263,17 @@ bgEllipse4: {
     marginRight: 8,
   },
 
-  rememberRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
+rememberRow: {
+  flexDirection: "row",
+  alignItems: "center",
+  marginBottom: 40,
+},
 
-  rememberText: {
-    marginLeft: 7,
-    marginBottom: 40,
-    fontSize: 14,
-    color: "#A5AAB4",
-  },
+rememberText: {
+  marginLeft: 7,
+  fontSize: 14,
+  color: "#A5AAB4",
+},
 
   signInButton: {
     alignSelf: "center",

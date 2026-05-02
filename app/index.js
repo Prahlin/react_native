@@ -271,6 +271,18 @@ export default function Index() {
           {renderYellowEllipse(styles.ellipseBottom, true)}
           {renderYellowEllipse(styles.ellipseBottomLeft, true)}
 
+          <View pointerEvents="none" style={styles.wandSvg}>
+            <Image
+              source={require("../assets/wand2.png")}
+              style={[styles.wandImage, styles.wandBorder]}
+            />
+
+            <Image
+              source={require("../assets/wand2.png")}
+              style={styles.wandImage}
+            />
+          </View>
+
           <View style={styles.card}>
             <View style={{ flex: 1, justifyContent: "center" }}>
               <View style={styles.logoContainer}>
@@ -309,24 +321,24 @@ export default function Index() {
                 </View>
               </View>
 
-<View style={styles.fieldRow}>
-  <Image
-    source={require("../assets/avatar.png")}
-    style={[styles.fieldIcon, styles.avatarIcon]}
-  />
-<TextInput
-  placeholder="Username"
-  style={[styles.input, styles.usernameInput]}
-/>
-</View>
+              <View style={styles.fieldRow}>
+                <Image
+                  source={require("../assets/avatar.png")}
+                  style={[styles.fieldIcon, styles.avatarIcon]}
+                />
+                <TextInput
+                  placeholder="Username"
+                  style={[styles.input, styles.usernameInput]}
+                />
+              </View>
 
-<View style={styles.fieldRow}>
-  <Image
-    source={require("../assets/lock.png")}
-    style={styles.fieldIcon}
-  />
-  <TextInput placeholder="Password" secureTextEntry style={styles.input} />
-</View>
+              <View style={styles.fieldRow}>
+                <Image
+                  source={require("../assets/lock.png")}
+                  style={styles.fieldIcon}
+                />
+                <TextInput placeholder="Password" secureTextEntry style={styles.input} />
+              </View>
 
               <View style={styles.rememberRow}>
                 <CustomSwitch />

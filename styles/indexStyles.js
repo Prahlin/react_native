@@ -22,39 +22,39 @@ export default StyleSheet.create({
     backgroundColor: "#7887E8",
   },
 
-stage: {
-  flex: 1,
-  alignItems: "center",
-  justifyContent: "flex-end", // ⬅️ anchor card to bottom
-  paddingBottom: 40,          // ⬅️ keeps your original bottom gap
-  overflow: "hidden",
-},
+  stage: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingBottom: 40,
+    overflow: "hidden",
+  },
 
-bgEllipse1: {
-  position: "absolute",
-  top: isWeb ? "12.75%" : "13.5%",
-  left: isWeb ? "4.375%" : "6.75%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  borderWidth: 3,
-  zIndex: -5,
-  borderColor: "#3E4BB5",
-},
+  bgEllipse1: {
+    position: "absolute",
+    top: isWeb ? "12.75%" : "13.5%",
+    left: isWeb ? "4.375%" : "6.75%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    borderWidth: 3,
+    zIndex: -5,
+    borderColor: "#3E4BB5",
+  },
 
-bgEllipse2: {
-  position: "absolute",
-  top: isWeb ? "12.75%" : "13.5%",
-  right: isWeb ? "4.375%" : "6.75%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  borderWidth: 3,
-  zIndex: -5,
-  borderColor: "#3E4BB5",
-},
+  bgEllipse2: {
+    position: "absolute",
+    top: isWeb ? "12.75%" : "13.5%",
+    right: isWeb ? "4.375%" : "6.75%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    borderWidth: 3,
+    zIndex: -5,
+    borderColor: "#3E4BB5",
+  },
 
   bgEllipse3: {
     position: "absolute",
@@ -134,29 +134,29 @@ bgEllipse2: {
     borderColor: "#3E4BB5",
   },
 
-ellipseTopLeft: {
-  position: "absolute",
-  top: isWeb ? "12.75%" : "13.5%",
-  left: isWeb ? "4%" : "6%",
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  overflow: "hidden",
-  borderWidth: 3,
-  borderColor: "#D4A017",
-},
+  ellipseTopLeft: {
+    position: "absolute",
+    top: isWeb ? "12.75%" : "13.5%",
+    left: isWeb ? "4%" : "6%",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "#D4A017",
+  },
 
-ellipseTop: {
-  position: "absolute",
-  top: isWeb ? "12.75%" : "13.5%",
-  right: isWeb ? "4%" : "6%",
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  overflow: "hidden",
-  borderWidth: 3,
-  borderColor: "#D4A017",
-},
+  ellipseTop: {
+    position: "absolute",
+    top: isWeb ? "12.75%" : "13.5%",
+    right: isWeb ? "4%" : "6%",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "#D4A017",
+  },
 
   ellipseMiddleLeft: {
     position: "absolute",
@@ -226,20 +226,20 @@ ellipseTop: {
     opacity: 0.1,
   },
 
-card: {
-  width: "80%",
-  height: "80%", // ⬅️ was 90% → smaller = more top gap ONLY
-  backgroundColor: "#F7F7F7",
-  borderRadius: 28,
-  borderWidth: 1.5,
-  borderColor: "#C6C6C6",
-  paddingTop: 40,
-  paddingHorizontal: "8%",
-  paddingBottom: 40,
-  justifyContent: "center",
-  overflow: "hidden",
-  zIndex: 4,
-},
+  card: {
+    width: "80%",
+    height: "70%",
+    backgroundColor: "#F7F7F7",
+    borderRadius: 28,
+    borderWidth: 1.5,
+    borderColor: "#C6C6C6",
+    paddingTop: 40,
+    paddingHorizontal: "8%",
+    paddingBottom: 40,
+    justifyContent: "center",
+    overflow: "hidden",
+    zIndex: 4,
+  },
 
   logoContainer: {
     width: "100%",
@@ -346,20 +346,20 @@ card: {
     resizeMode: "contain",
   },
 
-fieldIcon: {
-  width: 19.36 * S,
-  height: 19.36 * S,
-  resizeMode: "contain",
-  marginRight: 10 * S,
-  marginBottom: 4,
-  opacity: 1,
-},
+  fieldIcon: {
+    width: 19.36 * S,
+    height: 19.36 * S,
+    resizeMode: "contain",
+    marginRight: 10 * S,
+    marginBottom: 4,
+    opacity: 1,
+  },
 
-avatarIcon: {
-  width: 23 * S,
-  height: 23 * S,
-  transform: [{ translateX: -2 }], // tweak: -1, -2, or -3 depending on perfection
-},
+  avatarIcon: {
+    width: 23 * S,
+    height: 23 * S,
+    transform: [{ translateX: -2 }],
+  },
 
   fieldRow: {
     flexDirection: "row",
@@ -389,37 +389,57 @@ avatarIcon: {
     marginBottom: 24 * S,
   },
 
-rememberText: {
-  marginLeft: 10 * S,
-  marginBottom: 24 * S,
-  marginTop: 0,
-  fontSize: 12.5 * S,
-  color: "#A5AAB4",
-  lineHeight: 16 * S,
-transform: [{ translateY: isWeb ? 15 : 12 }], // tighter
+  rememberText: {
+    marginLeft: 10 * S,
+    marginBottom: 24 * S,
+    marginTop: 0,
+    fontSize: 12.5 * S,
+    color: "#A5AAB4",
+    lineHeight: 16 * S,
+    transform: [{ translateY: isWeb ? 15 : 12 }],
+  },
+
+  signInButton: {
+    alignSelf: "center",
+    width: "102%",
+    transform: [{ translateX: -1 }],
+    backgroundColor: "#8D98F0",
+    borderRadius: 9 * S,
+    borderWidth: 2,
+    borderColor: "#4E5DC8",
+    paddingVertical: 13.2 * S,
+    alignItems: "center",
+    marginTop: 24 * S,
+    marginBottom: 0,
+  },
+
+  wandSvg: {
+    position: "absolute",
+    left: "10%",
+    width: "80%",
+    top: isWeb ? "12.75%" : "13.5%",
+    height: 200 * S * 1.4,
+    zIndex: 4,
+    transform: [{ translateY: -75 }, { rotate: "-0deg" }],
+  },
+
+wandImage: {
+  position: "absolute",
+  width: "100%",
+  height: "100%",
+  resizeMode: "contain",
 },
 
-signInButton: {
-  alignSelf: "center",
-  width: "102%",
-  transform: [{ translateX: -1 }], // keep your current centering tweak
+wandBorder: {
+  tintColor: "#3E4BB5",
+  opacity: 0.9,
 
-  backgroundColor: "#8D98F0",
-  borderRadius: 9 * S,
-  borderWidth: 2,
-  borderColor: "#4E5DC8",
-
-  paddingVertical: 13.2 * S, // was 11 → +20%
-  alignItems: "center",
-
-  marginTop: 24 * S,
-  marginBottom: 0,
+transform: [{ translateX: 4 }, { translateY: 4 }]
 },
 
-signInText: {
-  color: "#FFFFFF",
-  fontWeight: "800",
-  fontSize: 12 * S, // was 10 → +20%
-},
-
+  signInText: {
+    color: "#FFFFFF",
+    fontWeight: "800",
+    fontSize: 12 * S,
+  },
 });

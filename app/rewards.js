@@ -1,4 +1,5 @@
-import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
+import GrayBg from "../components/gray_bg";
 import styles from "../styles/rewardsStyles";
 
 const rewardItems = [
@@ -67,22 +68,10 @@ function RewardsCard() {
 export default function Rewards() {
   return (
     <View style={styles.screen}>
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: 151 }]}
-      >
-        <ImageBackground
-          style={styles.dashboardHomeScreenContainer}
-          source={require("../assets/twirl-background-png-1.png")}
-          resizeMode="cover"
-        >
-          <View style={styles.mainContent}>
-            <RewardsCard />
-            <View style={styles.bottomSpacer} />
-          </View>
-        </ImageBackground>
-      </ScrollView>
+      <GrayBg>
+        <RewardsCard />
+        <View style={styles.bottomSpacer} />
+      </GrayBg>
     </View>
   );
 }

@@ -1,42 +1,17 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: "#ffffff" },
-
-  scrollContent: { paddingBottom: 110 },
-
-  bottomSpacer: { height: 3 },
-
-  scrollView: { backgroundColor: "#FFFFFF" },
-
-  dashboardHomeScreenContainer: {
-    width: "100%",
-    backgroundColor: "rgba(217, 217, 217, 0.5)",
-    overflow: "hidden",
+  screen: {
+    flex: 1,
+    backgroundColor: "#F4F5FB",
   },
 
-  mainContent: {
-    paddingTop: 0,
-    paddingHorizontal: 8,
-    gap: 8,
-    zIndex: 1,
+  bottomSpacer: {
+    height: 3,
   },
-
-  bG: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 0,
-    backgroundColor: "transparent",
-  },
-
-  time: { display: "none" },
-
-  frame188: { display: "none" },
 
   frameCreditScore: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 6,
     paddingHorizontal: 12,
     paddingTop: 12,
@@ -44,7 +19,7 @@ const styles = StyleSheet.create({
   },
 
   frameImpact: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 6,
     paddingHorizontal: 12,
     paddingTop: 12,
@@ -272,24 +247,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontFamily: "Inter",
     fontWeight: "400",
-  },
-
-  twirlbackgroundPNG1: {
-    position: "absolute",
-    top: 70,
-    left: -25,
-    width: 420,
-    height: 420,
-    opacity: 0.35,
-  },
-
-  twirlbackgroundPNG2: {
-    position: "absolute",
-    top: 760,
-    left: -25,
-    width: 420,
-    height: 420,
-    opacity: 0.35,
   },
 });
 

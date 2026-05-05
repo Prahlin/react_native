@@ -1,36 +1,17 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-screen: {
-  flex: 1,
-  backgroundColor: "rgba(217, 217, 217, 0.5)",
-},
-
-  scrollContent: {
-    paddingBottom: 110,
+  screen: {
+    flex: 1,
+    backgroundColor: "#F4F5FB",
   },
 
   bottomSpacer: {
     height: 3,
   },
 
-  scrollView: {
-    backgroundColor: "#FFFFFF",
-  },
-
-  dashboardHomeScreenContainer: {
-    width: "100%",
-    backgroundColor: "rgba(217, 217, 217, 0.5)",
-    overflow: "hidden",
-  },
-
-  mainContent: {
-    paddingHorizontal: 8,
-    gap: 8,
-  },
-
   frameDebt: {
-    backgroundColor: "rgba(255,255,255,0.6)",
+    backgroundColor: "rgba(255,255,255,0.8)",
     borderRadius: 6,
     padding: 12,
   },
@@ -93,7 +74,7 @@ screen: {
   },
 
   frame153: {
-    backgroundColor: "rgba(255,255,255,0.6)",
+    backgroundColor: "rgba(255,255,255,0.8)",
     borderRadius: 6,
     padding: 12,
   },
@@ -133,7 +114,7 @@ screen: {
   },
 
   frameAcademy: {
-    backgroundColor: "rgba(255,255,255,0.6)",
+    backgroundColor: "rgba(255,255,255,0.8)",
     borderRadius: 6,
     padding: 12,
   },

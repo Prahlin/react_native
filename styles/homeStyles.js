@@ -121,7 +121,7 @@ screen: {
   },
 
   frameCreditScore: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 6,
     padding: 12,
   },
@@ -244,7 +244,7 @@ screen: {
   },
 
   frameSpending: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 6,
     padding: 12,
   },
@@ -319,7 +319,7 @@ screen: {
   },
 
   frame107: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 6,
     padding: 12,
   },
@@ -381,7 +381,7 @@ screen: {
   },
 
   frameCreditCards: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 6,
     padding: 12,
   },
@@ -496,7 +496,7 @@ screen: {
   },
 
   frame153: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 6,
     padding: 12,
   },

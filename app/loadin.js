@@ -200,7 +200,7 @@ export default function LoadIn() {
         pathname: "/home",
         params: { fromLoadin: "1" },
       });
-    }, 24000);
+    }, 3000);
 
     return () => {
       didCancel = true;

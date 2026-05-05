@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import styles from "../styles/headerStyles";
+import { forceHideChrome } from "./navChromeState";
 
 let hasBellBeenClicked = false;
 
@@ -199,16 +200,21 @@ export default function HeaderBar() {
             <Text style={styles.itemText}>Notifications</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[styles.item, styles.last]}
-            onPress={() => {
-              closeAllowedAtRef.current = 0;
-              closeAll();
-              router.push("/loadout");
-            }}
-          >
-            <Text style={styles.itemText}>Log out</Text>
-          </TouchableOpacity>
+<TouchableOpacity
+  style={[styles.item, styles.last]}
+  onPress={() => {
+    closeAllowedAtRef.current = 0;
+
+    setMenuOpen(false);
+    setNotificationsOpen(false);
+
+    forceHideChrome();
+
+    router.replace("/loadout");
+  }}
+>
+  <Text style={styles.itemText}>Log out</Text>
+</TouchableOpacity>
         </Animated.View>
       )}
 

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import Svg, { Line, Path } from "react-native-svg";
+import GrayBg from "../components/gray_bg";
 import styles from "../styles/debtStyles";
 
 const loanOffers = [
@@ -90,7 +91,9 @@ function DebtCard() {
 
           <View style={styles.monthRow}>
             {["May", "Jun", "July", "Aug", "Sep", "Oct"].map((m) => (
-              <Text key={m} style={styles.monthLabel}>{m}</Text>
+              <Text key={m} style={styles.monthLabel}>
+                {m}
+              </Text>
             ))}
           </View>
         </View>
@@ -133,7 +136,8 @@ function AcademyCard() {
       <Text style={styles.sectionTitle}>Borrowing Academy</Text>
 
       <Text style={styles.academyIntro}>
-        Find out all of the most important aspects of taking a personal loan, including:
+        Find out all of the most important aspects of taking a personal loan,
+        including:
       </Text>
 
       <View style={styles.academyList}>
@@ -162,31 +166,12 @@ function AcademyCard() {
 export default function Debt() {
   return (
     <View style={styles.screen}>
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-contentContainerStyle={[
-  styles.scrollContent,
-  { paddingTop: 151 },
-]}
-      >
-        <ImageBackground
-          style={styles.dashboardHomeScreenContainer}
-          source={require("../assets/twirl-background-png-1.png")}
-          resizeMode="cover"
-        >
-          <View style={styles.mainContent}>
-
-            <DebtCard />
-            <LoanOffersCard />
-            <AcademyCard />
-
-            {/* ✅ Bottom spacer */}
-            <View style={styles.bottomSpacer} />
-          </View>
-        </ImageBackground>
-      </ScrollView>
-
+      <GrayBg>
+        <DebtCard />
+        <LoanOffersCard />
+        <AcademyCard />
+        <View style={styles.bottomSpacer} />
+      </GrayBg>
     </View>
   );
 }

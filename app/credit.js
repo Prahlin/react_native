@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
-import { ImageBackground, ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import Svg, { Line, Path } from "react-native-svg";
-import BottomNav from "../components/BottomNav";
-import HeaderBar from "../components/HeaderBar";
+import GrayBg from "../components/gray_bg";
 import styles from "../styles/creditStyles";
 
 function buildCreditPoints(chartWidth, chartHeight, profile = "tu") {
@@ -45,7 +44,13 @@ function ScoreMeter({ markerLeft = "54%" }) {
       <View style={styles.scoreBarMid} />
       <View style={styles.scoreBarDark} />
 
-      <Svg style={styles.scoreArrowLine} width="44" height="6" viewBox="0 0 44 6" fill="none">
+      <Svg
+        style={styles.scoreArrowLine}
+        width="44"
+        height="6"
+        viewBox="0 0 44 6"
+        fill="none"
+      >
         <Path
           d="M0 2.88672L5 5.77347V-3.26633e-05L0 2.88672ZM43.5 2.88672L38.5 -3.26633e-05V5.77347L43.5 2.88672ZM4.5 3.38672H39V2.38672H4.5V3.38672Z"
           fill="black"
@@ -86,9 +91,30 @@ function CreditChart({ profile = "tu" }) {
       >
         {chartWidth > 0 && (
           <Svg width="100%" height={chartHeight}>
-            <Line x1={left} y1={100} x2={right} y2={100} stroke="#ECEFF6" strokeWidth="1" />
-            <Line x1={left} y1={60} x2={right} y2={60} stroke="#ECEFF6" strokeWidth="1" />
-            <Line x1={left} y1={20} x2={right} y2={20} stroke="#ECEFF6" strokeWidth="1" />
+            <Line
+              x1={left}
+              y1={100}
+              x2={right}
+              y2={100}
+              stroke="#ECEFF6"
+              strokeWidth="1"
+            />
+            <Line
+              x1={left}
+              y1={60}
+              x2={right}
+              y2={60}
+              stroke="#ECEFF6"
+              strokeWidth="1"
+            />
+            <Line
+              x1={left}
+              y1={20}
+              x2={right}
+              y2={20}
+              stroke="#ECEFF6"
+              strokeWidth="1"
+            />
 
             <Path
               d={pathD}
@@ -190,45 +216,11 @@ function ImpactCard() {
 export default function Credit() {
   return (
     <View style={styles.screen}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingTop: 151, paddingBottom: 110 },
-        ]}
-      >
-        <ImageBackground
-          style={styles.dashboardHomeScreenContainer}
-          source={require("../assets/twirl-background-png-1.png")}
-          resizeMode="cover"
-        >
-          <View style={styles.bG} />
-          <View style={styles.time} />
-          <View style={styles.frame188} />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG1}
-            source={require("../assets/twirl-background-png-1.png")}
-            resizeMode="contain"
-          />
-
-          <ImageBackground
-            style={styles.twirlbackgroundPNG2}
-            source={require("../assets/twirl-background-png-2.png")}
-            resizeMode="contain"
-          />
-
-          <View style={styles.mainContent}>
-
-            <CreditScoreCard />
-            <ImpactCard />
-          </View>
-        </ImageBackground>
-      </ScrollView>
-
-      <HeaderBar />
-
-      <BottomNav activeTab="home" />
+      <GrayBg>
+        <CreditScoreCard />
+        <ImpactCard />
+        <View style={styles.bottomSpacer} />
+      </GrayBg>
     </View>
   );
 }

@@ -3,36 +3,15 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#ffffff",
-  },
-
-  scrollContent: {
-    paddingBottom: 110,
+    backgroundColor: "#F4F5FB",
   },
 
   bottomSpacer: {
     height: 3,
   },
 
-  scrollView: {
-    backgroundColor: "#FFFFFF",
-  },
-
-  dashboardHomeScreenContainer: {
-    width: "100%",
-    backgroundColor: "rgba(217, 217, 217, 0.5)",
-    overflow: "hidden",
-  },
-
-  mainContent: {
-    paddingTop: 0,
-    paddingHorizontal: 8,
-    gap: 8,
-    zIndex: 1,
-  },
-
   frameAccounts: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 6,
     paddingHorizontal: 12,
     paddingTop: 12,
@@ -67,6 +46,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  accountsImage: {
+    width: 360,
+    height: 240,
+    resizeMode: "contain",
+  },
+
   accountsList: {
     marginTop: 4,
   },
@@ -89,6 +74,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
+  },
+
+  rowIcon: {
+    width: 39,
+    height: 39,
+    resizeMode: "contain",
   },
 
   accountCopy: {

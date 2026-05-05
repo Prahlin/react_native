@@ -344,7 +344,7 @@ export default function HeaderBar() {
       </View>
 
       <LinearGradient
-        colors={["#6F7EF0", "#AAB4FF"]}
+colors={["#6F7EF0", "#97A2FE"]}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
         style={styles.header}

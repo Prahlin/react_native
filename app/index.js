@@ -101,20 +101,28 @@ export default function Index() {
   const { setDisplayName } = useUser();
 
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const [usernameErrorVisible, setUsernameErrorVisible] = useState(false);
+  const [passwordErrorVisible, setPasswordErrorVisible] = useState(false);
 
   const jiggleAnim = useRef(new Animated.Value(0)).current;
+
   const usernameErrorOpacity = useRef(new Animated.Value(0)).current;
+  const passwordErrorOpacity = useRef(new Animated.Value(0)).current;
+
   const usernameErrorTimeoutRef = useRef(null);
+  const passwordErrorTimeoutRef = useRef(null);
 
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;
 
   const isWeb = Platform.OS === "web";
   const TOP_YELLOW_TOP = isWeb ? "20.75%" : "23.5%";
-const USERNAME_ERROR_BOTTOM = isWeb ? 70 : 60;
-const USERNAME_ERROR_BG_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
-const USERNAME_ERROR_ARROW_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
+
+  const FIELD_ERROR_LEFT = 20;
+  const FIELD_ERROR_BOTTOM = isWeb ? 70 : 60;
+  const FIELD_ERROR_BG_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
 
   const slideXAnim = useRef(
     new Animated.Value(fromLoadout === "1" ? screenWidth : 0)
@@ -179,71 +187,149 @@ const USERNAME_ERROR_ARROW_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
   useEffect(() => {
     return () => {
       clearTimeout(usernameErrorTimeoutRef.current);
+      clearTimeout(passwordErrorTimeoutRef.current);
     };
   }, []);
 
-  const showUsernameError = () => {
-    clearTimeout(usernameErrorTimeoutRef.current);
-
-    setUsernameErrorVisible(true);
-
+  const jiggleScreen = () => {
     jiggleAnim.stopAnimation();
-    usernameErrorOpacity.stopAnimation();
-
     jiggleAnim.setValue(0);
-    usernameErrorOpacity.setValue(0);
 
-    Animated.parallel([
-      Animated.sequence([
-        Animated.timing(jiggleAnim, {
-          toValue: -10,
-          duration: 45,
-          useNativeDriver: true,
-        }),
-        Animated.timing(jiggleAnim, {
-          toValue: 10,
-          duration: 45,
-          useNativeDriver: true,
-        }),
-        Animated.timing(jiggleAnim, {
-          toValue: -8,
-          duration: 45,
-          useNativeDriver: true,
-        }),
-        Animated.timing(jiggleAnim, {
-          toValue: 8,
-          duration: 45,
-          useNativeDriver: true,
-        }),
-        Animated.timing(jiggleAnim, {
-          toValue: -4,
-          duration: 45,
-          useNativeDriver: true,
-        }),
-        Animated.timing(jiggleAnim, {
-          toValue: 0,
-          duration: 45,
-          useNativeDriver: true,
-        }),
-      ]),
-
-      Animated.timing(usernameErrorOpacity, {
-        toValue: 0.5,
-        duration: 120,
+    return Animated.sequence([
+      Animated.timing(jiggleAnim, {
+        toValue: -10,
+        duration: 45,
         useNativeDriver: true,
       }),
-    ]).start();
-
-    usernameErrorTimeoutRef.current = setTimeout(() => {
-      Animated.timing(usernameErrorOpacity, {
-        toValue: 0,
-        duration: 160,
+      Animated.timing(jiggleAnim, {
+        toValue: 10,
+        duration: 45,
         useNativeDriver: true,
-      }).start(() => {
-        setUsernameErrorVisible(false);
-      });
-    }, 1600);
+      }),
+      Animated.timing(jiggleAnim, {
+        toValue: -8,
+        duration: 45,
+        useNativeDriver: true,
+      }),
+      Animated.timing(jiggleAnim, {
+        toValue: 8,
+        duration: 45,
+        useNativeDriver: true,
+      }),
+      Animated.timing(jiggleAnim, {
+        toValue: -4,
+        duration: 45,
+        useNativeDriver: true,
+      }),
+      Animated.timing(jiggleAnim, {
+        toValue: 0,
+        duration: 45,
+        useNativeDriver: true,
+      }),
+    ]);
   };
+
+  const runJiggle = () => {
+  jiggleAnim.stopAnimation();
+  jiggleAnim.setValue(0);
+
+  Animated.sequence([
+    Animated.timing(jiggleAnim, {
+      toValue: -10,
+      duration: 45,
+      useNativeDriver: true,
+    }),
+    Animated.timing(jiggleAnim, {
+      toValue: 10,
+      duration: 45,
+      useNativeDriver: true,
+    }),
+    Animated.timing(jiggleAnim, {
+      toValue: -8,
+      duration: 45,
+      useNativeDriver: true,
+    }),
+    Animated.timing(jiggleAnim, {
+      toValue: 8,
+      duration: 45,
+      useNativeDriver: true,
+    }),
+    Animated.timing(jiggleAnim, {
+      toValue: -4,
+      duration: 45,
+      useNativeDriver: true,
+    }),
+    Animated.timing(jiggleAnim, {
+      toValue: 0,
+      duration: 45,
+      useNativeDriver: true,
+    }),
+  ]).start();
+};
+
+ const showFieldError = (
+  setVisible,
+  opacityValue,
+  timeoutRef,
+  otherSetVisible = () => {},
+  otherOpacityValue = null,
+  otherTimeoutRef = null
+) => {
+  clearTimeout(timeoutRef?.current);
+  clearTimeout(otherTimeoutRef?.current);
+
+  otherSetVisible(false);
+
+  if (otherOpacityValue) {
+    otherOpacityValue.stopAnimation();
+    otherOpacityValue.setValue(0);
+  }
+
+  setVisible(true);
+
+  opacityValue.stopAnimation();
+  opacityValue.setValue(0);
+
+  runJiggle();
+
+  Animated.timing(opacityValue, {
+    toValue: 0.5,
+    duration: 120,
+    useNativeDriver: true,
+  }).start();
+
+  timeoutRef.current = setTimeout(() => {
+    Animated.timing(opacityValue, {
+      toValue: 0,
+      duration: 160,
+      useNativeDriver: true,
+    }).start(() => {
+      setVisible(false);
+    });
+  }, 1600);
+};
+
+const showUsernameError = () => {
+  showFieldError(
+    setUsernameErrorVisible,
+    usernameErrorOpacity,
+    usernameErrorTimeoutRef,
+    setPasswordErrorVisible,
+    passwordErrorOpacity,
+    passwordErrorTimeoutRef
+  );
+};
+
+const showPasswordError = () => {
+  showFieldError(
+    setPasswordErrorVisible,
+    passwordErrorOpacity,
+    passwordErrorTimeoutRef,
+    setUsernameErrorVisible,
+    usernameErrorOpacity,
+    usernameErrorTimeoutRef
+  );
+};
 
   const dots = [
     [65, 51], [70, 51], [75, 51], [80, 51], [85, 51], [90, 51], [95, 51],
@@ -311,6 +397,69 @@ const USERNAME_ERROR_ARROW_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
         <EllipseDots color="#8C6A00" />
       </LinearGradient>
     </>
+  );
+
+  const renderFieldError = (message, opacity) => (
+    <Animated.View
+      pointerEvents="none"
+      style={{
+        position: "absolute",
+        left: FIELD_ERROR_LEFT,
+        bottom: FIELD_ERROR_BOTTOM,
+        borderRadius: 10,
+        paddingVertical: 5.5,
+        paddingHorizontal: 14,
+        zIndex: 999,
+        elevation: isWeb ? 0 : 999,
+        shadowColor: "#000",
+        shadowOpacity: isWeb ? 0 : 0.2,
+        shadowRadius: isWeb ? 0 : 8,
+        shadowOffset: isWeb ? { width: 0, height: 0 } : { width: 0, height: 3 },
+      }}
+    >
+      <Animated.View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: FIELD_ERROR_BG_COLOR,
+          borderRadius: 10,
+          opacity,
+        }}
+      />
+
+      <Animated.View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          bottom: -8,
+          left: 24,
+          width: 0,
+          height: 0,
+          borderLeftWidth: 8,
+          borderRightWidth: 8,
+          borderTopWidth: 8,
+          borderLeftColor: "transparent",
+          borderRightColor: "transparent",
+          borderTopColor: FIELD_ERROR_BG_COLOR,
+          opacity,
+        }}
+      />
+
+      <Text
+        style={{
+          color: "#FFFFFF",
+          fontFamily: "Inter",
+          fontWeight: "700",
+          fontSize: 13,
+        }}
+      >
+        {message}
+      </Text>
+    </Animated.View>
   );
 
   return (
@@ -441,101 +590,51 @@ const USERNAME_ERROR_ARROW_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
                 </View>
               </View>
 
-              <View style={{ position: "relative", zIndex: 50 }}>
- {usernameErrorVisible && (
-  <Animated.View
-    pointerEvents="none"
-    style={{
-      position: "absolute",
-      left: 20,
-      bottom: USERNAME_ERROR_BOTTOM,
-      borderRadius: 10,
-      paddingVertical: 5.5,
-      paddingHorizontal: 14,
-zIndex: 999,
-elevation: isWeb ? 0 : 999,
-shadowColor: "#000",
-shadowOpacity: isWeb ? 0 : 0.2,
-shadowRadius: isWeb ? 0 : 8,
-shadowOffset: isWeb ? { width: 0, height: 0 } : { width: 0, height: 3 },
-    }}
-  >
-    <Animated.View
-      pointerEvents="none"
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: USERNAME_ERROR_BG_COLOR,
-        borderRadius: 10,
-        opacity: usernameErrorOpacity,
-      }}
+<View style={{ position: "relative", zIndex: 50 }}>
+  {usernameErrorVisible &&
+    renderFieldError("Please input username", usernameErrorOpacity)}
+
+  <View style={styles.fieldRow}>
+    <View style={styles.fieldIconContainer}>
+      <Image
+        source={require("../assets/avatar.png")}
+        style={styles.avatarIcon}
+      />
+    </View>
+
+    <TextInput
+      placeholder="Username"
+      value={username}
+      onChangeText={setUsername}
+      style={styles.input}
     />
+  </View>
+</View>
 
-    <Animated.View
-      pointerEvents="none"
-      style={{
-        position: "absolute",
-        bottom: -8,
-        left: 24,
-        width: 0,
-        height: 0,
-        borderLeftWidth: 8,
-        borderRightWidth: 8,
-        borderTopWidth: 8,
-        borderLeftColor: "transparent",
-        borderRightColor: "transparent",
-        borderTopColor: USERNAME_ERROR_BG_COLOR,
-        opacity: usernameErrorOpacity,
-      }}
+<View style={{ position: "relative", zIndex: 50 }}>
+  {passwordErrorVisible &&
+    renderFieldError(
+      `Please input password for ${username.trim()}`,
+      passwordErrorOpacity
+    )}
+
+  <View style={styles.fieldRow}>
+    <View style={styles.fieldIconContainer}>
+      <Image
+        source={require("../assets/lock.png")}
+        style={styles.lockIcon}
+      />
+    </View>
+
+    <TextInput
+      placeholder="Password"
+      value={password}
+      onChangeText={setPassword}
+      secureTextEntry
+      style={styles.input}
     />
-
-    <Text
-      style={{
-        color: "#FFFFFF",
-        fontFamily: "Inter",
-        fontWeight: "700",
-        fontSize: 13,
-      }}
-    >
-      Please input username
-    </Text>
-  </Animated.View>
-)}
-
-                <View style={styles.fieldRow}>
-                  <View style={styles.fieldIconContainer}>
-                    <Image
-                      source={require("../assets/avatar.png")}
-                      style={styles.avatarIcon}
-                    />
-                  </View>
-
-                  <TextInput
-                    placeholder="Username"
-                    value={username}
-                    onChangeText={setUsername}
-                    style={styles.input}
-                  />
-                </View>
-              </View>
-
-              <View style={styles.fieldRow}>
-                <View style={styles.fieldIconContainer}>
-                  <Image
-                    source={require("../assets/lock.png")}
-                    style={styles.lockIcon}
-                  />
-                </View>
-
-                <TextInput
-                  placeholder="Password"
-                  secureTextEntry
-                  style={styles.input}
-                />
-              </View>
+  </View>
+</View>
 
               <View style={styles.rememberRow}>
                 <CustomSwitch />
@@ -548,6 +647,11 @@ shadowOffset: isWeb ? { width: 0, height: 0 } : { width: 0, height: 3 },
                 onPress={() => {
                   if (!username.trim()) {
                     showUsernameError();
+                    return;
+                  }
+
+                  if (!password.trim()) {
+                    showPasswordError();
                     return;
                   }
 

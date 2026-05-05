@@ -32,18 +32,17 @@ export default StyleSheet.create({
     opacity: 0.05,
   },
 
-  crownBorder: {
-    tintColor: "#3E4BB5",
-    opacity: 0.9,
-    transform: [{ translateX: 4 }, { translateY: 4 }],
-  },
+crownBorder: {
+  tintColor: "#3E4BB5",
+  opacity: 0,
+  transform: [{ translateX: 4 }, { translateY: 4 }],
+},
 
-  crownBorderWide: {
-    tintColor: "#3E4BB5",
-    opacity: 0.9,
-    transform: [{ translateX: 7 }, { translateY: 7 }],
-  },
-
+crownBorderWide: {
+  tintColor: "#3E4BB5",
+  opacity: 0,
+  transform: [{ translateX: 7 }, { translateY: 7 }],
+},
   fancyCrownSvg: {
     position: "absolute",
     left: "10%",
@@ -99,6 +98,34 @@ export default StyleSheet.create({
     borderWidth: 3,
     borderColor: "#3E4BB5",
   },
+
+ellipseTopCenter: {
+  position: "absolute",
+  top: isWeb ? "25.5%" : "27.5%",
+  left: "50%",
+  width: 250,
+  height: 250,
+  borderRadius: 125,
+  overflow: "hidden",
+  zIndex: 4,
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+  transform: [{ translateX: -125 }],
+},
+
+ellipseTopCenterBack: {
+  position: "absolute",
+  top: isWeb ? "17.5%" : "17.5%",
+  left: "50%",
+  width: 200,
+  height: 200,
+  borderRadius: 100,
+  overflow: "hidden",
+  zIndex: 0,
+  borderWidth: 3,
+  borderColor: "#3E4BB5",
+  transform: [{ translateX: -100 }],
+},
 
   ellipseLeftSide: {
     position: "absolute",
@@ -162,6 +189,7 @@ export default StyleSheet.create({
     overflow: "hidden",
     borderWidth: 3,
     borderColor: "#D4A017",
+    zIndex: 1,
   },
 
   ellipseTop: {
@@ -174,6 +202,7 @@ export default StyleSheet.create({
     overflow: "hidden",
     borderWidth: 3,
     borderColor: "#D4A017",
+    zIndex: -1,
   },
 
   ellipseMiddleLeft: {
@@ -461,11 +490,11 @@ input: {
     resizeMode: "contain",
   },
 
-  wandBorder: {
-    tintColor: "#3E4BB5",
-    opacity: 0.9,
-    transform: [{ translateX: 4 }, { translateY: 4 }],
-  },
+wandBorder: {
+  tintColor: "#3E4BB5",
+  opacity: 0,
+  transform: [{ translateX: 4 }, { translateY: 4 }],
+},
 
   signInText: {
     color: "#FFFFFF",

@@ -477,22 +477,24 @@ const showPasswordError = () => {
 
         <View style={styles.topBar} />
 
-        <View style={styles.stage}>
-          {renderGradientEllipse(styles.bgEllipse3, true)}
-          {renderGradientEllipse(styles.bgEllipse4)}
+<View style={styles.stage}>
+  {renderGradientEllipse(styles.ellipseTopCenterBack)}
+  {renderGradientEllipse(styles.bgEllipse3, true)}
+  {renderGradientEllipse(styles.bgEllipse4)}
 
-          <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
+  <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
 
-          {renderGradientEllipse(styles.ellipseLeftSide, true)}
-          {renderGradientEllipse(styles.ellipseRightSide)}
-          {renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
-          {renderGradientEllipse(styles.ellipseRightSideBottom)}
+  {renderGradientEllipse(styles.ellipseTopCenter)}
+  {renderGradientEllipse(styles.ellipseLeftSide, true)}
+  {renderGradientEllipse(styles.ellipseRightSide)}
+  {renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
+  {renderGradientEllipse(styles.ellipseRightSideBottom)}
 
-          {renderYellowEllipse({ ...styles.ellipseTop, top: TOP_YELLOW_TOP })}
-          {renderYellowEllipse({ ...styles.ellipseTopLeft, top: TOP_YELLOW_TOP })}
+  {renderYellowEllipse({ ...styles.ellipseTop, top: TOP_YELLOW_TOP })}
+  {renderYellowEllipse({ ...styles.ellipseTopLeft, top: TOP_YELLOW_TOP })}
 
-          {renderYellowEllipse(styles.ellipseBottom, true)}
-          {renderYellowEllipse(styles.ellipseBottomLeft, true)}
+  {renderYellowEllipse(styles.ellipseBottom, true)}
+  {renderYellowEllipse(styles.ellipseBottomLeft, true)}
 
           <View pointerEvents="none" style={styles.fancyCrownSvg}>
             <Image
@@ -520,6 +522,8 @@ const showPasswordError = () => {
               style={[styles.fancyCrownImage, styles.fancyCrownTint]}
             />
           </View>
+
+          {renderGradientEllipse(styles.ellipseTopCenter)}
 
           <View pointerEvents="none" style={styles.wandSvg}>
             <Image

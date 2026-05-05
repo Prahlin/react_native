@@ -5,6 +5,7 @@ import {
   Animated,
   Dimensions,
   Image,
+  Platform,
   Text,
   TextInput,
   TouchableOpacity,
@@ -19,28 +20,26 @@ import styles from "../styles/indexStyles";
 const DOT_GAP = 5;
 const OUTER_BORDER_WIDTH = 3;
 
-const EllipseDots = memo(({ color }) => {
-  return (
-    <View pointerEvents="none" style={styles.ellipseDotsLayer}>
-      <Svg width="100%" height="100%">
-        <Defs>
-          <Pattern
-            id="ellipseDotPattern"
-            x="0"
-            y="0"
-            width={DOT_GAP}
-            height={DOT_GAP}
-            patternUnits="userSpaceOnUse"
-          >
-            <Circle cx="1.5" cy="1.5" r="1.5" fill={color} opacity="0.1" />
-          </Pattern>
-        </Defs>
+const EllipseDots = memo(({ color }) => (
+  <View pointerEvents="none" style={styles.ellipseDotsLayer}>
+    <Svg width="100%" height="100%">
+      <Defs>
+        <Pattern
+          id="ellipseDotPattern"
+          x="0"
+          y="0"
+          width={DOT_GAP}
+          height={DOT_GAP}
+          patternUnits="userSpaceOnUse"
+        >
+          <Circle cx="1.5" cy="1.5" r="1.5" fill={color} opacity="0.1" />
+        </Pattern>
+      </Defs>
 
-        <Rect width="100%" height="100%" fill="url(#ellipseDotPattern)" />
-      </Svg>
-    </View>
-  );
-});
+      <Rect width="100%" height="100%" fill="url(#ellipseDotPattern)" />
+    </Svg>
+  </View>
+));
 
 const CustomSwitch = memo(() => {
   const [checked, setChecked] = useState(false);
@@ -101,6 +100,9 @@ export default function Index() {
 
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;
+
+  const isWeb = Platform.OS === "web";
+  const TOP_YELLOW_TOP = isWeb ? "20.75%" : "23.5%";
 
   const slideXAnim = useRef(
     new Animated.Value(fromLoadout === "1" ? screenWidth : 0)
@@ -196,43 +198,39 @@ export default function Index() {
     );
   };
 
-  const renderGradientEllipse = (style, flip = false) => {
-    return (
-      <>
-        {renderBlackOuterBorder(style)}
+  const renderGradientEllipse = (style, flip = false) => (
+    <>
+      {renderBlackOuterBorder(style)}
 
-        <View pointerEvents="none" style={[style, { overflow: "hidden" }]}>
-          <LinearGradient
-            pointerEvents="none"
-            colors={["#AAB4FF", "#5F6FE8"]}
-            start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
-            end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
-            style={{ flex: 1 }}
-          >
-            <EllipseDots color="#3E4BB5" />
-          </LinearGradient>
-        </View>
-      </>
-    );
-  };
-
-  const renderYellowEllipse = (style, flipVertical = false) => {
-    return (
-      <>
-        {renderBlackOuterBorder(style)}
-
+      <View pointerEvents="none" style={[style, { overflow: "hidden" }]}>
         <LinearGradient
           pointerEvents="none"
-          colors={["#FFF200", "#FFC700"]}
-          start={{ x: 0, y: flipVertical ? 0 : 1 }}
-          end={{ x: 0, y: flipVertical ? 1 : 0 }}
-          style={[style, { overflow: "hidden" }]}
+          colors={["#AAB4FF", "#5F6FE8"]}
+          start={flip ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 }}
+          end={flip ? { x: 0, y: 0.5 } : { x: 1, y: 0.5 }}
+          style={{ flex: 1 }}
         >
-          <EllipseDots color="#8C6A00" />
+          <EllipseDots color="#3E4BB5" />
         </LinearGradient>
-      </>
-    );
-  };
+      </View>
+    </>
+  );
+
+  const renderYellowEllipse = (style, flipVertical = false) => (
+    <>
+      {renderBlackOuterBorder(style)}
+
+      <LinearGradient
+        pointerEvents="none"
+        colors={["#FFF200", "#FFC700"]}
+        start={{ x: 0, y: flipVertical ? 0 : 1 }}
+        end={{ x: 0, y: flipVertical ? 1 : 0 }}
+        style={[style, { overflow: "hidden" }]}
+      >
+        <EllipseDots color="#8C6A00" />
+      </LinearGradient>
+    </>
+  );
 
   return (
     <Animated.View
@@ -250,8 +248,6 @@ export default function Index() {
         <View style={styles.topBar} />
 
         <View style={styles.stage}>
-          {renderGradientEllipse(styles.bgEllipse1, true)}
-          {renderGradientEllipse(styles.bgEllipse2)}
           {renderGradientEllipse(styles.bgEllipse3, true)}
           {renderGradientEllipse(styles.bgEllipse4)}
 
@@ -262,14 +258,38 @@ export default function Index() {
           {renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
           {renderGradientEllipse(styles.ellipseRightSideBottom)}
 
-          {renderYellowEllipse(styles.ellipseTop)}
-          {renderYellowEllipse(styles.ellipseTopLeft)}
-
-          {renderYellowEllipse(styles.ellipseMiddle)}
-          {renderYellowEllipse(styles.ellipseMiddleLeft)}
+          {renderYellowEllipse({ ...styles.ellipseTop, top: TOP_YELLOW_TOP })}
+          {renderYellowEllipse({ ...styles.ellipseTopLeft, top: TOP_YELLOW_TOP })}
 
           {renderYellowEllipse(styles.ellipseBottom, true)}
           {renderYellowEllipse(styles.ellipseBottomLeft, true)}
+
+          <View pointerEvents="none" style={styles.fancyCrownSvg}>
+            <Image
+              source={require("../assets/fancy_crown.png")}
+              style={[styles.fancyCrownImage, styles.crownBorderWide]}
+            />
+
+            <Image
+              source={require("../assets/fancy_crown.png")}
+              style={[styles.fancyCrownImage, styles.crownBorder]}
+            />
+
+            <Image
+              source={require("../assets/fancy_crown.png")}
+              style={styles.fancyCrownImage}
+            />
+
+            <Image
+              source={require("../assets/fancy_crown.png")}
+              style={[styles.fancyCrownImage, styles.crownLighten]}
+            />
+
+            <Image
+              source={require("../assets/fancy_crown.png")}
+              style={[styles.fancyCrownImage, styles.fancyCrownTint]}
+            />
+          </View>
 
           <View pointerEvents="none" style={styles.wandSvg}>
             <Image
@@ -280,6 +300,11 @@ export default function Index() {
             <Image
               source={require("../assets/wand2.png")}
               style={styles.wandImage}
+            />
+
+            <Image
+              source={require("../assets/wand2.png")}
+              style={[styles.wandImage, styles.wandTint]}
             />
           </View>
 
@@ -311,37 +336,62 @@ export default function Index() {
                     ))}
                   </View>
 
-                  <Image source={require("../assets/dollar.png")} style={styles.dollar} />
-                  <Image source={require("../assets/union.png")} style={styles.crown} />
+                  <Image
+                    source={require("../assets/dollar.png")}
+                    style={styles.dollar}
+                  />
+
+                  <Image
+                    source={require("../assets/union.png")}
+                    style={styles.crown}
+                  />
                 </View>
 
                 <View style={styles.logoTextGroup}>
-                  <Image source={require("../assets/credit.png")} style={styles.credit} />
-                  <Image source={require("../assets/king.png")} style={styles.king} />
+                  <Image
+                    source={require("../assets/credit.png")}
+                    style={styles.credit}
+                  />
+
+                  <Image
+                    source={require("../assets/king.png")}
+                    style={styles.king}
+                  />
                 </View>
               </View>
 
-              <View style={styles.fieldRow}>
-                <Image
-                  source={require("../assets/avatar.png")}
-                  style={[styles.fieldIcon, styles.avatarIcon]}
-                />
-                <TextInput
-                  placeholder="Username"
-                  style={[styles.input, styles.usernameInput]}
-                />
-              </View>
+  <View style={styles.fieldRow}>
+  <View style={styles.fieldIconContainer}>
+    <Image
+      source={require("../assets/avatar.png")}
+      style={styles.avatarIcon}
+    />
+  </View>
 
-              <View style={styles.fieldRow}>
-                <Image
-                  source={require("../assets/lock.png")}
-                  style={styles.fieldIcon}
-                />
-                <TextInput placeholder="Password" secureTextEntry style={styles.input} />
-              </View>
+  <TextInput
+    placeholder="Username"
+    style={styles.input}
+  />
+</View>
+
+<View style={styles.fieldRow}>
+  <View style={styles.fieldIconContainer}>
+    <Image
+      source={require("../assets/lock.png")}
+      style={styles.lockIcon}
+    />
+  </View>
+
+  <TextInput
+    placeholder="Password"
+    secureTextEntry
+    style={styles.input}
+  />
+</View>
 
               <View style={styles.rememberRow}>
                 <CustomSwitch />
+
                 <Text style={styles.rememberText}>Remember me</Text>
               </View>
 

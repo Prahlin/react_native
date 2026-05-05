@@ -17,6 +17,50 @@ export default StyleSheet.create({
     opacity: 0,
   },
 
+  fancyCrownTint: {
+    tintColor: "#FFD84D",
+    opacity: 0.1,
+  },
+
+  crownLighten: {
+    tintColor: "#FFFFFF",
+    opacity: 0.0,
+  },
+
+  wandTint: {
+    tintColor: "#FFD800",
+    opacity: 0.05,
+  },
+
+  crownBorder: {
+    tintColor: "#3E4BB5",
+    opacity: 0.9,
+    transform: [{ translateX: 4 }, { translateY: 4 }],
+  },
+
+  crownBorderWide: {
+    tintColor: "#3E4BB5",
+    opacity: 0.9,
+    transform: [{ translateX: 7 }, { translateY: 7 }],
+  },
+
+  fancyCrownSvg: {
+    position: "absolute",
+    left: "10%",
+    width: "80%",
+    top: isWeb ? "22.75%" : "27.5%",
+    height: 100 * S * 1.4,
+    zIndex: 3,
+    transform: [{ translateY: -75 }, { scaleX: -1 }],
+  },
+
+  fancyCrownImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+  },
+
   topBar: {
     height: 0,
     backgroundColor: "#7887E8",
@@ -28,32 +72,6 @@ export default StyleSheet.create({
     justifyContent: "flex-end",
     paddingBottom: 40,
     overflow: "hidden",
-  },
-
-  bgEllipse1: {
-    position: "absolute",
-    top: isWeb ? "12.75%" : "13.5%",
-    left: isWeb ? "4.375%" : "6.75%",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    overflow: "hidden",
-    borderWidth: 3,
-    zIndex: -5,
-    borderColor: "#3E4BB5",
-  },
-
-  bgEllipse2: {
-    position: "absolute",
-    top: isWeb ? "12.75%" : "13.5%",
-    right: isWeb ? "4.375%" : "6.75%",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    overflow: "hidden",
-    borderWidth: 3,
-    zIndex: -5,
-    borderColor: "#3E4BB5",
   },
 
   bgEllipse3: {
@@ -84,8 +102,8 @@ export default StyleSheet.create({
 
   ellipseLeftSide: {
     position: "absolute",
-    top: isWeb ? "16.75%" : "13.5%",
-    left: isWeb ? "5.125%" : "6.75%",
+    top: isWeb ? "20.75%" : "22.5%",
+    left: isWeb ? "5.125%" : "5.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -97,8 +115,8 @@ export default StyleSheet.create({
 
   ellipseRightSide: {
     position: "absolute",
-    top: isWeb ? "16.75%" : "13.5%",
-    right: isWeb ? "5.125%" : "6.75%",
+    top: isWeb ? "20.75%" : "22.5%",
+    right: isWeb ? "5.125%" : "5.75%",
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -166,7 +184,7 @@ export default StyleSheet.create({
     height: 300,
     borderRadius: 150,
     overflow: "hidden",
-    zIndex: 4,
+    zIndex: 3,
     borderWidth: 3,
     borderColor: "#D4A017",
     transform: [{ translateY: -150 }],
@@ -180,7 +198,7 @@ export default StyleSheet.create({
     height: 300,
     borderRadius: 150,
     overflow: "hidden",
-    zIndex: 4,
+    zIndex: 3,
     borderWidth: 3,
     borderColor: "#D4A017",
     transform: [{ translateY: -150 }],
@@ -241,17 +259,22 @@ export default StyleSheet.create({
     zIndex: 4,
   },
 
-  logoContainer: {
-    width: "100%",
-    height: isWeb ? "38%" : "24%",
-    alignSelf: "center",
-    marginBottom: isWeb ? "5.5%" : "8%",
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "center",
-    paddingTop: isWeb ? 18 : 0,
-    transform: [{ translateX: isWeb ? -10 : -6 }],
-  },
+logoContainer: {
+  width: "100%",
+  height: isWeb ? "38%" : "24%",
+  alignSelf: "center",
+  marginBottom: isWeb ? "10.5%" : "8%",
+  marginTop: isWeb ? 50 : 30,
+  flexDirection: "row",
+  alignItems: "flex-start",
+  justifyContent: "center",
+  paddingTop: isWeb ? 18 : 0,
+  transform: [
+    { translateX: isWeb ? -10 : -6 },
+    { translateY: isWeb ? -24 : 0 }, // 👈 move logo UP on web only
+    { scale: 0.8 },
+  ],
+},
 
   coinGroup: {
     width: 91 * S * 1.4,
@@ -346,56 +369,64 @@ export default StyleSheet.create({
     resizeMode: "contain",
   },
 
-  fieldIcon: {
-    width: 19.36 * S,
-    height: 19.36 * S,
-    resizeMode: "contain",
-    marginRight: 10 * S,
-    marginBottom: 4,
-    opacity: 1,
+  fieldRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: isWeb ? 32 : 32 * S,
+    transform: [{ translateY: isWeb ? -6 : 6 }],
+  },
+
+  fieldIconContainer: {
+    width: isWeb ? 24 : 24 * S,
+    height: isWeb ? 24 : 24 * S,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: isWeb ? 10 : 10 * S,
   },
 
   avatarIcon: {
-    width: 23 * S,
-    height: 23 * S,
-    transform: [{ translateX: -2 }],
+    width: isWeb ? 23 : 23 * S,
+    height: isWeb ? 23 : 23 * S,
+    resizeMode: "contain",
   },
 
-  fieldRow: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    marginBottom: 32 * S,
+  lockIcon: {
+    width: isWeb ? 19 : 19 * S,
+    height: isWeb ? 19 : 19 * S,
+    resizeMode: "contain",
   },
 
-  input: {
-    flex: 1,
-    fontSize: 14 * S,
-    lineHeight: 18 * S,
-    height: 28 * S,
-    color: "#808690",
-    borderBottomWidth: 2,
-    borderBottomColor: "#D0D4DC",
-    paddingTop: 0,
-    paddingBottom: 2,
-    paddingVertical: 0,
-    marginRight: 6 * S,
-    includeFontPadding: false,
-  },
+input: {
+  flex: 1,
+  fontSize: isWeb ? 14 : 14,
+  lineHeight: isWeb ? 18 : 20,
+  height: isWeb ? 28 : 32,
+  color: "#808690",
+  borderBottomWidth: 2,
+  borderBottomColor: "#D0D4DC",
+
+  paddingTop: isWeb ? 0 : 4,     // 👈 push text DOWN on Android
+  paddingBottom: isWeb ? 2 : 4,
+  paddingVertical: 0,
+
+  marginRight: isWeb ? 6 : 6,
+  includeFontPadding: false,
+},
 
   rememberRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 24 * S,
-    marginBottom: 24 * S,
+    marginTop: isWeb ? 12 : 6 * S,
+    marginBottom: isWeb ? 12 : 6 * S,
   },
 
   rememberText: {
-    marginLeft: 10 * S,
-    marginBottom: 24 * S,
+    marginLeft: isWeb ? 10 : 10 * S,
+    marginBottom: isWeb ? 24 : 24 * S,
     marginTop: 0,
-    fontSize: 12.5 * S,
+    fontSize: isWeb ? 12.5 : 12.5 * S,
     color: "#A5AAB4",
-    lineHeight: 16 * S,
+    lineHeight: isWeb ? 16 : 16 * S,
     transform: [{ translateY: isWeb ? 15 : 12 }],
   },
 
@@ -404,42 +435,41 @@ export default StyleSheet.create({
     width: "102%",
     transform: [{ translateX: -1 }],
     backgroundColor: "#8D98F0",
-    borderRadius: 9 * S,
+    borderRadius: isWeb ? 9 : 9 * S,
     borderWidth: 2,
     borderColor: "#4E5DC8",
-    paddingVertical: 13.2 * S,
+    paddingVertical: isWeb ? 15.2 : 15.2 * S,
     alignItems: "center",
-    marginTop: 24 * S,
-    marginBottom: 0,
+    marginTop: isWeb ? 24 : 24 * S,
+    marginBottom: 50,
   },
 
   wandSvg: {
     position: "absolute",
     left: "10%",
     width: "80%",
-    top: isWeb ? "12.75%" : "13.5%",
-    height: 200 * S * 1.4,
+    top: isWeb ? "22.75%" : "24.5%",
+    height: 150 * S * 1.4,
     zIndex: 4,
-    transform: [{ translateY: -75 }, { rotate: "-0deg" }],
+    transform: [{ translateY: -75 }, { scaleX: -1 }],
   },
 
-wandImage: {
-  position: "absolute",
-  width: "100%",
-  height: "100%",
-  resizeMode: "contain",
-},
+  wandImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+  },
 
-wandBorder: {
-  tintColor: "#3E4BB5",
-  opacity: 0.9,
-
-transform: [{ translateX: 4 }, { translateY: 4 }]
-},
+  wandBorder: {
+    tintColor: "#3E4BB5",
+    opacity: 0.9,
+    transform: [{ translateX: 4 }, { translateY: 4 }],
+  },
 
   signInText: {
     color: "#FFFFFF",
     fontWeight: "800",
-    fontSize: 12 * S,
+    fontSize: isWeb ? 12 : 12 * S,
   },
 });

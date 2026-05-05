@@ -1,9 +1,13 @@
 import { Slot, usePathname } from "expo-router";
 import { useEffect } from "react";
-import { Platform, View } from "react-native";
+import { Platform, useWindowDimensions, View } from "react-native";
 import BottomNav from "../components/BottomNav";
 import HeaderBar from "../components/HeaderBar";
 import TopNav from "../components/TopNav";
+import {
+  CrownWandPattern,
+  GRAY_BG_COLOR,
+} from "../components/gray_bg";
 import {
   releaseChromeHide,
   useForceHideChrome,
@@ -12,6 +16,7 @@ import {
 export default function RootLayout() {
   const pathname = usePathname();
   const forceHideChrome = useForceHideChrome();
+  const { height: screenHeight } = useWindowDimensions();
 
   const isAuthOrLoadingScreen =
     pathname === "/" ||
@@ -28,10 +33,8 @@ export default function RootLayout() {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-      {/* HEADER */}
       {!hideNav && <HeaderBar />}
 
-      {/* TOP NAV */}
       {!hideNav && (
         <View
           pointerEvents="box-none"
@@ -43,16 +46,28 @@ export default function RootLayout() {
             paddingHorizontal: 8,
             paddingTop: 8,
             paddingBottom: 8,
-backgroundColor: "#F4F5FB",
+            backgroundColor: GRAY_BG_COLOR,
+            overflow: "hidden",
             zIndex: 900,
             elevation: 900,
           }}
         >
-          <TopNav />
+          <CrownWandPattern
+            style={{
+              position: "absolute",
+              top: -80,
+              left: 0,
+              right: 0,
+              height: screenHeight,
+            }}
+          />
+
+          <View style={{ zIndex: 1 }}>
+            <TopNav />
+          </View>
         </View>
       )}
 
-      {/* SCREEN CONTENT */}
       <View
         style={{
           flex: 1,
@@ -63,7 +78,6 @@ backgroundColor: "#F4F5FB",
         <Slot />
       </View>
 
-      {/* BOTTOM NAV */}
       {!hideNav && <BottomNav />}
     </View>
   );

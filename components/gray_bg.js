@@ -5,7 +5,9 @@ const IS_ANDROID = Platform.OS === "android";
 const ROWS = 25;
 const PAIRS_PER_ROW = 5;
 
-const CROWN_OPACITY = 0.1;
+export const GRAY_BG_COLOR = "#F4F5FB";
+
+const CROWN_OPACITY = 0.05;
 const WAND_OPACITY = CROWN_OPACITY * 0.5;
 
 const BACKGROUND_ICONS = Array.from({
@@ -38,6 +40,35 @@ const BACKGROUND_ICONS = Array.from({
   };
 });
 
+export function CrownWandPattern({ style }) {
+  return (
+    <View pointerEvents="none" style={[styles.patternLayer, style]}>
+      {BACKGROUND_ICONS.map((icon) => (
+        <Image
+          key={icon.id}
+          source={
+            icon.isCrown
+              ? require("../assets/fancy_crown.png")
+              : require("../assets/wand.png")
+          }
+          style={{
+            position: "absolute",
+            width: icon.isCrown ? 22 : 40,
+            height: icon.isCrown ? 22 : 40,
+            opacity: icon.isCrown ? CROWN_OPACITY : WAND_OPACITY,
+            top: icon.top,
+            left:
+              !icon.isCrown && IS_ANDROID
+                ? icon.androidLeft
+                : icon.left,
+          }}
+          resizeMode="contain"
+        />
+      ))}
+    </View>
+  );
+}
+
 export default function GrayBg({
   children,
   paddingTop = 151,
@@ -47,30 +78,7 @@ export default function GrayBg({
 }) {
   return (
     <View style={styles.root}>
-      <View pointerEvents="none" style={styles.fixedBackground}>
-        {BACKGROUND_ICONS.map((icon) => (
-          <Image
-            key={icon.id}
-            source={
-              icon.isCrown
-                ? require("../assets/fancy_crown.png")
-                : require("../assets/wand.png")
-            }
-            style={{
-              position: "absolute",
-              width: icon.isCrown ? 22 : 40,
-              height: icon.isCrown ? 22 : 40,
-              opacity: icon.isCrown ? CROWN_OPACITY : WAND_OPACITY,
-              top: icon.top,
-              left:
-                !icon.isCrown && IS_ANDROID
-                  ? icon.androidLeft
-                  : icon.left,
-            }}
-            resizeMode="contain"
-          />
-        ))}
-      </View>
+      <CrownWandPattern style={StyleSheet.absoluteFillObject} />
 
       <ScrollView
         style={styles.scrollView}
@@ -91,14 +99,13 @@ export default function GrayBg({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: GRAY_BG_COLOR,
     position: "relative",
     overflow: "hidden",
   },
 
-  fixedBackground: {
-    ...StyleSheet.absoluteFillObject,
-backgroundColor: "#F4F5FB", 
+  patternLayer: {
+    backgroundColor: GRAY_BG_COLOR,
     overflow: "hidden",
   },
 

@@ -1,5 +1,6 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Image,
@@ -9,6 +10,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
+import Svg, { Circle, Defs, Pattern, Rect } from "react-native-svg";
 
 import styles from "../styles/headerStyles";
 import { forceHideChrome } from "./navChromeState";
@@ -35,9 +37,32 @@ const NOTIFICATION_HORIZONTAL_PADDING = 16;
 const NOTIFICATION_STAR_WIDTH = 14;
 const NOTIFICATION_STAR_MARGIN_RIGHT = 8;
 
+const DOT_GAP = 5;
+
 const clamp = (value, min, max) => {
   return Math.max(min, Math.min(value, max));
 };
+
+const HeaderDots = memo(({ color }) => (
+  <View pointerEvents="none" style={styles.headerDotsLayer}>
+    <Svg width="100%" height="100%">
+      <Defs>
+        <Pattern
+          id="headerDotPattern"
+          x="0"
+          y="0"
+          width={DOT_GAP}
+          height={DOT_GAP}
+          patternUnits="userSpaceOnUse"
+        >
+<Circle cx="0.75" cy="0.75" r="0.75" fill={color} opacity="0.05" />
+        </Pattern>
+      </Defs>
+
+      <Rect width="100%" height="100%" fill="url(#headerDotPattern)" />
+    </Svg>
+  </View>
+));
 
 export default function HeaderBar() {
   const { width: screenWidth } = useWindowDimensions();
@@ -318,7 +343,14 @@ export default function HeaderBar() {
         ))}
       </View>
 
-      <View style={styles.header}>
+      <LinearGradient
+        colors={["#6F7EF0", "#AAB4FF"]}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 1 }}
+        style={styles.header}
+      >
+        <HeaderDots color="#3E4BB5" />
+
         <Text style={styles.title}>Welcome, Steve</Text>
 
         <View style={styles.middleSection}>
@@ -351,7 +383,7 @@ export default function HeaderBar() {
         >
           <Text style={styles.menuDots}>⋮</Text>
         </Pressable>
-      </View>
+      </LinearGradient>
 
       {(menuOpen || notificationsOpen) && (
         <Pressable style={styles.overlay} onPress={closeAll} />
@@ -406,7 +438,7 @@ export default function HeaderBar() {
             style={[
               styles.notificationsArrow,
               {
-                left: notificationsArrowLeft -2,
+                left: notificationsArrowLeft - 2,
               },
             ]}
           />

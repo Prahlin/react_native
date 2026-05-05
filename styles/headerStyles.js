@@ -27,13 +27,17 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     height: HEADER_TOTAL_HEIGHT,
-    backgroundColor: "#8E95E8",
+    backgroundColor: "#6F7EF0",
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: SIDE_PADDING,
     paddingTop: TOP_PADDING,
     zIndex: 1003,
     elevation: 1003,
+  },
+
+  headerDotsLayer: {
+    ...StyleSheet.absoluteFillObject,
   },
 
   title: {

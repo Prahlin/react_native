@@ -1,6 +1,8 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
-export const ICON_SIZE = 22;
+const isAndroid = Platform.OS === "android";
+
+export const ICON_SIZE = 20;
 export const SIDE_PADDING = 18;
 export const TOP_PADDING = 40;
 export const HEADER_TOTAL_HEIGHT = 80;
@@ -9,6 +11,14 @@ export default StyleSheet.create({
   root: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 1000,
+  },
+
+  measureLayer: {
+    position: "absolute",
+    left: -10000,
+    top: -10000,
+    opacity: 0,
+    zIndex: -1,
   },
 
   header: {
@@ -51,8 +61,8 @@ export default StyleSheet.create({
   },
 
   bellButton: {
-    width: 44,
-    height: 44,
+    width: 42,
+    height: 42,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -63,20 +73,21 @@ export default StyleSheet.create({
   },
 
   menuButton: {
-    width: ICON_SIZE,
+    width: isAndroid ? 18 : ICON_SIZE,
     height: 44,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 8,
-    marginRight: -6,
+    marginTop: isAndroid ? -2 : 2,
+    marginLeft: 2,
+    marginRight: -2,
   },
 
   menuDots: {
     color: "#FFFFFF",
-    fontSize: ICON_SIZE,
-    lineHeight: ICON_SIZE,
+    fontSize: isAndroid ? 28 : ICON_SIZE,
+    lineHeight: isAndroid ? 28 : ICON_SIZE,
     fontFamily: "Inter",
-    fontWeight: "700",
+    fontWeight: "400",
   },
 
   overlay: {
@@ -93,7 +104,7 @@ export default StyleSheet.create({
   menu: {
     position: "absolute",
     top: HEADER_TOTAL_HEIGHT + 1,
-    width: 170,
+    minWidth: 0,
     backgroundColor: "#97A2FE",
     borderRadius: 12,
     paddingVertical: 6,
@@ -108,7 +119,7 @@ export default StyleSheet.create({
   notifications: {
     position: "absolute",
     top: HEADER_TOTAL_HEIGHT + 1,
-    width: 265,
+    minWidth: 0,
     backgroundColor: "#97A2FE",
     borderRadius: 12,
     paddingVertical: 6,
@@ -169,7 +180,13 @@ export default StyleSheet.create({
     borderBottomColor: "rgba(255,255,255,0.45)",
   },
 
+  notificationMeasureRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
   star: {
+    width: 14,
     color: "#FFFFFF",
     fontSize: 14,
     marginRight: 8,
@@ -179,11 +196,19 @@ export default StyleSheet.create({
   },
 
   notificationText: {
-    flex: 1,
     color: "#FFFFFF",
     fontSize: 14,
     fontFamily: "Inter",
     fontWeight: "400",
+    flexShrink: 0,
+  },
+
+  notificationMeasureText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: "Inter",
+    fontWeight: "400",
+    flexShrink: 0,
   },
 
   last: {

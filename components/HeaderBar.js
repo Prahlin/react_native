@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Image,
@@ -20,12 +20,24 @@ export function resetBellClickedState() {
 }
 
 const POPUP_RIGHT_OVERHANG = 27;
-const POPUP_BODY_NUDGE_RIGHT = 5;
+const POPUP_NUDGE_RIGHT = 0;
 const CLOSE_GUARD_MS = 250;
 
-const MENU_WIDTH = 170;
-const NOTIFICATIONS_WIDTH = 265;
+const MENU_MIN_WIDTH = 0;
+const NOTIFICATIONS_MIN_WIDTH = 0;
+
 const SCREEN_MARGIN = 8;
+const ARROW_WIDTH = 16;
+const ARROW_EDGE_PADDING = 8;
+
+const MENU_HORIZONTAL_PADDING = 16;
+const NOTIFICATION_HORIZONTAL_PADDING = 16;
+const NOTIFICATION_STAR_WIDTH = 14;
+const NOTIFICATION_STAR_MARGIN_RIGHT = 8;
+
+const clamp = (value, min, max) => {
+  return Math.max(min, Math.min(value, max));
+};
 
 export default function HeaderBar() {
   const { width: screenWidth } = useWindowDimensions();
@@ -34,13 +46,19 @@ export default function HeaderBar() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [bellClicked, setBellClicked] = useState(hasBellBeenClicked);
 
-  const [menuRight, setMenuRight] = useState(12);
-  const [notificationsRight, setNotificationsRight] = useState(12);
+  const [menuLeft, setMenuLeft] = useState(12);
+  const [notificationsLeft, setNotificationsLeft] = useState(12);
 
-  const [menuArrowRight, setMenuArrowRight] =
+  const [menuArrowLeft, setMenuArrowLeft] = useState(POPUP_RIGHT_OVERHANG);
+  const [notificationsArrowLeft, setNotificationsArrowLeft] =
     useState(POPUP_RIGHT_OVERHANG);
-  const [notificationsArrowRight, setNotificationsArrowRight] =
-    useState(POPUP_RIGHT_OVERHANG);
+
+  const [menuIconCenterX, setMenuIconCenterX] = useState(null);
+  const [notificationsIconCenterX, setNotificationsIconCenterX] =
+    useState(null);
+
+  const [menuTextWidths, setMenuTextWidths] = useState({});
+  const [notificationTextWidths, setNotificationTextWidths] = useState({});
 
   const menuScale = useRef(new Animated.Value(0.96)).current;
   const notificationsScale = useRef(new Animated.Value(0.96)).current;
@@ -50,6 +68,8 @@ export default function HeaderBar() {
   const bellRef = useRef(null);
   const menuRef = useRef(null);
 
+  const menuItems = ["Profile", "Settings", "Notifications", "Log out"];
+
   const notifications = [
     "New software update",
     "Credit score change",
@@ -58,24 +78,118 @@ export default function HeaderBar() {
     "Credit score change",
   ];
 
-  const getPopupPosition = (iconCenterX, popupWidth) => {
-    const rawRight = screenWidth - iconCenterX - POPUP_RIGHT_OVERHANG;
+  const menuMaxTextWidth = Math.max(0, ...Object.values(menuTextWidths));
 
-    const minRight = SCREEN_MARGIN;
-    const maxRight = screenWidth - popupWidth - SCREEN_MARGIN;
+  const notificationsMaxTextWidth = Math.max(
+    0,
+    ...Object.values(notificationTextWidths)
+  );
 
-    const popupRight = Math.max(minRight, Math.min(rawRight, maxRight));
+  const menuPopupWidth = Math.max(
+    MENU_MIN_WIDTH,
+    Math.ceil(menuMaxTextWidth + MENU_HORIZONTAL_PADDING * 2)
+  );
 
-    const arrowRight = Math.max(
-      12,
-      Math.min(screenWidth - popupRight - iconCenterX, popupWidth - 12)
+  const notificationsLeftWordGap =
+    NOTIFICATION_HORIZONTAL_PADDING +
+    NOTIFICATION_STAR_WIDTH +
+    NOTIFICATION_STAR_MARGIN_RIGHT;
+
+  const notificationsPopupWidth = Math.max(
+    NOTIFICATIONS_MIN_WIDTH,
+    Math.ceil(
+      notificationsMaxTextWidth +
+        notificationsLeftWordGap +
+        NOTIFICATION_HORIZONTAL_PADDING
+    )
+  );
+
+  const getPopupPosition = useCallback(
+    (iconCenterX, popupWidth) => {
+      const rightMarginAfterNudge = Math.max(
+        0,
+        SCREEN_MARGIN - POPUP_NUDGE_RIGHT
+      );
+
+      const minLeft = SCREEN_MARGIN;
+      const maxLeft = Math.max(
+        minLeft,
+        screenWidth - popupWidth - rightMarginAfterNudge
+      );
+
+      const rawLeft =
+        iconCenterX + POPUP_RIGHT_OVERHANG - popupWidth + POPUP_NUDGE_RIGHT;
+
+      const popupLeft = clamp(rawLeft, minLeft, maxLeft);
+
+      const arrowLeft = clamp(
+        iconCenterX - popupLeft - ARROW_WIDTH / 2,
+        ARROW_EDGE_PADDING,
+        popupWidth - ARROW_WIDTH - ARROW_EDGE_PADDING
+      );
+
+      return { popupLeft, arrowLeft };
+    },
+    [screenWidth]
+  );
+
+  useEffect(() => {
+    if (!menuOpen || menuIconCenterX === null) return;
+
+    const { popupLeft, arrowLeft } = getPopupPosition(
+      menuIconCenterX,
+      menuPopupWidth
     );
 
-    return { popupRight, arrowRight };
-  };
+    setMenuLeft(popupLeft);
+    setMenuArrowLeft(arrowLeft);
+  }, [menuOpen, menuIconCenterX, menuPopupWidth, getPopupPosition]);
+
+  useEffect(() => {
+    if (!notificationsOpen || notificationsIconCenterX === null) return;
+
+    const { popupLeft, arrowLeft } = getPopupPosition(
+      notificationsIconCenterX,
+      notificationsPopupWidth
+    );
+
+    setNotificationsLeft(popupLeft);
+    setNotificationsArrowLeft(arrowLeft);
+  }, [
+    notificationsOpen,
+    notificationsIconCenterX,
+    notificationsPopupWidth,
+    getPopupPosition,
+  ]);
 
   const guardClose = () => {
     closeAllowedAtRef.current = Date.now() + CLOSE_GUARD_MS;
+  };
+
+  const measureMenuText = (text, width) => {
+    const nextWidth = Math.ceil(width);
+
+    setMenuTextWidths((prev) => {
+      if (prev[text] === nextWidth) return prev;
+
+      return {
+        ...prev,
+        [text]: nextWidth,
+      };
+    });
+  };
+
+  const measureNotificationText = (text, width) => {
+    const nextWidth = Math.ceil(width);
+
+    setNotificationTextWidths((prev) => {
+      if (prev[text] === nextWidth) return prev;
+
+      return {
+        ...prev,
+        [text]: nextWidth,
+      };
+    });
   };
 
   const openMenu = () => {
@@ -84,14 +198,15 @@ export default function HeaderBar() {
 
     menuRef.current?.measureInWindow?.((x, y, width) => {
       const iconCenterX = x + width / 2;
+      setMenuIconCenterX(iconCenterX);
 
-      const { popupRight, arrowRight } = getPopupPosition(
+      const { popupLeft, arrowLeft } = getPopupPosition(
         iconCenterX,
-        MENU_WIDTH
+        menuPopupWidth
       );
 
-      setMenuRight(popupRight);
-      setMenuArrowRight(arrowRight);
+      setMenuLeft(popupLeft);
+      setMenuArrowLeft(arrowLeft);
       setMenuOpen(true);
 
       menuScale.setValue(0.96);
@@ -112,14 +227,15 @@ export default function HeaderBar() {
 
     bellRef.current?.measureInWindow?.((x, y, width) => {
       const iconCenterX = x + width / 2;
+      setNotificationsIconCenterX(iconCenterX);
 
-      const { popupRight, arrowRight } = getPopupPosition(
+      const { popupLeft, arrowLeft } = getPopupPosition(
         iconCenterX,
-        NOTIFICATIONS_WIDTH
+        notificationsPopupWidth
       );
 
-      setNotificationsRight(popupRight);
-      setNotificationsArrowRight(arrowRight);
+      setNotificationsLeft(popupLeft);
+      setNotificationsArrowLeft(arrowLeft);
       setNotificationsOpen(true);
 
       notificationsScale.setValue(0.96);
@@ -139,8 +255,69 @@ export default function HeaderBar() {
     setNotificationsOpen(false);
   };
 
+  const handleMenuPress = (text) => {
+    closeAllowedAtRef.current = 0;
+
+    setMenuOpen(false);
+    setNotificationsOpen(false);
+
+    if (text === "Profile") {
+      router.push("/profile");
+      return;
+    }
+
+    if (text === "Settings") {
+      router.push("/settings");
+      return;
+    }
+
+    if (text === "Notifications") {
+      router.push("/notifications");
+      return;
+    }
+
+    if (text === "Log out") {
+      forceHideChrome();
+      router.replace("/loadout");
+    }
+  };
+
   return (
     <View style={styles.root} pointerEvents="box-none">
+      <View pointerEvents="none" style={styles.measureLayer}>
+        {menuItems.map((text) => (
+          <Text
+            key={`menu-measure-${text}`}
+            numberOfLines={1}
+            style={styles.itemText}
+            onLayout={(e) => {
+              measureMenuText(text, e.nativeEvent.layout.width);
+            }}
+          >
+            {text}
+          </Text>
+        ))}
+
+        {notifications.map((text, i) => (
+          <View
+            key={`notification-measure-${text}-${i}`}
+            style={styles.notificationMeasureRow}
+          >
+            <Text style={styles.star}>★</Text>
+
+            <Text
+              numberOfLines={1}
+              style={styles.notificationMeasureText}
+              onLayout={(e) => {
+                measureNotificationText(text, e.nativeEvent.layout.width);
+              }}
+            >
+              {text}
+            </Text>
+          </View>
+        ))}
+      </View>
+
       <View style={styles.header}>
         <Text style={styles.title}>Welcome, Steve</Text>
 
@@ -185,11 +362,9 @@ export default function HeaderBar() {
           style={[
             styles.menu,
             {
-              right: menuRight,
-              transform: [
-                { translateX: POPUP_BODY_NUDGE_RIGHT },
-                { scale: menuScale },
-              ],
+              left: menuLeft,
+              width: menuPopupWidth,
+              transform: [{ scale: menuScale }],
             },
           ]}
         >
@@ -197,59 +372,22 @@ export default function HeaderBar() {
             style={[
               styles.arrowRight,
               {
-                right: menuArrowRight + POPUP_BODY_NUDGE_RIGHT,
+                left: menuArrowLeft + 1,
               },
             ]}
           />
 
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {
-              closeAllowedAtRef.current = 0;
-              closeAll();
-              router.push("/profile");
-            }}
-          >
-            <Text style={styles.itemText}>Profile</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {
-              closeAllowedAtRef.current = 0;
-              closeAll();
-              router.push("/settings");
-            }}
-          >
-            <Text style={styles.itemText}>Settings</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {
-              closeAllowedAtRef.current = 0;
-              closeAll();
-              router.push("/notifications");
-            }}
-          >
-            <Text style={styles.itemText}>Notifications</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.item, styles.last]}
-            onPress={() => {
-              closeAllowedAtRef.current = 0;
-
-              setMenuOpen(false);
-              setNotificationsOpen(false);
-
-              forceHideChrome();
-
-              router.replace("/loadout");
-            }}
-          >
-            <Text style={styles.itemText}>Log out</Text>
-          </TouchableOpacity>
+          {menuItems.map((text, i) => (
+            <TouchableOpacity
+              key={text}
+              style={[styles.item, i === menuItems.length - 1 && styles.last]}
+              onPress={() => handleMenuPress(text)}
+            >
+              <Text numberOfLines={1} style={styles.itemText}>
+                {text}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </Animated.View>
       )}
 
@@ -258,11 +396,9 @@ export default function HeaderBar() {
           style={[
             styles.notifications,
             {
-              right: notificationsRight,
-              transform: [
-                { translateX: POPUP_BODY_NUDGE_RIGHT },
-                { scale: notificationsScale },
-              ],
+              left: notificationsLeft,
+              width: notificationsPopupWidth,
+              transform: [{ scale: notificationsScale }],
             },
           ]}
         >
@@ -270,21 +406,24 @@ export default function HeaderBar() {
             style={[
               styles.notificationsArrow,
               {
-                right: notificationsArrowRight + POPUP_BODY_NUDGE_RIGHT,
+                left: notificationsArrowLeft -2,
               },
             ]}
           />
 
           {notifications.map((text, i) => (
             <View
-              key={i}
+              key={`${text}-${i}`}
               style={[
                 styles.notificationItem,
                 i === notifications.length - 1 && styles.last,
               ]}
             >
               <Text style={styles.star}>★</Text>
-              <Text style={styles.notificationText}>{text}</Text>
+
+              <Text numberOfLines={1} style={styles.notificationText}>
+                {text}
+              </Text>
             </View>
           ))}
         </Animated.View>

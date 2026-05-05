@@ -12,12 +12,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import AvatarSpinner from "../components/AvatarSpinner";
 
+const AnimatedPatternImage = Animated.createAnimatedComponent(Image);
+
 const PULSE_MIN = 1;
 const PULSE_MAX = 1.08;
 const PULSE_DURATION = 1400;
 
 const ROWS = 25;
 const PAIRS_PER_ROW = 5;
+
+const PATTERN_MAX_VISIBLE_OPACITY = 0.05;
 
 const getPatternOpacity = (topPercent, leftPercent) => {
   const centerX = 50;
@@ -43,41 +47,56 @@ const getPatternOpacity = (topPercent, leftPercent) => {
     curved * (maxOpacity - minOpacity) +
     verticalBoost;
 
-const faintCircles = [
-  // top-left edge zone
-  { x: 25, y: 0 },
+  const faintZones = [
+    { x: 0, y: 0, radius: 44, strength: 0.30 },
+    { x: 100, y: 0, radius: 44, strength: 0.30 },
+    { x: 0, y: 100, radius: 44, strength: 0.30 },
+    { x: 100, y: 100, radius: 44, strength: 0.30 },
 
-  // top-right edge zone
-  { x: 75, y: 0 },
+    { x: 50, y: 50, radius: 44, strength: 0.28, squashY: 1.8 },
+  ];
 
-  // center spinner zone
-  { x: 50, y: 50 },
+  let nearestZoneDistance = Infinity;
 
-  // bottom-left edge zone
-  { x: 25, y: 100 },
+  faintZones.forEach((zone) => {
+    let zoneDx = leftPercent - zone.x;
+    let zoneDy = topPercent - zone.y;
 
-  // bottom-right edge zone
-  { x: 75, y: 100 },
-];
+    if (zone.squashY) {
+      zoneDy *= zone.squashY;
+    }
 
-faintCircles.forEach((circle) => {
-  let dx = leftPercent - circle.x;
-  let dy = topPercent - circle.y;
+    const zoneDistance = Math.sqrt(zoneDx * zoneDx + zoneDy * zoneDy);
 
-  // 👇 ONLY squash the CENTER circle vertically
-  if (circle.x === 50 && circle.y === 50) {
-    dy *= 1.8; // increase this = LESS fade above/below spinner
-  }
+    nearestZoneDistance = Math.min(nearestZoneDistance, zoneDistance);
 
-  const distance = Math.sqrt(dx * dx + dy * dy);
+    if (zoneDistance < zone.radius) {
+      const t = zoneDistance / zone.radius;
+      const smoothT = t * t * (3 - 2 * t);
+      const fadeStrength = 1 - smoothT;
 
-  if (distance < 22) {
-    const fadeStrength = 1 - distance / 22;
-    opacity -= fadeStrength * 0.22;
-  }
-});
+      opacity -= fadeStrength * zone.strength;
+    }
+  });
 
-  return Math.max(0.005, Math.min(opacity, 0.35));
+  const farOpacityStart = 18;
+  const farOpacityEnd = 42;
+
+  const farNormalized = Math.min(
+    Math.max(
+      (nearestZoneDistance - farOpacityStart) /
+        (farOpacityEnd - farOpacityStart),
+      0
+    ),
+    1
+  );
+
+  const farBoostCurve = Math.pow(farNormalized, 1.6);
+  const farOpacityBoost = farBoostCurve * 0.09;
+
+  opacity += farOpacityBoost;
+
+  return Math.max(0, Math.min(opacity, PATTERN_MAX_VISIBLE_OPACITY));
 };
 
 const BACKGROUND_ICONS = Array.from({
@@ -101,13 +120,21 @@ const BACKGROUND_ICONS = Array.from({
 
   const finalLeft = pairStartLeft + (isCrown ? crownOffset : 0);
 
+  const baseOpacity = getPatternOpacity(adjustedTop, finalLeft);
+
+  const flippedOpacity = Math.max(
+    0,
+    PATTERN_MAX_VISIBLE_OPACITY - baseOpacity
+  );
+
   return {
     id: i,
     isCrown,
     top: `${adjustedTop}%`,
     left: `${finalLeft}%`,
     androidLeft: `${pairStartLeft - 4}%`,
-    opacity: getPatternOpacity(adjustedTop, finalLeft),
+    baseOpacity,
+    flippedOpacity,
   };
 });
 
@@ -144,7 +171,7 @@ export default function LoadIn() {
         pathname: "/home",
         params: { fromLoadin: "1" },
       });
-    }, 6000);
+    }, 24000);
 
     return () => {
       clearTimeout(timeoutId);
@@ -176,36 +203,43 @@ export default function LoadIn() {
               position: "relative",
             }}
           >
-            {/* Background pattern */}
             <View
               pointerEvents="none"
               style={[StyleSheet.absoluteFillObject, { zIndex: 1 }]}
             >
-              {BACKGROUND_ICONS.map((icon) => (
-                <Image
-                  key={icon.id}
-                  source={
-                    icon.isCrown
-                      ? require("../assets/fancy_crown.png")
-                      : require("../assets/wand.png")
-                  }
-                  style={{
-                    position: "absolute",
-                    width: icon.isCrown ? 22 : 40,
-                    height: icon.isCrown ? 22 : 40,
-                    opacity: icon.opacity,
-                    top: icon.top,
-                    left:
-                      !icon.isCrown && Platform.OS === "android"
-                        ? icon.androidLeft
-                        : icon.left,
-                  }}
-                  resizeMode="contain"
-                />
-              ))}
+              {BACKGROUND_ICONS.map((icon) => {
+                const animatedPatternOpacity = pulseValue.interpolate({
+                  inputRange: [PULSE_MIN, PULSE_MAX],
+                  outputRange: [icon.baseOpacity, icon.flippedOpacity],
+                  extrapolate: "clamp",
+                });
+
+                return (
+                  <AnimatedPatternImage
+                    key={icon.id}
+                    source={
+                      icon.isCrown
+                        ? require("../assets/fancy_crown.png")
+                        : require("../assets/wand.png")
+                    }
+                    style={{
+                      position: "absolute",
+                      width: icon.isCrown ? 22 : 40,
+                      height: icon.isCrown ? 22 : 40,
+                      opacity: animatedPatternOpacity,
+                      top: icon.top,
+                      left:
+                        !icon.isCrown && Platform.OS === "android"
+                          ? icon.androidLeft
+                          : icon.left,
+                    }}
+                    resizeMode="contain"
+                    renderToHardwareTextureAndroid
+                  />
+                );
+              })}
             </View>
 
-            {/* Foreground spinner */}
             <View
               style={{
                 alignItems: "center",

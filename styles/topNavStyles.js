@@ -1,5 +1,7 @@
 import { Platform, StyleSheet } from "react-native";
 
+const isWeb = Platform.OS === "web";
+
 const styles = StyleSheet.create({
   dashboardLetterRow: {
     flexDirection: "row",
@@ -8,10 +10,13 @@ const styles = StyleSheet.create({
   },
 
   dashboardLetter: {
-    fontSize: Platform.OS === "web" ? 20 : 15,
-    fontFamily: "Inter",
-    fontWeight: "700",
-    letterSpacing: Platform.OS === "web" ? -0.6 : -0.2,
+    fontSize: isWeb ? 16 : 13,
+
+    // WEB ONLY font change
+    fontFamily: isWeb ? "Avenir Next" : "Inter",
+
+    fontWeight: isWeb ? "700" : "700",
+    letterSpacing: isWeb ? -0.9 : -0.2,
     includeFontPadding: false,
     textAlign: "center",
     flexShrink: 0,
@@ -30,10 +35,10 @@ const styles = StyleSheet.create({
   frame155: {
     backgroundColor: "rgba(255, 255, 255, 1)",
     borderRadius: 6,
-    minHeight: Platform.OS === "web" ? 66 : 55,
+    minHeight: isWeb ? 66 : 55,
     paddingHorizontal: 10,
-    paddingTop: Platform.OS === "web" ? 18 : 14,
-    paddingBottom: Platform.OS === "web" ? 15 : 13,
+    paddingTop: isWeb ? 18 : 14,
+    paddingBottom: isWeb ? 15 : 13,
     position: "relative",
     marginTop: 0,
     overflow: "visible",
@@ -41,10 +46,10 @@ const styles = StyleSheet.create({
 
   topNav: {
     width: "100%",
-    minHeight: Platform.OS === "web" ? 24 : 18,
+    minHeight: isWeb ? 24 : 18,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: Platform.OS === "web" ? "space-between" : "flex-start",
+    justifyContent: isWeb ? "space-between" : "flex-start",
     position: "relative",
     overflow: "visible",
   },
@@ -58,7 +63,7 @@ const styles = StyleSheet.create({
   },
 
   navTrack: {
-    marginTop: Platform.OS === "web" ? 9 : 7,
+    marginTop: isWeb ? 9 : 7,
     width: "100%",
     height: 4,
     backgroundColor: "#D9D9D9",

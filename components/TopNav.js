@@ -115,9 +115,6 @@ export default function TopNav() {
       return section;
     });
 
-    // Android-only aesthetic boundary nudges:
-    // Debt encroaches slightly into Dashboard.
-    // Credit encroaches slightly into Accounts.
     const debtIntoDashboard = 7;
     const creditIntoAccounts = 7;
 

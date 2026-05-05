@@ -43,7 +43,7 @@ export default function RootLayout() {
             paddingHorizontal: 8,
             paddingTop: 8,
             paddingBottom: 8,
-            backgroundColor: "rgba(217,217,217,0.5)",
+backgroundColor: "#F4F5FB",
             zIndex: 900,
             elevation: 900,
           }}

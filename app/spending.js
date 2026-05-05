@@ -121,15 +121,15 @@ function ExpenditureCard() {
             overflow: "hidden",
           }}
         >
-          <Image
-            source={require("../assets/spending.png")}
-            style={{
-              width: 220,
-              height: 220,
-              alignSelf: "center",
-            }}
-            resizeMode="contain"
-          />
+<Image
+  source={require("../assets/spending.png")}
+  style={{
+    width: 180,
+    height: 180,
+    alignSelf: "center",
+  }}
+  resizeMode="contain"
+/>
         </View>
 
         <View style={styles.outlineButton}>

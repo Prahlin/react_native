@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
 
-  heroWrap: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-    marginBottom: 12,
-  },
+heroWrap: {
+  alignItems: "center",
+  justifyContent: "center",
+  marginTop: 0,
+  marginBottom: 18,
+},
 
   activityList: {
     marginTop: 4,

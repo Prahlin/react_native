@@ -50,9 +50,9 @@ const activityItems = [
 
 function PulseIcon() {
   return (
-    <Svg width="110" height="78" viewBox="0 0 110 78" fill="none">
+    <Svg width="144" height="144" viewBox="0 0 110 110" fill="none">
       <Path
-        d="M8 46H28L41 20L56 58L69 40H102"
+        d="M8 58H28L41 32L56 70L69 52H102"
         stroke="#7280DE"
         strokeWidth="10"
         strokeLinecap="round"

@@ -20,6 +20,7 @@ export function resetBellClickedState() {
 }
 
 const POPUP_RIGHT_OVERHANG = 27;
+const POPUP_BODY_NUDGE_RIGHT = 5;
 const CLOSE_GUARD_MS = 250;
 
 const MENU_WIDTH = 170;
@@ -35,6 +36,11 @@ export default function HeaderBar() {
 
   const [menuRight, setMenuRight] = useState(12);
   const [notificationsRight, setNotificationsRight] = useState(12);
+
+  const [menuArrowRight, setMenuArrowRight] =
+    useState(POPUP_RIGHT_OVERHANG);
+  const [notificationsArrowRight, setNotificationsArrowRight] =
+    useState(POPUP_RIGHT_OVERHANG);
 
   const menuScale = useRef(new Animated.Value(0.96)).current;
   const notificationsScale = useRef(new Animated.Value(0.96)).current;
@@ -52,13 +58,20 @@ export default function HeaderBar() {
     "Credit score change",
   ];
 
-  const getPopupRight = (iconCenterX, popupWidth) => {
+  const getPopupPosition = (iconCenterX, popupWidth) => {
     const rawRight = screenWidth - iconCenterX - POPUP_RIGHT_OVERHANG;
 
     const minRight = SCREEN_MARGIN;
     const maxRight = screenWidth - popupWidth - SCREEN_MARGIN;
 
-    return Math.max(minRight, Math.min(rawRight, maxRight));
+    const popupRight = Math.max(minRight, Math.min(rawRight, maxRight));
+
+    const arrowRight = Math.max(
+      12,
+      Math.min(screenWidth - popupRight - iconCenterX, popupWidth - 12)
+    );
+
+    return { popupRight, arrowRight };
   };
 
   const guardClose = () => {
@@ -72,7 +85,13 @@ export default function HeaderBar() {
     menuRef.current?.measureInWindow?.((x, y, width) => {
       const iconCenterX = x + width / 2;
 
-      setMenuRight(getPopupRight(iconCenterX, MENU_WIDTH));
+      const { popupRight, arrowRight } = getPopupPosition(
+        iconCenterX,
+        MENU_WIDTH
+      );
+
+      setMenuRight(popupRight);
+      setMenuArrowRight(arrowRight);
       setMenuOpen(true);
 
       menuScale.setValue(0.96);
@@ -94,7 +113,13 @@ export default function HeaderBar() {
     bellRef.current?.measureInWindow?.((x, y, width) => {
       const iconCenterX = x + width / 2;
 
-      setNotificationsRight(getPopupRight(iconCenterX, NOTIFICATIONS_WIDTH));
+      const { popupRight, arrowRight } = getPopupPosition(
+        iconCenterX,
+        NOTIFICATIONS_WIDTH
+      );
+
+      setNotificationsRight(popupRight);
+      setNotificationsArrowRight(arrowRight);
       setNotificationsOpen(true);
 
       notificationsScale.setValue(0.96);
@@ -141,7 +166,12 @@ export default function HeaderBar() {
           <View style={styles.rightBellSpacer} />
         </View>
 
-        <Pressable ref={menuRef} style={styles.menuButton} onPress={openMenu}>
+        <Pressable
+          ref={menuRef}
+          style={styles.menuButton}
+          hitSlop={12}
+          onPress={openMenu}
+        >
           <Text style={styles.menuDots}>⋮</Text>
         </Pressable>
       </View>
@@ -156,14 +186,19 @@ export default function HeaderBar() {
             styles.menu,
             {
               right: menuRight,
-              transform: [{ scale: menuScale }],
+              transform: [
+                { translateX: POPUP_BODY_NUDGE_RIGHT },
+                { scale: menuScale },
+              ],
             },
           ]}
         >
           <View
             style={[
               styles.arrowRight,
-              { right: POPUP_RIGHT_OVERHANG - 8 },
+              {
+                right: menuArrowRight + POPUP_BODY_NUDGE_RIGHT,
+              },
             ]}
           />
 
@@ -200,21 +235,21 @@ export default function HeaderBar() {
             <Text style={styles.itemText}>Notifications</Text>
           </TouchableOpacity>
 
-<TouchableOpacity
-  style={[styles.item, styles.last]}
-  onPress={() => {
-    closeAllowedAtRef.current = 0;
+          <TouchableOpacity
+            style={[styles.item, styles.last]}
+            onPress={() => {
+              closeAllowedAtRef.current = 0;
 
-    setMenuOpen(false);
-    setNotificationsOpen(false);
+              setMenuOpen(false);
+              setNotificationsOpen(false);
 
-    forceHideChrome();
+              forceHideChrome();
 
-    router.replace("/loadout");
-  }}
->
-  <Text style={styles.itemText}>Log out</Text>
-</TouchableOpacity>
+              router.replace("/loadout");
+            }}
+          >
+            <Text style={styles.itemText}>Log out</Text>
+          </TouchableOpacity>
         </Animated.View>
       )}
 
@@ -224,14 +259,19 @@ export default function HeaderBar() {
             styles.notifications,
             {
               right: notificationsRight,
-              transform: [{ scale: notificationsScale }],
+              transform: [
+                { translateX: POPUP_BODY_NUDGE_RIGHT },
+                { scale: notificationsScale },
+              ],
             },
           ]}
         >
           <View
             style={[
               styles.notificationsArrow,
-              { right: POPUP_RIGHT_OVERHANG - 5 },
+              {
+                right: notificationsArrowRight + POPUP_BODY_NUDGE_RIGHT,
+              },
             ]}
           />
 

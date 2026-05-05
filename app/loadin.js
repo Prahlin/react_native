@@ -4,6 +4,7 @@ import {
   Animated,
   Easing,
   Image,
+  InteractionManager,
   Platform,
   ScrollView,
   StyleSheet,
@@ -13,6 +14,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AvatarSpinner from "../components/AvatarSpinner";
 
 const AnimatedPatternImage = Animated.createAnimatedComponent(Image);
+
+const IS_ANDROID = Platform.OS === "android";
 
 const PULSE_MIN = 1;
 const PULSE_MAX = 1.08;
@@ -142,31 +145,57 @@ export default function LoadIn() {
   const pulseValue = useRef(new Animated.Value(PULSE_MIN)).current;
 
   useEffect(() => {
-    pulseValue.stopAnimation();
-    pulseValue.setValue(PULSE_MIN);
+    let pulseAnimation;
+    let timeoutId;
+    let androidStartDelayId;
+    let androidFrameId;
+    let interactionHandle;
+    let didCancel = false;
 
-    const pulseAnimation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulseValue, {
-          toValue: PULSE_MAX,
-          duration: PULSE_DURATION,
-          easing: Easing.linear,
-          useNativeDriver: true,
-          isInteraction: false,
-        }),
-        Animated.timing(pulseValue, {
-          toValue: PULSE_MIN,
-          duration: PULSE_DURATION,
-          easing: Easing.linear,
-          useNativeDriver: true,
-          isInteraction: false,
-        }),
-      ])
-    );
+    const startPulseAnimation = () => {
+      if (didCancel) return;
 
-    pulseAnimation.start();
+      pulseValue.stopAnimation();
+      pulseValue.setValue(PULSE_MIN);
 
-    const timeoutId = setTimeout(() => {
+      pulseAnimation = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseValue, {
+            toValue: PULSE_MAX,
+            duration: PULSE_DURATION,
+            easing: Easing.linear,
+            useNativeDriver: true,
+            isInteraction: false,
+          }),
+          Animated.timing(pulseValue, {
+            toValue: PULSE_MIN,
+            duration: PULSE_DURATION,
+            easing: Easing.linear,
+            useNativeDriver: true,
+            isInteraction: false,
+          }),
+        ])
+      );
+
+      pulseAnimation.start();
+    };
+
+    if (IS_ANDROID) {
+      pulseValue.stopAnimation();
+      pulseValue.setValue(PULSE_MIN);
+
+      interactionHandle = InteractionManager.runAfterInteractions(() => {
+        androidFrameId = requestAnimationFrame(() => {
+          androidStartDelayId = setTimeout(() => {
+            startPulseAnimation();
+          }, 80);
+        });
+      });
+    } else {
+      startPulseAnimation();
+    }
+
+    timeoutId = setTimeout(() => {
       router.replace({
         pathname: "/home",
         params: { fromLoadin: "1" },
@@ -174,8 +203,23 @@ export default function LoadIn() {
     }, 24000);
 
     return () => {
+      didCancel = true;
+
       clearTimeout(timeoutId);
-      pulseAnimation.stop();
+      clearTimeout(androidStartDelayId);
+
+      if (androidFrameId) {
+        cancelAnimationFrame(androidFrameId);
+      }
+
+      if (interactionHandle?.cancel) {
+        interactionHandle.cancel();
+      }
+
+      if (pulseAnimation) {
+        pulseAnimation.stop();
+      }
+
       pulseValue.stopAnimation();
       pulseValue.setValue(PULSE_MIN);
     };
@@ -187,93 +231,105 @@ export default function LoadIn() {
     extrapolate: "clamp",
   });
 
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#6A79D1" }}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        style={{ flex: 1, backgroundColor: "#6A79D1" }}
+  const screenContent = (
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          position: "relative",
+        }}
       >
-        <View style={{ flex: 1 }}>
-          <View
+        <View
+          pointerEvents="none"
+          style={[StyleSheet.absoluteFillObject, { zIndex: 1 }]}
+        >
+          {BACKGROUND_ICONS.map((icon) => {
+            const animatedPatternOpacity = pulseValue.interpolate({
+              inputRange: [PULSE_MIN, PULSE_MAX],
+              outputRange: [icon.baseOpacity, icon.flippedOpacity],
+              extrapolate: "clamp",
+            });
+
+            return (
+              <AnimatedPatternImage
+                key={icon.id}
+                source={
+                  icon.isCrown
+                    ? require("../assets/fancy_crown.png")
+                    : require("../assets/wand.png")
+                }
+                style={{
+                  position: "absolute",
+                  width: icon.isCrown ? 22 : 40,
+                  height: icon.isCrown ? 22 : 40,
+                  opacity: animatedPatternOpacity,
+                  top: icon.top,
+                  left:
+                    !icon.isCrown && IS_ANDROID
+                      ? icon.androidLeft
+                      : icon.left,
+                }}
+                resizeMode="contain"
+              />
+            );
+          })}
+        </View>
+
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 2,
+          }}
+        >
+          <AvatarSpinner
+            size={92}
+            innerSize={57}
+            personSize={22}
+            personSource={require("../assets/loading-man.png")}
+            pulseValue={pulseValue}
+            pulseMin={PULSE_MIN}
+            pulseMax={PULSE_MAX}
+            spinDuration={PULSE_DURATION}
+          />
+
+          <Animated.Text
             style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              overflow: "hidden",
-              position: "relative",
+              color: "#FFD700",
+              fontWeight: "bold",
+              fontFamily: "sans-serif",
+              fontSize: 14,
+              marginTop: 10,
+              opacity: textOpacity,
             }}
           >
-            <View
-              pointerEvents="none"
-              style={[StyleSheet.absoluteFillObject, { zIndex: 1 }]}
-            >
-              {BACKGROUND_ICONS.map((icon) => {
-                const animatedPatternOpacity = pulseValue.interpolate({
-                  inputRange: [PULSE_MIN, PULSE_MAX],
-                  outputRange: [icon.baseOpacity, icon.flippedOpacity],
-                  extrapolate: "clamp",
-                });
-
-                return (
-                  <AnimatedPatternImage
-                    key={icon.id}
-                    source={
-                      icon.isCrown
-                        ? require("../assets/fancy_crown.png")
-                        : require("../assets/wand.png")
-                    }
-                    style={{
-                      position: "absolute",
-                      width: icon.isCrown ? 22 : 40,
-                      height: icon.isCrown ? 22 : 40,
-                      opacity: animatedPatternOpacity,
-                      top: icon.top,
-                      left:
-                        !icon.isCrown && Platform.OS === "android"
-                          ? icon.androidLeft
-                          : icon.left,
-                    }}
-                    resizeMode="contain"
-                    renderToHardwareTextureAndroid
-                  />
-                );
-              })}
-            </View>
-
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 2,
-              }}
-            >
-              <AvatarSpinner
-                size={92}
-                innerSize={57}
-                personSize={22}
-                personSource={require("../assets/loading-man.png")}
-                pulseValue={pulseValue}
-                pulseMin={PULSE_MIN}
-                pulseMax={PULSE_MAX}
-                spinDuration={PULSE_DURATION}
-              />
-
-              <Animated.Text
-                style={{
-                  color: "#FFD700",
-                  fontWeight: "bold",
-                  fontFamily: "sans-serif",
-                  fontSize: 14,
-                  marginTop: 10,
-                  opacity: textOpacity,
-                }}
-              >
-                Stand by as we log you in...
-              </Animated.Text>
-            </View>
-          </View>
+            Stand by as we log you in...
+          </Animated.Text>
         </View>
-      </ScrollView>
+      </View>
+    </View>
+  );
+
+  return (
+    <SafeAreaView
+      edges={IS_ANDROID ? [] : ["top", "right", "bottom", "left"]}
+      style={{ flex: 1, backgroundColor: "#6A79D1" }}
+    >
+      {IS_ANDROID ? (
+        <View style={{ flex: 1, backgroundColor: "#6A79D1" }}>
+          {screenContent}
+        </View>
+      ) : (
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          style={{ flex: 1, backgroundColor: "#6A79D1" }}
+        >
+          {screenContent}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

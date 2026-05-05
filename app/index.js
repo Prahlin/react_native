@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Circle, Defs, Pattern, Rect } from "react-native-svg";
 
 import TwirlBackground from "../components/TwirlBackground";
+import { useUser } from "../components/UserContext";
 import styles from "../styles/indexStyles";
 
 const DOT_GAP = 5;
@@ -97,12 +98,23 @@ const CustomSwitch = memo(() => {
 
 export default function Index() {
   const { fromLoadout } = useLocalSearchParams();
+  const { setDisplayName } = useUser();
+
+  const [username, setUsername] = useState("");
+  const [usernameErrorVisible, setUsernameErrorVisible] = useState(false);
+
+  const jiggleAnim = useRef(new Animated.Value(0)).current;
+  const usernameErrorOpacity = useRef(new Animated.Value(0)).current;
+  const usernameErrorTimeoutRef = useRef(null);
 
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;
 
   const isWeb = Platform.OS === "web";
   const TOP_YELLOW_TOP = isWeb ? "20.75%" : "23.5%";
+const USERNAME_ERROR_BOTTOM = isWeb ? 70 : 60;
+const USERNAME_ERROR_BG_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
+const USERNAME_ERROR_ARROW_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
 
   const slideXAnim = useRef(
     new Animated.Value(fromLoadout === "1" ? screenWidth : 0)
@@ -163,6 +175,75 @@ export default function Index() {
       }),
     ]).start();
   }, [fromLoadout, slideXAnim, slideYAnim]);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(usernameErrorTimeoutRef.current);
+    };
+  }, []);
+
+  const showUsernameError = () => {
+    clearTimeout(usernameErrorTimeoutRef.current);
+
+    setUsernameErrorVisible(true);
+
+    jiggleAnim.stopAnimation();
+    usernameErrorOpacity.stopAnimation();
+
+    jiggleAnim.setValue(0);
+    usernameErrorOpacity.setValue(0);
+
+    Animated.parallel([
+      Animated.sequence([
+        Animated.timing(jiggleAnim, {
+          toValue: -10,
+          duration: 45,
+          useNativeDriver: true,
+        }),
+        Animated.timing(jiggleAnim, {
+          toValue: 10,
+          duration: 45,
+          useNativeDriver: true,
+        }),
+        Animated.timing(jiggleAnim, {
+          toValue: -8,
+          duration: 45,
+          useNativeDriver: true,
+        }),
+        Animated.timing(jiggleAnim, {
+          toValue: 8,
+          duration: 45,
+          useNativeDriver: true,
+        }),
+        Animated.timing(jiggleAnim, {
+          toValue: -4,
+          duration: 45,
+          useNativeDriver: true,
+        }),
+        Animated.timing(jiggleAnim, {
+          toValue: 0,
+          duration: 45,
+          useNativeDriver: true,
+        }),
+      ]),
+
+      Animated.timing(usernameErrorOpacity, {
+        toValue: 0.5,
+        duration: 120,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    usernameErrorTimeoutRef.current = setTimeout(() => {
+      Animated.timing(usernameErrorOpacity, {
+        toValue: 0,
+        duration: 160,
+        useNativeDriver: true,
+      }).start(() => {
+        setUsernameErrorVisible(false);
+      });
+    }, 1600);
+  };
 
   const dots = [
     [65, 51], [70, 51], [75, 51], [80, 51], [85, 51], [90, 51], [95, 51],
@@ -237,7 +318,7 @@ export default function Index() {
       style={{
         flex: 1,
         transform: [
-          { translateX: slideXAnim },
+          { translateX: Animated.add(slideXAnim, jiggleAnim) },
           { translateY: slideYAnim },
         ],
       }}
@@ -360,34 +441,101 @@ export default function Index() {
                 </View>
               </View>
 
-  <View style={styles.fieldRow}>
-  <View style={styles.fieldIconContainer}>
-    <Image
-      source={require("../assets/avatar.png")}
-      style={styles.avatarIcon}
+              <View style={{ position: "relative", zIndex: 50 }}>
+ {usernameErrorVisible && (
+  <Animated.View
+    pointerEvents="none"
+    style={{
+      position: "absolute",
+      left: 20,
+      bottom: USERNAME_ERROR_BOTTOM,
+      borderRadius: 10,
+      paddingVertical: 5.5,
+      paddingHorizontal: 14,
+zIndex: 999,
+elevation: isWeb ? 0 : 999,
+shadowColor: "#000",
+shadowOpacity: isWeb ? 0 : 0.2,
+shadowRadius: isWeb ? 0 : 8,
+shadowOffset: isWeb ? { width: 0, height: 0 } : { width: 0, height: 3 },
+    }}
+  >
+    <Animated.View
+      pointerEvents="none"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: USERNAME_ERROR_BG_COLOR,
+        borderRadius: 10,
+        opacity: usernameErrorOpacity,
+      }}
     />
-  </View>
 
-  <TextInput
-    placeholder="Username"
-    style={styles.input}
-  />
-</View>
-
-<View style={styles.fieldRow}>
-  <View style={styles.fieldIconContainer}>
-    <Image
-      source={require("../assets/lock.png")}
-      style={styles.lockIcon}
+    <Animated.View
+      pointerEvents="none"
+      style={{
+        position: "absolute",
+        bottom: -8,
+        left: 24,
+        width: 0,
+        height: 0,
+        borderLeftWidth: 8,
+        borderRightWidth: 8,
+        borderTopWidth: 8,
+        borderLeftColor: "transparent",
+        borderRightColor: "transparent",
+        borderTopColor: USERNAME_ERROR_BG_COLOR,
+        opacity: usernameErrorOpacity,
+      }}
     />
-  </View>
 
-  <TextInput
-    placeholder="Password"
-    secureTextEntry
-    style={styles.input}
-  />
-</View>
+    <Text
+      style={{
+        color: "#FFFFFF",
+        fontFamily: "Inter",
+        fontWeight: "700",
+        fontSize: 13,
+      }}
+    >
+      Please input username
+    </Text>
+  </Animated.View>
+)}
+
+                <View style={styles.fieldRow}>
+                  <View style={styles.fieldIconContainer}>
+                    <Image
+                      source={require("../assets/avatar.png")}
+                      style={styles.avatarIcon}
+                    />
+                  </View>
+
+                  <TextInput
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={setUsername}
+                    style={styles.input}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.fieldRow}>
+                <View style={styles.fieldIconContainer}>
+                  <Image
+                    source={require("../assets/lock.png")}
+                    style={styles.lockIcon}
+                  />
+                </View>
+
+                <TextInput
+                  placeholder="Password"
+                  secureTextEntry
+                  style={styles.input}
+                />
+              </View>
 
               <View style={styles.rememberRow}>
                 <CustomSwitch />
@@ -397,7 +545,15 @@ export default function Index() {
 
               <TouchableOpacity
                 style={styles.signInButton}
-                onPress={() => router.push("/loadin")}
+                onPress={() => {
+                  if (!username.trim()) {
+                    showUsernameError();
+                    return;
+                  }
+
+                  setDisplayName(username);
+                  router.push("/loadin");
+                }}
               >
                 <Text style={styles.signInText}>SIGN IN</Text>
               </TouchableOpacity>

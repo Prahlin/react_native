@@ -14,6 +14,7 @@ import Svg, { Circle, Defs, Pattern, Rect } from "react-native-svg";
 
 import styles from "../styles/headerStyles";
 import { forceHideChrome } from "./navChromeState";
+import { useUser } from "./UserContext";
 
 let hasBellBeenClicked = false;
 
@@ -55,7 +56,7 @@ const HeaderDots = memo(({ color }) => (
           height={DOT_GAP}
           patternUnits="userSpaceOnUse"
         >
-<Circle cx="0.75" cy="0.75" r="0.75" fill={color} opacity="0.05" />
+          <Circle cx="0.75" cy="0.75" r="0.75" fill={color} opacity="0.05" />
         </Pattern>
       </Defs>
 
@@ -66,6 +67,7 @@ const HeaderDots = memo(({ color }) => (
 
 export default function HeaderBar() {
   const { width: screenWidth } = useWindowDimensions();
+  const { displayName, resetDisplayName } = useUser();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -302,6 +304,7 @@ export default function HeaderBar() {
     }
 
     if (text === "Log out") {
+      resetDisplayName();
       forceHideChrome();
       router.replace("/loadout");
     }
@@ -344,14 +347,14 @@ export default function HeaderBar() {
       </View>
 
       <LinearGradient
-colors={["#6F7EF0", "#97A2FE"]}
+        colors={["#6F7EF0", "#97A2FE"]}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
         style={styles.header}
       >
         <HeaderDots color="#3E4BB5" />
 
-        <Text style={styles.title}>Welcome, Steve</Text>
+        <Text style={styles.title}>Welcome, {displayName}</Text>
 
         <View style={styles.middleSection}>
           <View style={styles.leftBellSpacer} />

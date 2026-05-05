@@ -8,16 +8,17 @@ import {
   View,
 } from "react-native";
 import BottomNav from "../components/BottomNav";
-import HeaderBar from "../components/HeaderBar";
-import TopNav from "../components/TopNav";
 import {
   CrownWandPattern,
   GRAY_BG_COLOR,
 } from "../components/gray_bg";
+import HeaderBar from "../components/HeaderBar";
 import {
   releaseChromeHide,
   useForceHideChrome,
 } from "../components/navChromeState";
+import TopNav from "../components/TopNav";
+import { UserProvider } from "../components/UserContext";
 
 export default function RootLayout() {
   const pathname = usePathname();
@@ -99,84 +100,86 @@ export default function RootLayout() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-      {!hideNav && (
-        <Animated.View
-          pointerEvents="box-none"
-          style={[
-            StyleSheet.absoluteFillObject,
-            {
-              zIndex: 1000,
-              elevation: 1000,
-            },
-            chromeSlideStyle,
-          ]}
+    <UserProvider>
+      <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        {!hideNav && (
+          <Animated.View
+            pointerEvents="box-none"
+            style={[
+              StyleSheet.absoluteFillObject,
+              {
+                zIndex: 1000,
+                elevation: 1000,
+              },
+              chromeSlideStyle,
+            ]}
+          >
+            <HeaderBar />
+          </Animated.View>
+        )}
+
+        {!hideNav && (
+          <Animated.View
+            pointerEvents="box-none"
+            style={[
+              {
+                position: "absolute",
+                top: 80,
+                left: 0,
+                right: 0,
+                paddingHorizontal: 8,
+                paddingTop: 8,
+                paddingBottom: 8,
+                backgroundColor: GRAY_BG_COLOR,
+                overflow: "hidden",
+                zIndex: 900,
+                elevation: 900,
+              },
+              chromeSlideStyle,
+            ]}
+          >
+            <CrownWandPattern
+              style={{
+                position: "absolute",
+                top: -80,
+                left: 0,
+                right: 0,
+                height: screenHeight,
+              }}
+            />
+
+            <View style={{ zIndex: 1 }}>
+              <TopNav />
+            </View>
+          </Animated.View>
+        )}
+
+        <View
+          style={{
+            flex: 1,
+            paddingTop: !hideNav && Platform.OS === "web" ? 10 : 0,
+            backgroundColor: hideNav ? "#6A79D1" : "#ffffff",
+          }}
         >
-          <HeaderBar />
-        </Animated.View>
-      )}
+          <Slot />
+        </View>
 
-      {!hideNav && (
-        <Animated.View
-          pointerEvents="box-none"
-          style={[
-            {
-              position: "absolute",
-              top: 80,
-              left: 0,
-              right: 0,
-              paddingHorizontal: 8,
-              paddingTop: 8,
-              paddingBottom: 8,
-              backgroundColor: GRAY_BG_COLOR,
-              overflow: "hidden",
-              zIndex: 900,
-              elevation: 900,
-            },
-            chromeSlideStyle,
-          ]}
-        >
-          <CrownWandPattern
-            style={{
-              position: "absolute",
-              top: -80,
-              left: 0,
-              right: 0,
-              height: screenHeight,
-            }}
-          />
-
-          <View style={{ zIndex: 1 }}>
-            <TopNav />
-          </View>
-        </Animated.View>
-      )}
-
-      <View
-        style={{
-          flex: 1,
-          paddingTop: !hideNav && Platform.OS === "web" ? 10 : 0,
-          backgroundColor: hideNav ? "#6A79D1" : "#ffffff",
-        }}
-      >
-        <Slot />
+        {!hideNav && (
+          <Animated.View
+            pointerEvents="box-none"
+            style={[
+              StyleSheet.absoluteFillObject,
+              {
+                zIndex: 950,
+                elevation: 950,
+              },
+              chromeSlideStyle,
+            ]}
+          >
+            <BottomNav />
+          </Animated.View>
+        )}
       </View>
-
-      {!hideNav && (
-        <Animated.View
-          pointerEvents="box-none"
-          style={[
-            StyleSheet.absoluteFillObject,
-            {
-              zIndex: 950,
-              elevation: 950,
-            },
-            chromeSlideStyle,
-          ]}
-        >
-          <BottomNav />
-        </Animated.View>
-      )}
-    </View>
+    </UserProvider>
   );
 }

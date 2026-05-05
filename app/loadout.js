@@ -22,10 +22,16 @@ const PULSE_MIN = 1;
 const PULSE_MAX = 1.08;
 const PULSE_DURATION = 1400;
 
+const RIPPLE_START = 0;
+const RIPPLE_END = 1.15;
+const RIPPLE_DURATION = 2200;
+const RIPPLE_WAVE_WIDTH = 0.12;
+const RIPPLE_BLEND_RATIO = 0.5;
+
 const ROWS = 25;
 const PAIRS_PER_ROW = 5;
 
-const PATTERN_MAX_VISIBLE_OPACITY = 0.05;
+const PATTERN_MAX_VISIBLE_OPACITY = 0.1;
 
 const getPatternOpacity = (topPercent, leftPercent) => {
   const centerX = 50;
@@ -103,6 +109,19 @@ const getPatternOpacity = (topPercent, leftPercent) => {
   return Math.max(0, Math.min(opacity, PATTERN_MAX_VISIBLE_OPACITY));
 };
 
+const getRipplePhase = (topPercent, leftPercent) => {
+  const centerX = 50;
+  const centerY = 50;
+
+  const dx = leftPercent - centerX;
+  const dy = topPercent - centerY;
+
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const maxDistance = 70;
+
+  return Math.min(distance / maxDistance, 1);
+};
+
 const BACKGROUND_ICONS = Array.from({
   length: ROWS * PAIRS_PER_ROW * 2,
 }).map((_, i) => {
@@ -125,11 +144,7 @@ const BACKGROUND_ICONS = Array.from({
   const finalLeft = pairStartLeft + (isCrown ? crownOffset : 0);
 
   const baseOpacity = getPatternOpacity(adjustedTop, finalLeft);
-
-  const flippedOpacity = Math.max(
-    0,
-    PATTERN_MAX_VISIBLE_OPACITY - baseOpacity
-  );
+  const ripplePhase = getRipplePhase(adjustedTop, finalLeft);
 
   return {
     id: i,
@@ -138,26 +153,52 @@ const BACKGROUND_ICONS = Array.from({
     left: `${finalLeft}%`,
     androidLeft: `${pairStartLeft - 4}%`,
     baseOpacity,
-    flippedOpacity,
+    ripplePhase,
   };
 });
 
+const getRippleOpacity = (rippleValue, ripplePhase, maxOpacity) => {
+  const safePhase = Math.max(ripplePhase, 0.001);
+  const start = Math.max(safePhase - RIPPLE_WAVE_WIDTH, RIPPLE_START);
+  const end = Math.min(safePhase + RIPPLE_WAVE_WIDTH, RIPPLE_END);
+  const blendOpacity = maxOpacity * RIPPLE_BLEND_RATIO;
+
+  if (start <= RIPPLE_START) {
+    return rippleValue.interpolate({
+      inputRange: [RIPPLE_START, safePhase, end, RIPPLE_END],
+      outputRange: [blendOpacity, maxOpacity, blendOpacity, 0],
+      extrapolate: "clamp",
+    });
+  }
+
+  return rippleValue.interpolate({
+    inputRange: [RIPPLE_START, start, safePhase, end, RIPPLE_END],
+    outputRange: [0, blendOpacity, maxOpacity, blendOpacity, 0],
+    extrapolate: "clamp",
+  });
+};
+
 export default function LoadOut() {
   const pulseValue = useRef(new Animated.Value(PULSE_MIN)).current;
+  const rippleValue = useRef(new Animated.Value(RIPPLE_START)).current;
 
   useEffect(() => {
     let pulseAnimation;
+    let rippleAnimation;
     let timeoutId;
     let androidStartDelayId;
     let androidFrameId;
     let interactionHandle;
     let didCancel = false;
 
-    const startPulseAnimation = () => {
+    const startAnimations = () => {
       if (didCancel) return;
 
       pulseValue.stopAnimation();
       pulseValue.setValue(PULSE_MIN);
+
+      rippleValue.stopAnimation();
+      rippleValue.setValue(RIPPLE_START);
 
       pulseAnimation = Animated.loop(
         Animated.sequence([
@@ -178,22 +219,50 @@ export default function LoadOut() {
         ])
       );
 
+      rippleAnimation = Animated.loop(
+        Animated.sequence([
+          Animated.timing(rippleValue, {
+            toValue: RIPPLE_END,
+            duration: RIPPLE_DURATION,
+            easing: Easing.linear,
+            useNativeDriver: true,
+            isInteraction: false,
+          }),
+
+          Animated.delay(500),
+
+          Animated.timing(rippleValue, {
+            toValue: RIPPLE_START,
+            duration: RIPPLE_DURATION,
+            easing: Easing.linear,
+            useNativeDriver: true,
+            isInteraction: false,
+          }),
+
+          Animated.delay(250),
+        ])
+      );
+
       pulseAnimation.start();
+      rippleAnimation.start();
     };
 
     if (IS_ANDROID) {
       pulseValue.stopAnimation();
       pulseValue.setValue(PULSE_MIN);
 
+      rippleValue.stopAnimation();
+      rippleValue.setValue(RIPPLE_START);
+
       interactionHandle = InteractionManager.runAfterInteractions(() => {
         androidFrameId = requestAnimationFrame(() => {
           androidStartDelayId = setTimeout(() => {
-            startPulseAnimation();
+            startAnimations();
           }, 80);
         });
       });
     } else {
-      startPulseAnimation();
+      startAnimations();
     }
 
     timeoutId = setTimeout(() => {
@@ -223,10 +292,17 @@ export default function LoadOut() {
         pulseAnimation.stop();
       }
 
+      if (rippleAnimation) {
+        rippleAnimation.stop();
+      }
+
       pulseValue.stopAnimation();
       pulseValue.setValue(PULSE_MIN);
+
+      rippleValue.stopAnimation();
+      rippleValue.setValue(RIPPLE_START);
     };
-  }, [pulseValue]);
+  }, [pulseValue, rippleValue]);
 
   const textOpacity = pulseValue.interpolate({
     inputRange: [PULSE_MIN, PULSE_MAX],
@@ -250,11 +326,11 @@ export default function LoadOut() {
           style={[StyleSheet.absoluteFillObject, { zIndex: 1 }]}
         >
           {BACKGROUND_ICONS.map((icon) => {
-            const animatedPatternOpacity = pulseValue.interpolate({
-              inputRange: [PULSE_MIN, PULSE_MAX],
-              outputRange: [icon.baseOpacity, icon.flippedOpacity],
-              extrapolate: "clamp",
-            });
+            const animatedPatternOpacity = getRippleOpacity(
+              rippleValue,
+              icon.ripplePhase,
+              PATTERN_MAX_VISIBLE_OPACITY
+            );
 
             return (
               <AnimatedPatternImage

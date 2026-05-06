@@ -428,8 +428,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    rowGap: 14,
-    columnGap: 0,
+    rowGap: 16,
   },
 
   cardItem: {
@@ -440,8 +439,16 @@ const styles = StyleSheet.create({
 
   offerItem: {
     width: "48%",
+    minHeight: 94,
     alignItems: "center",
     justifyContent: "flex-start",
+  },
+
+  offerLabelWrap: {
+    height: 28,
+    marginBottom: 6,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   cardItemTitle: {
@@ -455,12 +462,13 @@ const styles = StyleSheet.create({
 
   offerLabel: {
     fontSize: 8,
+    lineHeight: 10,
     textAlign: "center",
-    marginBottom: 8,
-    width: 60,
+    width: 90,
     alignSelf: "center",
     fontFamily: "Inter",
     fontWeight: "400",
+    color: "#111111",
   },
 
   cardOfferImage: {
@@ -679,4 +687,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles
+export default styles;

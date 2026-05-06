@@ -1,10 +1,56 @@
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef } from "react";
-import { Animated, Dimensions, Text, View } from "react-native";
+import { Animated, Dimensions, Image, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import GrayBg from "../components/gray_bg";
 
 import styles from "../styles/homeStyles";
+
+const creditCardOffers = [
+  {
+    title: "Capital One\nSavorOne",
+    image: require("../assets/capital-one-savorone-2.png"),
+  },
+  {
+    title: "Discover it",
+    image: require("../assets/capital-one-savorone-1.png"),
+  },
+  {
+    title: "Bank of America\nCash Rewards",
+    image: require("../assets/bank-of-america-customized-cash-rewards-1.png"),
+  },
+  {
+    title: "Wells Fargo\nActive Cash Card",
+    image: require("../assets/wells-fargo-active-cash-card-1.png"),
+  },
+  {
+    title: "PNC Cash\nUnlimited",
+    image: require("../assets/pnc-cash-unlimited-1.png"),
+  },
+  {
+    title: "TD Double Up",
+    image: require("../assets/td-double-up-1.png"),
+  },
+];
+
+const loanOffers = [
+  {
+    title: "PNC Bank",
+    image: require("../assets/pnc-bank-icon-1.png"),
+  },
+  {
+    title: "Chase Bank",
+    image: require("../assets/chase-icon-1.png"),
+  },
+  {
+    title: "TD Bank",
+    image: require("../assets/td-icon-1.png"),
+  },
+  {
+    title: "Wells Fargo",
+    image: require("../assets/wells-fargo-icon-1.png"),
+  },
+];
 
 //
 // 🔷 CREDIT SCORE CARD
@@ -90,7 +136,13 @@ function SpendingCard() {
           </View>
 
           <View style={{ width: 30, alignItems: "center" }}>
-            <View style={{ width: 25, height: 96, backgroundColor: "#6A79D1" }} />
+            <View
+              style={{
+                width: 25,
+                height: 96,
+                backgroundColor: "#6A79D1",
+              }}
+            />
             <Text style={{ marginTop: 8, fontSize: 12, fontWeight: "900" }}>
               Oct
             </Text>
@@ -121,6 +173,26 @@ function CreditCardOffersCard() {
       <Text style={styles.creditCardsSubtitle}>
         *Based on your credit score
       </Text>
+
+      <View style={styles.offersGrid}>
+        {creditCardOffers.map((offer) => (
+          <View key={offer.title} style={styles.offerItem}>
+            <View style={styles.offerLabelWrap}>
+              <Text style={styles.offerLabel}>{offer.title}</Text>
+            </View>
+
+            <Image
+              source={offer.image}
+              style={styles.offerCard}
+              resizeMode="contain"
+            />
+          </View>
+        ))}
+      </View>
+
+      <View style={styles.primaryButton}>
+        <Text style={styles.primaryButtonText}>See more offers</Text>
+      </View>
     </View>
   );
 }
@@ -132,6 +204,26 @@ function LoanOffersCard() {
   return (
     <View style={styles.frame153}>
       <Text style={styles.sectionTitle}>Loan Offers</Text>
+      <Text style={styles.creditCardsSubtitle}>
+        *Based on your credit score
+      </Text>
+
+      <View style={styles.loanGrid}>
+        {loanOffers.map((offer) => (
+          <View key={offer.title} style={styles.loanItem}>
+            <Text style={styles.loanLabel}>{offer.title}</Text>
+            <Image
+              source={offer.image}
+              style={styles.loanIcon}
+              resizeMode="contain"
+            />
+          </View>
+        ))}
+      </View>
+
+      <View style={styles.primaryButton}>
+        <Text style={styles.primaryButtonText}>Find out more</Text>
+      </View>
     </View>
   );
 }
@@ -142,8 +234,6 @@ function LoanOffersCard() {
 export default function Home() {
   const { fromLoadin } = useLocalSearchParams();
   const screenWidth = Dimensions.get("window").width;
-
-  const scrollY = useRef(new Animated.Value(0)).current;
 
   const slideAnim = useRef(
     new Animated.Value(fromLoadin === "1" ? -screenWidth : 0)
@@ -185,13 +275,13 @@ export default function Home() {
         },
       ]}
     >
-<GrayBg fadeTopNavOnScroll>
-  <CreditScoreCard />
-  <SpendingCard />
-  <CreditCardOffersCard />
-  <LoanOffersCard />
-  <View style={styles.bottomSpacer} />
-</GrayBg>
+      <GrayBg fadeTopNavOnScroll>
+        <CreditScoreCard />
+        <SpendingCard />
+        <CreditCardOffersCard />
+        <LoanOffersCard />
+        <View style={styles.bottomSpacer} />
+      </GrayBg>
     </Animated.View>
   );
 }

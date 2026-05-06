@@ -4,6 +4,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "rgba(217, 217, 217, 0.5)",
+    position: "relative",
+    zIndex: 0,
+    elevation: 0,
   },
 
   scrollContent: {
@@ -24,13 +27,17 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "rgba(217, 217, 217, 0.5)",
     overflow: "hidden",
+    position: "relative",
+    zIndex: 0,
+    elevation: 0,
   },
 
   mainContent: {
     paddingTop: 132,
     paddingHorizontal: 8,
     gap: 8,
-    zIndex: 1,
+    zIndex: 0,
+    elevation: 0,
   },
 
   stickyHeaderWrap: {
@@ -38,7 +45,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 20,
+    zIndex: 999999,
+    elevation: 999999,
+    overflow: "visible",
   },
 
   welcomeSteve: {
@@ -58,8 +67,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingTop: 0,
     backgroundColor: "transparent",
-    zIndex: 1002,
-    elevation: 1002,
+    zIndex: 1000000,
+    elevation: 1000000,
+    overflow: "visible",
   },
 
   bG: {

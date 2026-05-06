@@ -1,5 +1,12 @@
+import { useRef } from "react";
 import { Animated, Image, Platform, StyleSheet, View } from "react-native";
-import { resetTopNavScroll, topNavScrollY } from "./topNavScrollState";
+import {
+  NAV_CROSSFADE_DISTANCE,
+  navCrossfadeProgress,
+  resetNavCrossfadeProgress,
+  resetTopNavScroll,
+  topNavScrollY,
+} from "./topNavScrollState";
 
 const IS_ANDROID = Platform.OS === "android";
 
@@ -78,6 +85,91 @@ export default function GrayBg({
   bottomPadding = 110,
   fadeTopNavOnScroll = false,
 }) {
+  const viewportHeightRef = useRef(0);
+  const contentHeightRef = useRef(0);
+  const previousScrollYRef = useRef(0);
+  const navCrossfadeProgressRef = useRef(0);
+
+  const setCrossfadeProgress = (value) => {
+    const clampedValue = Math.max(0, Math.min(value, 1));
+
+    navCrossfadeProgressRef.current = clampedValue;
+    navCrossfadeProgress.setValue(clampedValue);
+
+    topNavScrollY.setValue(clampedValue * NAV_CROSSFADE_DISTANCE);
+  };
+
+  const forceTopNavVisible = () => {
+    previousScrollYRef.current = 0;
+    setCrossfadeProgress(0);
+  };
+
+  const updateNavCrossfadeFromScroll = (scrollY) => {
+    if (!viewportHeightRef.current || !contentHeightRef.current) {
+      forceTopNavVisible();
+      return;
+    }
+
+    const maxScrollY = Math.max(
+      contentHeightRef.current - viewportHeightRef.current,
+      0
+    );
+
+    const clampedScrollY = Math.max(0, Math.min(scrollY, maxScrollY));
+
+    if (clampedScrollY <= 1) {
+      forceTopNavVisible();
+      return;
+    }
+
+    const scrollDelta = clampedScrollY - previousScrollYRef.current;
+
+    previousScrollYRef.current = clampedScrollY;
+
+    if (Math.abs(scrollDelta) < 0.25) return;
+
+    const nextProgress =
+      navCrossfadeProgressRef.current +
+      scrollDelta / NAV_CROSSFADE_DISTANCE;
+
+    setCrossfadeProgress(nextProgress);
+  };
+
+  const handleScroll = (event) => {
+    if (!fadeTopNavOnScroll) return;
+
+    const y = event.nativeEvent.contentOffset.y;
+
+    updateNavCrossfadeFromScroll(y);
+  };
+
+  const handleScrollEnd = (event) => {
+    if (!fadeTopNavOnScroll) return;
+
+    const y = event.nativeEvent.contentOffset.y;
+
+    if (y <= 1) {
+      forceTopNavVisible();
+    }
+  };
+
+  const handleLayout = (event) => {
+    viewportHeightRef.current = event.nativeEvent.layout.height;
+
+    if (fadeTopNavOnScroll) {
+      previousScrollYRef.current = 0;
+      navCrossfadeProgressRef.current = 0;
+
+      resetTopNavScroll();
+      resetNavCrossfadeProgress();
+      forceTopNavVisible();
+    }
+  };
+
+  const handleContentSizeChange = (_, height) => {
+    contentHeightRef.current = height;
+  };
+
   return (
     <View style={styles.root}>
       <CrownWandPattern style={StyleSheet.absoluteFillObject} />
@@ -86,35 +178,18 @@ export default function GrayBg({
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
+        removeClippedSubviews={false}
         contentContainerStyle={{
           paddingTop,
           paddingHorizontal,
           paddingBottom: bottomPadding,
           gap,
         }}
-        onScroll={
-          fadeTopNavOnScroll
-            ? Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: topNavScrollY,
-                      },
-                    },
-                  },
-                ],
-                {
-                  useNativeDriver: false,
-                }
-              )
-            : undefined
-        }
-        onLayout={() => {
-          if (fadeTopNavOnScroll) {
-            resetTopNavScroll();
-          }
-        }}
+        onScroll={fadeTopNavOnScroll ? handleScroll : undefined}
+        onScrollEndDrag={fadeTopNavOnScroll ? handleScrollEnd : undefined}
+        onMomentumScrollEnd={fadeTopNavOnScroll ? handleScrollEnd : undefined}
+        onLayout={handleLayout}
+        onContentSizeChange={handleContentSizeChange}
       >
         {children}
       </Animated.ScrollView>
@@ -128,16 +203,21 @@ const styles = StyleSheet.create({
     backgroundColor: GRAY_BG_COLOR,
     position: "relative",
     overflow: "hidden",
+    zIndex: 0,
+    elevation: 0,
   },
 
   patternLayer: {
     backgroundColor: GRAY_BG_COLOR,
     overflow: "hidden",
+    zIndex: 0,
+    elevation: 0,
   },
 
   scrollView: {
     flex: 1,
     backgroundColor: "transparent",
-    zIndex: 1,
+    zIndex: 0,
+    elevation: 0,
   },
 });

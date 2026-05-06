@@ -11,11 +11,8 @@ const styles = StyleSheet.create({
 
   dashboardLetter: {
     fontSize: isWeb ? 16 : 13,
-
-    // WEB ONLY font change
     fontFamily: isWeb ? "Avenir Next" : "Inter",
-
-    fontWeight: isWeb ? "700" : "700",
+    fontWeight: "700",
     letterSpacing: isWeb ? -0.9 : -0.2,
     includeFontPadding: false,
     textAlign: "center",
@@ -32,8 +29,32 @@ const styles = StyleSheet.create({
     color: "#6A79D1",
   },
 
+  frame155Wrap: {
+    position: "relative",
+    minHeight: isWeb ? 66 : 55,
+    zIndex: 999999,
+    elevation: 999999,
+    overflow: "visible",
+    backgroundColor: "transparent",
+  },
+
+  topNavShield: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 6,
+    zIndex: 999998,
+    elevation: 999998,
+  },
+
+  topNavShieldHidden: {
+    display: "none",
+  },
+
   frame155: {
-    backgroundColor: "rgba(255, 255, 255, 1)",
     borderRadius: 6,
     minHeight: isWeb ? 66 : 55,
     paddingHorizontal: 10,
@@ -42,6 +63,16 @@ const styles = StyleSheet.create({
     position: "relative",
     marginTop: 0,
     overflow: "visible",
+    backgroundColor: "transparent",
+    zIndex: 999999,
+    elevation: 999999,
+  },
+
+  topNavContent: {
+    width: "100%",
+    position: "relative",
+    zIndex: 1000000,
+    elevation: 1000000,
   },
 
   topNav: {
@@ -52,6 +83,8 @@ const styles = StyleSheet.create({
     justifyContent: isWeb ? "space-between" : "flex-start",
     position: "relative",
     overflow: "visible",
+    zIndex: 1000000,
+    elevation: 1000000,
   },
 
   navTab: {
@@ -70,6 +103,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     overflow: "hidden",
     position: "relative",
+    zIndex: 1000000,
+    elevation: 1000000,
   },
 
   navUnderlineActive: {

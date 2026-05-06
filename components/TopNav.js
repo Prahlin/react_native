@@ -2,6 +2,7 @@ import { router, usePathname } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Easing, Platform, Pressable, Text, View } from "react-native";
 import styles from "../styles/topNavStyles";
+import { navCrossfadeProgress } from "./topNavScrollState";
 
 export default function TopNav() {
   const pathname = usePathname();
@@ -24,10 +25,40 @@ export default function TopNav() {
   const [activeIndex, setActiveIndex] = useState(routeIndex);
   const [trackWidth, setTrackWidth] = useState(0);
   const [textWidths, setTextWidths] = useState({});
+  const [navTouchable, setNavTouchable] = useState(true);
+  const [shieldVisible, setShieldVisible] = useState(true);
+
+  const navTouchableRef = useRef(true);
+  const shieldVisibleRef = useRef(true);
 
   const underlineAnim = useRef(
     new Animated.Value(routeIndex >= 0 ? routeIndex : 0)
   ).current;
+
+  useEffect(() => {
+    const listenerId = navCrossfadeProgress.addListener(({ value }) => {
+      const nextTouchable = value < 0.98;
+
+      if (nextTouchable !== navTouchableRef.current) {
+        navTouchableRef.current = nextTouchable;
+        setNavTouchable(nextTouchable);
+      }
+
+      // Android fix:
+      // Keep a solid white shield above the scroll content whenever the top nav
+      // is even slightly visible. Hide it only when the nav is fully gone.
+      const nextShieldVisible = value < 0.999;
+
+      if (nextShieldVisible !== shieldVisibleRef.current) {
+        shieldVisibleRef.current = nextShieldVisible;
+        setShieldVisible(nextShieldVisible);
+      }
+    });
+
+    return () => {
+      navCrossfadeProgress.removeListener(listenerId);
+    };
+  }, []);
 
   useEffect(() => {
     setActiveIndex(routeIndex);
@@ -56,6 +87,12 @@ export default function TopNav() {
 
     router.replace(route);
   };
+
+  const topNavContentOpacity = navCrossfadeProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+    extrapolate: "clamp",
+  });
 
   const allTextMeasured = Object.keys(textWidths).length === tabs.length;
 
@@ -138,62 +175,87 @@ export default function TopNav() {
     activeIndex >= 0 ? underlineSections[activeIndex]?.width ?? 0 : 0;
 
   return (
-    <View style={styles.frame155}>
-      <View style={styles.topNav}>
-        {tabs.map((tab, index) => (
-          <Pressable
-            key={tab.label}
-            style={[
-              styles.navTab,
-              Platform.OS === "web"
-                ? { flex: 1 }
-                : {
-                    width: measuredTextWidths[index] || undefined,
-                    marginRight: index === tabs.length - 1 ? 0 : androidGap,
-                  },
-            ]}
-            hitSlop={8}
-            onPress={() => goToTab(index, tab.route)}
-          >
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="clip"
-              onLayout={(e) => {
-                const { width } = e.nativeEvent.layout;
-
-                setTextWidths((prev) => ({
-                  ...prev,
-                  [index]: Math.ceil(width),
-                }));
-              }}
-              style={[
-                styles.dashboardLetter,
-                index === activeIndex
-                  ? styles.dashboardLetterActive
-                  : styles.dashboardLetterInactive,
-              ]}
-            >
-              {tab.label}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
+    <View style={styles.frame155Wrap} pointerEvents="box-none" collapsable={false}>
+      <View
+        pointerEvents="none"
+        collapsable={false}
+        style={[
+          styles.topNavShield,
+          !shieldVisible && styles.topNavShieldHidden,
+        ]}
+      />
 
       <View
-        style={styles.navTrack}
-        onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
+        pointerEvents={navTouchable ? "auto" : "none"}
+        collapsable={false}
+        style={styles.frame155}
       >
-        {activeIndex >= 0 && trackWidth > 0 && underlineWidth > 0 && (
-          <Animated.View
-            style={[
-              styles.navUnderlineActive,
-              {
-                width: underlineWidth,
-                transform: [{ translateX }],
-              },
-            ]}
-          />
-        )}
+        <Animated.View
+          collapsable={false}
+          style={[
+            styles.topNavContent,
+            {
+              opacity: topNavContentOpacity,
+            },
+          ]}
+        >
+          <View style={styles.topNav}>
+            {tabs.map((tab, index) => (
+              <Pressable
+                key={tab.label}
+                style={[
+                  styles.navTab,
+                  Platform.OS === "web"
+                    ? { flex: 1 }
+                    : {
+                        width: measuredTextWidths[index] || undefined,
+                        marginRight: index === tabs.length - 1 ? 0 : androidGap,
+                      },
+                ]}
+                hitSlop={8}
+                onPress={() => goToTab(index, tab.route)}
+              >
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="clip"
+                  onLayout={(e) => {
+                    const { width } = e.nativeEvent.layout;
+
+                    setTextWidths((prev) => ({
+                      ...prev,
+                      [index]: Math.ceil(width),
+                    }));
+                  }}
+                  style={[
+                    styles.dashboardLetter,
+                    index === activeIndex
+                      ? styles.dashboardLetterActive
+                      : styles.dashboardLetterInactive,
+                  ]}
+                >
+                  {tab.label}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+
+          <View
+            style={styles.navTrack}
+            onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}
+          >
+            {activeIndex >= 0 && trackWidth > 0 && underlineWidth > 0 && (
+              <Animated.View
+                style={[
+                  styles.navUnderlineActive,
+                  {
+                    width: underlineWidth,
+                    transform: [{ translateX }],
+                  },
+                ]}
+              />
+            )}
+          </View>
+        </Animated.View>
       </View>
     </View>
   );

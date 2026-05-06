@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     paddingHorizontal: 14,
+    zIndex: 9999,
+    elevation: 9999,
   },
 
   bottomTab: {
@@ -60,10 +62,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 1,
   },
-
-
-
-  
 });
 
 export default styles;

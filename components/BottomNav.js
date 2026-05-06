@@ -23,7 +23,7 @@ export default function BottomNav() {
     return () => {
       navCrossfadeProgress.removeListener(listenerId);
     };
-  }, []);
+  }, []); 
 
   const bottomNavOpacity = navCrossfadeProgress.interpolate({
     inputRange: [0, 1],

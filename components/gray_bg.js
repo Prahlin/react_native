@@ -91,13 +91,13 @@ export default function GrayBg({
   reverseNavCrossfade = false,
   initialNavCrossfadeProgress = 0,
 }) {
-  const lastScrollYRef = useRef(0);
+  const lastHandledScrollYRef = useRef(0);
   const progressRef = useRef(initialNavCrossfadeProgress);
 
   useEffect(() => {
     if (!fadeTopNavOnScroll) return;
 
-    lastScrollYRef.current = 0;
+    lastHandledScrollYRef.current = 0;
     progressRef.current = initialNavCrossfadeProgress;
 
     resetTopNavScroll(0);
@@ -112,16 +112,27 @@ export default function GrayBg({
     if (!fadeTopNavOnScroll) return;
 
     const currentY = Math.max(0, event.nativeEvent.contentOffset.y);
-    const deltaY = currentY - lastScrollYRef.current;
-
-    const minimumDelta = IS_ANDROID ? 2.25 : 0.5;
 
     topNavScrollY.setValue(currentY);
 
-    if (Math.abs(deltaY) < minimumDelta) {
-      lastScrollYRef.current = currentY;
+    if (currentY <= 1) {
+      lastHandledScrollYRef.current = 0;
+      progressRef.current = initialNavCrossfadeProgress;
+      navCrossfadeProgress.setValue(initialNavCrossfadeProgress);
       return;
     }
+
+    const deltaY = currentY - lastHandledScrollYRef.current;
+
+    /*
+      Android sends very tiny scroll deltas during slow finger movement.
+      Previously those tiny deltas were discarded AND the scroll ref was updated,
+      which meant progress never accumulated. Now the ref only updates after
+      progress changes, so slow movement still eventually triggers the nav fade.
+    */
+    const minimumDelta = IS_ANDROID ? 0.75 : 0.2;
+
+    if (Math.abs(deltaY) < minimumDelta) return;
 
     const progressDelta = deltaY / TOP_NAV_FADE_DISTANCE;
 
@@ -134,7 +145,7 @@ export default function GrayBg({
       navCrossfadeProgress.setValue(nextProgress);
     }
 
-    lastScrollYRef.current = currentY;
+    lastHandledScrollYRef.current = currentY;
   };
 
   return (

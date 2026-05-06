@@ -5,7 +5,12 @@ import styles from "../styles/notificationsStyles";
 export default function Notifications() {
   return (
     <View style={styles.screen}>
-      <GrayBg>
+      <GrayBg
+        fadeTopNavOnScroll
+        paddingTop={80}
+        reverseNavCrossfade
+        initialNavCrossfadeProgress={1}
+      >
         <View style={styles.frameNotifications}>
           <View style={styles.heroWrap}>
             <Image

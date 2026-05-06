@@ -5,7 +5,12 @@ import styles from "../styles/statsStyles";
 export default function Stats() {
   return (
     <View style={styles.screen}>
-      <GrayBg>
+      <GrayBg
+        fadeTopNavOnScroll
+        paddingTop={80}
+        reverseNavCrossfade
+        initialNavCrossfadeProgress={1}
+      >
         <View style={styles.frameRewards}>
           <View style={styles.heroWrap}>
             <Image

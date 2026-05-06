@@ -1,10 +1,10 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Animated, Image, Platform, StyleSheet, View } from "react-native";
 import {
-  NAV_CROSSFADE_DISTANCE,
   navCrossfadeProgress,
   resetNavCrossfadeProgress,
   resetTopNavScroll,
+  TOP_NAV_FADE_DISTANCE,
   topNavScrollY,
 } from "./topNavScrollState";
 
@@ -48,6 +48,10 @@ const BACKGROUND_ICONS = Array.from({
   };
 });
 
+function clamp01(value) {
+  return Math.max(0, Math.min(1, value));
+}
+
 export function CrownWandPattern({ style }) {
   return (
     <View pointerEvents="none" style={[styles.patternLayer, style]}>
@@ -84,90 +88,53 @@ export default function GrayBg({
   gap = 8,
   bottomPadding = 110,
   fadeTopNavOnScroll = false,
+  reverseNavCrossfade = false,
+  initialNavCrossfadeProgress = 0,
 }) {
-  const viewportHeightRef = useRef(0);
-  const contentHeightRef = useRef(0);
-  const previousScrollYRef = useRef(0);
-  const navCrossfadeProgressRef = useRef(0);
+  const lastScrollYRef = useRef(0);
+  const progressRef = useRef(initialNavCrossfadeProgress);
 
-  const setCrossfadeProgress = (value) => {
-    const clampedValue = Math.max(0, Math.min(value, 1));
+  useEffect(() => {
+    if (!fadeTopNavOnScroll) return;
 
-    navCrossfadeProgressRef.current = clampedValue;
-    navCrossfadeProgress.setValue(clampedValue);
+    lastScrollYRef.current = 0;
+    progressRef.current = initialNavCrossfadeProgress;
 
-    topNavScrollY.setValue(clampedValue * NAV_CROSSFADE_DISTANCE);
-  };
-
-  const forceTopNavVisible = () => {
-    previousScrollYRef.current = 0;
-    setCrossfadeProgress(0);
-  };
-
-  const updateNavCrossfadeFromScroll = (scrollY) => {
-    if (!viewportHeightRef.current || !contentHeightRef.current) {
-      forceTopNavVisible();
-      return;
-    }
-
-    const maxScrollY = Math.max(
-      contentHeightRef.current - viewportHeightRef.current,
-      0
-    );
-
-    const clampedScrollY = Math.max(0, Math.min(scrollY, maxScrollY));
-
-    if (clampedScrollY <= 1) {
-      forceTopNavVisible();
-      return;
-    }
-
-    const scrollDelta = clampedScrollY - previousScrollYRef.current;
-
-    previousScrollYRef.current = clampedScrollY;
-
-    if (Math.abs(scrollDelta) < 0.25) return;
-
-    const nextProgress =
-      navCrossfadeProgressRef.current +
-      scrollDelta / NAV_CROSSFADE_DISTANCE;
-
-    setCrossfadeProgress(nextProgress);
-  };
+    resetTopNavScroll(0);
+    resetNavCrossfadeProgress(initialNavCrossfadeProgress);
+  }, [
+    fadeTopNavOnScroll,
+    initialNavCrossfadeProgress,
+    reverseNavCrossfade,
+  ]);
 
   const handleScroll = (event) => {
     if (!fadeTopNavOnScroll) return;
 
-    const y = event.nativeEvent.contentOffset.y;
+    const currentY = Math.max(0, event.nativeEvent.contentOffset.y);
+    const deltaY = currentY - lastScrollYRef.current;
 
-    updateNavCrossfadeFromScroll(y);
-  };
+    const minimumDelta = IS_ANDROID ? 2.25 : 0.5;
 
-  const handleScrollEnd = (event) => {
-    if (!fadeTopNavOnScroll) return;
+    topNavScrollY.setValue(currentY);
 
-    const y = event.nativeEvent.contentOffset.y;
-
-    if (y <= 1) {
-      forceTopNavVisible();
+    if (Math.abs(deltaY) < minimumDelta) {
+      lastScrollYRef.current = currentY;
+      return;
     }
-  };
 
-  const handleLayout = (event) => {
-    viewportHeightRef.current = event.nativeEvent.layout.height;
+    const progressDelta = deltaY / TOP_NAV_FADE_DISTANCE;
 
-    if (fadeTopNavOnScroll) {
-      previousScrollYRef.current = 0;
-      navCrossfadeProgressRef.current = 0;
+    const nextProgress = reverseNavCrossfade
+      ? clamp01(progressRef.current - progressDelta)
+      : clamp01(progressRef.current + progressDelta);
 
-      resetTopNavScroll();
-      resetNavCrossfadeProgress();
-      forceTopNavVisible();
+    if (nextProgress !== progressRef.current) {
+      progressRef.current = nextProgress;
+      navCrossfadeProgress.setValue(nextProgress);
     }
-  };
 
-  const handleContentSizeChange = (_, height) => {
-    contentHeightRef.current = height;
+    lastScrollYRef.current = currentY;
   };
 
   return (
@@ -179,6 +146,7 @@ export default function GrayBg({
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         removeClippedSubviews={false}
+        overScrollMode="never"
         contentContainerStyle={{
           paddingTop,
           paddingHorizontal,
@@ -186,10 +154,6 @@ export default function GrayBg({
           gap,
         }}
         onScroll={fadeTopNavOnScroll ? handleScroll : undefined}
-        onScrollEndDrag={fadeTopNavOnScroll ? handleScrollEnd : undefined}
-        onMomentumScrollEnd={fadeTopNavOnScroll ? handleScrollEnd : undefined}
-        onLayout={handleLayout}
-        onContentSizeChange={handleContentSizeChange}
       >
         {children}
       </Animated.ScrollView>
@@ -217,7 +181,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     backgroundColor: "transparent",
-    zIndex: 0,
-    elevation: 0,
+    zIndex: 1,
+    elevation: 1,
   },
 });

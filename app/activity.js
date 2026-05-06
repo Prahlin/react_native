@@ -108,7 +108,12 @@ function ActivityCard() {
 export default function Activity() {
   return (
     <View style={styles.screen}>
-      <GrayBg>
+      <GrayBg
+        fadeTopNavOnScroll
+        paddingTop={80}
+        reverseNavCrossfade
+        initialNavCrossfadeProgress={1}
+      >
         <ActivityCard />
         <View style={styles.bottomSpacer} />
       </GrayBg>

@@ -68,7 +68,12 @@ function RewardsCard() {
 export default function Rewards() {
   return (
     <View style={styles.screen}>
-      <GrayBg>
+      <GrayBg
+        fadeTopNavOnScroll
+        paddingTop={80}
+        reverseNavCrossfade
+        initialNavCrossfadeProgress={1}
+      >
         <RewardsCard />
         <View style={styles.bottomSpacer} />
       </GrayBg>

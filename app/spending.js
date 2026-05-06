@@ -18,7 +18,11 @@ const trackedAccounts = [
   { name: "Chase", subtitle: "From your credit profile", type: "chase" },
   { name: "Citi", subtitle: "From your credit profile", type: "citi" },
   { name: "CapitalOne", subtitle: "From your credit profile", type: "cap1" },
-  { name: "American Express", subtitle: "From your credit profile", type: "amex" },
+  {
+    name: "American Express",
+    subtitle: "From your credit profile",
+    type: "amex",
+  },
 ];
 
 function SmallBankLogo({ type }) {
@@ -77,10 +81,26 @@ function SpendingCard() {
       </View>
 
       <View style={[styles.barChartWrap, { marginVertical: VERTICAL_GAP }]}>
-        <View style={[styles.barsRow, { width: CHART_WIDTH, height: CHART_HEIGHT }]}>
+        <View
+          style={[
+            styles.barsRow,
+            {
+              width: CHART_WIDTH,
+              height: CHART_HEIGHT,
+            },
+          ]}
+        >
           {monthlyBars.map((item) => (
             <View key={item.month} style={styles.barGroup}>
-              <View style={[styles.barTrack, { width: BAR_WIDTH, height: BAR_HEIGHT }]}>
+              <View
+                style={[
+                  styles.barTrack,
+                  {
+                    width: BAR_WIDTH,
+                    height: BAR_HEIGHT,
+                  },
+                ]}
+              >
                 <View
                   style={[
                     styles.barFill,
@@ -92,7 +112,9 @@ function SpendingCard() {
                 />
               </View>
 
-              <Text style={item.active ? styles.monthLabelActive : styles.monthLabel}>
+              <Text
+                style={item.active ? styles.monthLabelActive : styles.monthLabel}
+              >
                 {item.month}
               </Text>
             </View>
@@ -121,15 +143,15 @@ function ExpenditureCard() {
             overflow: "hidden",
           }}
         >
-<Image
-  source={require("../assets/spending.png")}
-  style={{
-    width: 180,
-    height: 180,
-    alignSelf: "center",
-  }}
-  resizeMode="contain"
-/>
+          <Image
+            source={require("../assets/spending.png")}
+            style={{
+              width: 180,
+              height: 180,
+              alignSelf: "center",
+            }}
+            resizeMode="contain"
+          />
         </View>
 
         <View style={styles.outlineButton}>
@@ -171,7 +193,7 @@ function TrackSpendingCard() {
 export default function Spending() {
   return (
     <View style={styles.screen}>
-      <GrayBg>
+      <GrayBg fadeTopNavOnScroll>
         <SpendingCard />
         <ExpenditureCard />
         <TrackSpendingCard />

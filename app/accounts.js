@@ -5,7 +5,7 @@ import styles from "../styles/accountsStyles";
 export default function Accounts() {
   return (
     <View style={styles.screen}>
-      <GrayBg>
+      <GrayBg fadeTopNavOnScroll>
         <View style={styles.frameAccounts}>
           <View style={styles.cardHeaderRow}>
             <Text style={styles.sectionTitle}>Accounts</Text>

@@ -35,8 +35,8 @@ function buildDebtPoints(chartWidth, chartHeight) {
   return [
     { x: left + xStep * 0, y: top + usableHeight * 0.84 },
     { x: left + xStep * 1, y: top + usableHeight * 0.62 },
-    { x: left + xStep * 2, y: top + usableHeight * 0.70 },
-    { x: left + xStep * 3, y: top + usableHeight * 0.60 },
+    { x: left + xStep * 2, y: top + usableHeight * 0.7 },
+    { x: left + xStep * 3, y: top + usableHeight * 0.6 },
     { x: left + xStep * 4, y: top + usableHeight * 0.64 },
     { x: left + xStep * 5, y: top + usableHeight * 0.18 },
   ];
@@ -166,7 +166,7 @@ function AcademyCard() {
 export default function Debt() {
   return (
     <View style={styles.screen}>
-      <GrayBg>
+      <GrayBg fadeTopNavOnScroll>
         <DebtCard />
         <LoanOffersCard />
         <AcademyCard />

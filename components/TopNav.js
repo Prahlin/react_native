@@ -27,9 +27,12 @@ export default function TopNav() {
   const [textWidths, setTextWidths] = useState({});
   const [navTouchable, setNavTouchable] = useState(true);
   const [shieldVisible, setShieldVisible] = useState(true);
+  const [isScrollingUp, setIsScrollingUp] = useState(false);
 
   const navTouchableRef = useRef(true);
   const shieldVisibleRef = useRef(true);
+  const isScrollingUpRef = useRef(false);
+  const previousCrossfadeValueRef = useRef(0);
 
   const underlineAnim = useRef(
     new Animated.Value(routeIndex >= 0 ? routeIndex : 0)
@@ -37,6 +40,20 @@ export default function TopNav() {
 
   useEffect(() => {
     const listenerId = navCrossfadeProgress.addListener(({ value }) => {
+      const previousValue = previousCrossfadeValueRef.current;
+      const delta = value - previousValue;
+
+      previousCrossfadeValueRef.current = value;
+
+      if (Math.abs(delta) > 0.001) {
+        const nextIsScrollingUp = delta < 0;
+
+        if (nextIsScrollingUp !== isScrollingUpRef.current) {
+          isScrollingUpRef.current = nextIsScrollingUp;
+          setIsScrollingUp(nextIsScrollingUp);
+        }
+      }
+
       const nextTouchable = value < 0.98;
 
       if (nextTouchable !== navTouchableRef.current) {
@@ -44,10 +61,8 @@ export default function TopNav() {
         setNavTouchable(nextTouchable);
       }
 
-      // Android fix:
-      // Keep a solid white shield above the scroll content whenever the top nav
-      // is even slightly visible. Hide it only when the nav is fully gone.
-      const nextShieldVisible = value < 0.999;
+      const nextShieldVisible =
+        isScrollingUpRef.current ? value < 0.999 : value < 0.98;
 
       if (nextShieldVisible !== shieldVisibleRef.current) {
         shieldVisibleRef.current = nextShieldVisible;
@@ -93,6 +108,14 @@ export default function TopNav() {
     outputRange: [1, 0],
     extrapolate: "clamp",
   });
+
+  const topNavShieldOpacity = isScrollingUp
+    ? navCrossfadeProgress.interpolate({
+        inputRange: [0, 0.98, 1],
+        outputRange: [1, 1, 0],
+        extrapolate: "clamp",
+      })
+    : topNavContentOpacity;
 
   const allTextMeasured = Object.keys(textWidths).length === tabs.length;
 
@@ -176,12 +199,15 @@ export default function TopNav() {
 
   return (
     <View style={styles.frame155Wrap} pointerEvents="box-none" collapsable={false}>
-      <View
+      <Animated.View
         pointerEvents="none"
         collapsable={false}
         style={[
           styles.topNavShield,
           !shieldVisible && styles.topNavShieldHidden,
+          {
+            opacity: topNavShieldOpacity,
+          },
         ]}
       />
 
@@ -209,7 +235,8 @@ export default function TopNav() {
                     ? { flex: 1 }
                     : {
                         width: measuredTextWidths[index] || undefined,
-                        marginRight: index === tabs.length - 1 ? 0 : androidGap,
+                        marginRight:
+                          index === tabs.length - 1 ? 0 : androidGap,
                       },
                 ]}
                 hitSlop={8}

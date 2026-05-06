@@ -216,7 +216,7 @@ function ImpactCard() {
 export default function Credit() {
   return (
     <View style={styles.screen}>
-      <GrayBg>
+      <GrayBg fadeTopNavOnScroll>
         <CreditScoreCard />
         <ImpactCard />
         <View style={styles.bottomSpacer} />

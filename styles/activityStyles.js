@@ -4,6 +4,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "#F4F5FB",
+    position: "relative",
+    zIndex: 0,
+    elevation: 0,
   },
 
   bottomSpacer: {
@@ -18,12 +21,12 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
 
-heroWrap: {
-  alignItems: "center",
-  justifyContent: "center",
-  marginTop: 0,
-  marginBottom: 18,
-},
+  heroWrap: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 0,
+    marginBottom: 18,
+  },
 
   activityList: {
     marginTop: 4,

@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-screen: {
-  flex: 1,
-  backgroundColor: "rgba(217, 217, 217, 0.5)",
-},
+  screen: {
+    flex: 1,
+    backgroundColor: "rgba(217, 217, 217, 0.5)",
+  },
 
   scrollContent: {
     paddingBottom: 110,
@@ -15,17 +15,19 @@ screen: {
   },
 
   scrollView: {
-    backgroundColor: "#FFFFFF",
+    flex: 1,
+    backgroundColor: "transparent",
   },
 
   dashboardHomeScreenContainer: {
+    flex: 1,
     width: "100%",
     backgroundColor: "rgba(217, 217, 217, 0.5)",
     overflow: "hidden",
   },
 
   mainContent: {
-    paddingTop: 0,
+    paddingTop: 132,
     paddingHorizontal: 8,
     gap: 8,
     zIndex: 1,
@@ -49,9 +51,15 @@ screen: {
   },
 
   stickyTopNav: {
+    position: "absolute",
+    top: 80,
+    left: 0,
+    right: 0,
     paddingHorizontal: 8,
-    paddingTop: 68,
+    paddingTop: 0,
     backgroundColor: "transparent",
+    zIndex: 1002,
+    elevation: 1002,
   },
 
   bG: {

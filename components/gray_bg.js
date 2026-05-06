@@ -1,4 +1,5 @@
-import { Image, Platform, ScrollView, StyleSheet, View } from "react-native";
+import { Animated, Image, Platform, StyleSheet, View } from "react-native";
+import { resetTopNavScroll, topNavScrollY } from "./topNavScrollState";
 
 const IS_ANDROID = Platform.OS === "android";
 
@@ -75,23 +76,48 @@ export default function GrayBg({
   paddingHorizontal = 8,
   gap = 8,
   bottomPadding = 110,
+  fadeTopNavOnScroll = false,
 }) {
   return (
     <View style={styles.root}>
       <CrownWandPattern style={StyleSheet.absoluteFillObject} />
 
-      <ScrollView
+      <Animated.ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
         contentContainerStyle={{
           paddingTop,
           paddingHorizontal,
           paddingBottom: bottomPadding,
           gap,
         }}
+        onScroll={
+          fadeTopNavOnScroll
+            ? Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        y: topNavScrollY,
+                      },
+                    },
+                  },
+                ],
+                {
+                  useNativeDriver: false,
+                }
+              )
+            : undefined
+        }
+        onLayout={() => {
+          if (fadeTopNavOnScroll) {
+            resetTopNavScroll();
+          }
+        }}
       >
         {children}
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 }

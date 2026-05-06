@@ -1,5 +1,5 @@
 import { Slot, usePathname } from "expo-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Platform,
@@ -8,16 +8,18 @@ import {
   View,
 } from "react-native";
 import BottomNav from "../components/BottomNav";
-import {
-  CrownWandPattern,
-  GRAY_BG_COLOR,
-} from "../components/gray_bg";
+import { CrownWandPattern, GRAY_BG_COLOR } from "../components/gray_bg";
 import HeaderBar from "../components/HeaderBar";
 import {
   releaseChromeHide,
   useForceHideChrome,
 } from "../components/navChromeState";
 import TopNav from "../components/TopNav";
+import {
+  resetTopNavScroll,
+  TOP_NAV_FADE_DISTANCE,
+  topNavScrollY,
+} from "../components/topNavScrollState";
 import { UserProvider } from "../components/UserContext";
 
 export default function RootLayout() {
@@ -29,12 +31,38 @@ export default function RootLayout() {
   const previousPathRef = useRef(pathname);
   const hasAnimatedChromeRef = useRef(false);
 
+  const [topNavHidden, setTopNavHidden] = useState(false);
+
   const isAuthOrLoadingScreen =
-    pathname === "/" ||
-    pathname === "/loadin" ||
-    pathname === "/loadout";
+    pathname === "/" || pathname === "/loadin" || pathname === "/loadout";
 
   const hideNav = forceHideChrome || isAuthOrLoadingScreen;
+
+  const shouldFadeTopNav = !hideNav && pathname === "/home";
+
+  const topNavOpacity = shouldFadeTopNav
+    ? topNavScrollY.interpolate({
+        inputRange: [0, TOP_NAV_FADE_DISTANCE],
+        outputRange: [1, 0],
+        extrapolate: "clamp",
+      })
+    : 1;
+
+  useEffect(() => {
+    if (!shouldFadeTopNav) {
+      resetTopNavScroll();
+      setTopNavHidden(false);
+      return;
+    }
+
+    const listenerId = topNavScrollY.addListener(({ value }) => {
+      setTopNavHidden(value >= TOP_NAV_FADE_DISTANCE);
+    });
+
+    return () => {
+      topNavScrollY.removeListener(listenerId);
+    };
+  }, [shouldFadeTopNav]);
 
   useEffect(() => {
     if (isAuthOrLoadingScreen) {
@@ -120,7 +148,7 @@ export default function RootLayout() {
 
         {!hideNav && (
           <Animated.View
-            pointerEvents="box-none"
+            pointerEvents={topNavHidden ? "none" : "box-none"}
             style={[
               {
                 position: "absolute",
@@ -134,6 +162,7 @@ export default function RootLayout() {
                 overflow: "hidden",
                 zIndex: 900,
                 elevation: 900,
+                opacity: topNavOpacity,
               },
               chromeSlideStyle,
             ]}

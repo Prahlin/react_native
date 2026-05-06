@@ -1,14 +1,8 @@
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef } from "react";
-import {
-  Animated,
-  Dimensions,
-  Text,
-  View
-} from "react-native";
+import { Animated, Dimensions, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import GrayBg from "../components/gray_bg";
-
 
 import styles from "../styles/homeStyles";
 
@@ -149,36 +143,38 @@ export default function Home() {
   const { fromLoadin } = useLocalSearchParams();
   const screenWidth = Dimensions.get("window").width;
 
-const slideAnim = useRef(
-  new Animated.Value(fromLoadin === "1" ? -screenWidth : 0)
-).current;
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const slideAnim = useRef(
+    new Animated.Value(fromLoadin === "1" ? -screenWidth : 0)
+  ).current;
 
   useEffect(() => {
     if (fromLoadin === "1") {
-Animated.sequence([
-  Animated.timing(slideAnim, {
-    toValue: 18,
-    duration: 260,
-    useNativeDriver: true,
-  }),
-  Animated.timing(slideAnim, {
-    toValue: -8,
-    duration: 90,
-    useNativeDriver: true,
-  }),
-  Animated.timing(slideAnim, {
-    toValue: 4,
-    duration: 70,
-    useNativeDriver: true,
-  }),
-  Animated.timing(slideAnim, {
-    toValue: 0,
-    duration: 80,
-    useNativeDriver: true,
-  }),
-]).start();
+      Animated.sequence([
+        Animated.timing(slideAnim, {
+          toValue: 18,
+          duration: 260,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideAnim, {
+          toValue: -8,
+          duration: 90,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideAnim, {
+          toValue: 4,
+          duration: 70,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 80,
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
-  }, [fromLoadin]);
+  }, [fromLoadin, slideAnim]);
 
   return (
     <Animated.View
@@ -189,15 +185,13 @@ Animated.sequence([
         },
       ]}
     >
-<GrayBg>
+<GrayBg fadeTopNavOnScroll>
   <CreditScoreCard />
   <SpendingCard />
   <CreditCardOffersCard />
   <LoanOffersCard />
   <View style={styles.bottomSpacer} />
 </GrayBg>
-
-
     </Animated.View>
   );
 }

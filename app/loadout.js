@@ -4,7 +4,6 @@ import {
   Animated,
   Easing,
   Image,
-  InteractionManager,
   Platform,
   ScrollView,
   StyleSheet,
@@ -24,9 +23,13 @@ const PULSE_DURATION = 1400;
 
 const RIPPLE_START = 0;
 const RIPPLE_END = 1.15;
-const RIPPLE_DURATION = 2200;
+const RIPPLE_DURATION = 1100;
 const RIPPLE_WAVE_WIDTH = 0.12;
 const RIPPLE_BLEND_RATIO = 0.5;
+
+const CENTER_CLEAR_PHASE = 0.04;
+const CENTER_FADE_PHASE = 0.09;
+const CENTER_INNER_OPACITY_MULTIPLIER = 0.75;
 
 const ROWS = 25;
 const PAIRS_PER_ROW = 5;
@@ -53,17 +56,17 @@ const getPatternOpacity = (topPercent, leftPercent) => {
   const maxOpacity = 0.35;
 
   let opacity =
-    minOpacity +
-    curved * (maxOpacity - minOpacity) +
-    verticalBoost;
+    minOpacity + curved * (maxOpacity - minOpacity) + verticalBoost;
 
   const faintZones = [
-    { x: 0, y: 0, radius: 44, strength: 0.30 },
-    { x: 100, y: 0, radius: 44, strength: 0.30 },
-    { x: 0, y: 100, radius: 44, strength: 0.30 },
-    { x: 100, y: 100, radius: 44, strength: 0.30 },
+    { x: 0, y: 0, radius: 44, strength: 0.3 },
+    { x: 100, y: 0, radius: 44, strength: 0.3 },
+    { x: 0, y: 100, radius: 44, strength: 0.3 },
+    { x: 100, y: 100, radius: 44, strength: 0.3 },
 
-    { x: 50, y: 50, radius: 44, strength: 0.28, squashY: 1.8 },
+    // Smaller, weaker center quiet zone so the ripple can encroach closer
+    // to the loading spinner without overpowering it.
+    { x: 50, y: 50, radius: 12, strength: 0.04, squashY: 1.15 },
   ];
 
   let nearestZoneDistance = Infinity;
@@ -122,6 +125,27 @@ const getRipplePhase = (topPercent, leftPercent) => {
   return Math.min(distance / maxDistance, 1);
 };
 
+const getCenterOpacityMultiplier = (ripplePhase) => {
+  if (ripplePhase <= CENTER_CLEAR_PHASE) {
+    return CENTER_INNER_OPACITY_MULTIPLIER;
+  }
+
+  if (ripplePhase >= CENTER_FADE_PHASE) {
+    return 1;
+  }
+
+  const t =
+    (ripplePhase - CENTER_CLEAR_PHASE) /
+    (CENTER_FADE_PHASE - CENTER_CLEAR_PHASE);
+
+  const smoothT = t * t * (3 - 2 * t);
+
+  return (
+    CENTER_INNER_OPACITY_MULTIPLIER +
+    smoothT * (1 - CENTER_INNER_OPACITY_MULTIPLIER)
+  );
+};
+
 const BACKGROUND_ICONS = Array.from({
   length: ROWS * PAIRS_PER_ROW * 2,
 }).map((_, i) => {
@@ -143,8 +167,11 @@ const BACKGROUND_ICONS = Array.from({
 
   const finalLeft = pairStartLeft + (isCrown ? crownOffset : 0);
 
-  const baseOpacity = getPatternOpacity(adjustedTop, finalLeft);
   const ripplePhase = getRipplePhase(adjustedTop, finalLeft);
+  const centerOpacityMultiplier = getCenterOpacityMultiplier(ripplePhase);
+
+  const baseOpacity =
+    getPatternOpacity(adjustedTop, finalLeft) * centerOpacityMultiplier;
 
   return {
     id: i,
@@ -166,7 +193,7 @@ const getRippleOpacity = (rippleValue, ripplePhase, maxOpacity) => {
   if (start <= RIPPLE_START) {
     return rippleValue.interpolate({
       inputRange: [RIPPLE_START, safePhase, end, RIPPLE_END],
-      outputRange: [blendOpacity, maxOpacity, blendOpacity, 0],
+      outputRange: [0, maxOpacity, blendOpacity, 0],
       extrapolate: "clamp",
     });
   }
@@ -186,9 +213,6 @@ export default function LoadOut() {
     let pulseAnimation;
     let rippleAnimation;
     let timeoutId;
-    let androidStartDelayId;
-    let androidFrameId;
-    let interactionHandle;
     let didCancel = false;
 
     const startAnimations = () => {
@@ -229,8 +253,6 @@ export default function LoadOut() {
             isInteraction: false,
           }),
 
-          Animated.delay(500),
-
           Animated.timing(rippleValue, {
             toValue: RIPPLE_START,
             duration: RIPPLE_DURATION,
@@ -239,7 +261,7 @@ export default function LoadOut() {
             isInteraction: false,
           }),
 
-          Animated.delay(250),
+          Animated.delay(140),
         ])
       );
 
@@ -247,23 +269,7 @@ export default function LoadOut() {
       rippleAnimation.start();
     };
 
-    if (IS_ANDROID) {
-      pulseValue.stopAnimation();
-      pulseValue.setValue(PULSE_MIN);
-
-      rippleValue.stopAnimation();
-      rippleValue.setValue(RIPPLE_START);
-
-      interactionHandle = InteractionManager.runAfterInteractions(() => {
-        androidFrameId = requestAnimationFrame(() => {
-          androidStartDelayId = setTimeout(() => {
-            startAnimations();
-          }, 80);
-        });
-      });
-    } else {
-      startAnimations();
-    }
+    startAnimations();
 
     timeoutId = setTimeout(() => {
       resetBellClickedState();
@@ -278,15 +284,6 @@ export default function LoadOut() {
       didCancel = true;
 
       clearTimeout(timeoutId);
-      clearTimeout(androidStartDelayId);
-
-      if (androidFrameId) {
-        cancelAnimationFrame(androidFrameId);
-      }
-
-      if (interactionHandle?.cancel) {
-        interactionHandle.cancel();
-      }
 
       if (pulseAnimation) {
         pulseAnimation.stop();
@@ -329,7 +326,7 @@ export default function LoadOut() {
             const animatedPatternOpacity = getRippleOpacity(
               rippleValue,
               icon.ripplePhase,
-              PATTERN_MAX_VISIBLE_OPACITY
+              icon.baseOpacity
             );
 
             return (

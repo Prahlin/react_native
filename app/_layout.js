@@ -1,5 +1,5 @@
 import { Slot, usePathname } from "expo-router";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import {
   Animated,
   Platform,
@@ -16,9 +16,9 @@ import {
 } from "../components/navChromeState";
 import TopNav from "../components/TopNav";
 import {
-  navCrossfadeProgress,
-  resetNavCrossfadeProgress,
   resetTopNavScroll,
+  TOP_NAV_FADE_DISTANCE,
+  topNavScrollY,
 } from "../components/topNavScrollState";
 import { UserProvider } from "../components/UserContext";
 
@@ -40,12 +40,6 @@ export default function RootLayout() {
   const previousPathRef = useRef(pathname);
   const hasAnimatedChromeRef = useRef(false);
 
-  const topNavHiddenRef = useRef(false);
-  const bottomNavHiddenRef = useRef(false);
-
-  const [topNavHidden, setTopNavHidden] = useState(false);
-  const [bottomNavHidden, setBottomNavHidden] = useState(false);
-
   const isAuthOrLoadingScreen =
     pathname === "/" || pathname === "/loadin" || pathname === "/loadout";
 
@@ -55,77 +49,27 @@ export default function RootLayout() {
   const isBottomNavScreen = isMatchingRoute(pathname, BOTTOM_NAV_ROUTES);
   const isInAppScreen = isTopNavScreen || isBottomNavScreen;
 
-  const topNavOpacity = navCrossfadeProgress.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 0],
-    extrapolate: "clamp",
-  });
-
-  const bottomNavOpacity = navCrossfadeProgress.interpolate({
-    inputRange: [0, 1],
+  const normalProgress = topNavScrollY.interpolate({
+    inputRange: [0, TOP_NAV_FADE_DISTANCE],
     outputRange: [0, 1],
     extrapolate: "clamp",
   });
 
-  const setTopHiddenSafely = (nextValue) => {
-    if (topNavHiddenRef.current === nextValue) return;
+  const topNavOpacity = normalProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: isBottomNavScreen ? [0, 1] : [1, 0],
+    extrapolate: "clamp",
+  });
 
-    topNavHiddenRef.current = nextValue;
-    setTopNavHidden(nextValue);
-  };
-
-  const setBottomHiddenSafely = (nextValue) => {
-    if (bottomNavHiddenRef.current === nextValue) return;
-
-    bottomNavHiddenRef.current = nextValue;
-    setBottomNavHidden(nextValue);
-  };
+  const bottomNavOpacity = normalProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: isBottomNavScreen ? [1, 0] : [0, 1],
+    extrapolate: "clamp",
+  });
 
   useLayoutEffect(() => {
-    if (hideNav || !isInAppScreen) {
-      resetTopNavScroll(0);
-      resetNavCrossfadeProgress(0);
-
-      setTopHiddenSafely(false);
-      setBottomHiddenSafely(false);
-      return;
-    }
-
-    const startingProgress = isBottomNavScreen ? 1 : 0;
-
     resetTopNavScroll(0);
-    resetNavCrossfadeProgress(startingProgress);
-
-    setTopHiddenSafely(isBottomNavScreen);
-    setBottomHiddenSafely(isTopNavScreen);
   }, [pathname, hideNav, isInAppScreen, isTopNavScreen, isBottomNavScreen]);
-
-  useEffect(() => {
-    if (hideNav || !isInAppScreen) return;
-
-    const listenerId = navCrossfadeProgress.addListener(({ value }) => {
-      /*
-        Hysteresis prevents Android from rapidly toggling visibility
-        when scroll values jitter around the threshold.
-      */
-
-      if (value >= 0.985) {
-        setTopHiddenSafely(true);
-      } else if (value <= 0.94) {
-        setTopHiddenSafely(false);
-      }
-
-      if (value <= 0.015) {
-        setBottomHiddenSafely(true);
-      } else if (value >= 0.06) {
-        setBottomHiddenSafely(false);
-      }
-    });
-
-    return () => {
-      navCrossfadeProgress.removeListener(listenerId);
-    };
-  }, [hideNav, isInAppScreen]);
 
   useEffect(() => {
     if (isAuthOrLoadingScreen) {
@@ -211,7 +155,7 @@ export default function RootLayout() {
 
         {!hideNav && isInAppScreen && (
           <Animated.View
-            pointerEvents={topNavHidden ? "none" : "box-none"}
+            pointerEvents="box-none"
             collapsable={false}
             renderToHardwareTextureAndroid={IS_ANDROID}
             needsOffscreenAlphaCompositing={IS_ANDROID}
@@ -219,7 +163,7 @@ export default function RootLayout() {
               styles.topNavChromeWrap,
               {
                 top: 80,
-                opacity: topNavHidden ? 0 : topNavOpacity,
+                opacity: topNavOpacity,
               },
               chromeSlideStyle,
             ]}
@@ -262,7 +206,7 @@ export default function RootLayout() {
 
         {!hideNav && isInAppScreen && (
           <Animated.View
-            pointerEvents={bottomNavHidden ? "none" : "box-none"}
+            pointerEvents="box-none"
             collapsable={false}
             renderToHardwareTextureAndroid={IS_ANDROID}
             needsOffscreenAlphaCompositing={IS_ANDROID}
@@ -270,7 +214,7 @@ export default function RootLayout() {
               StyleSheet.absoluteFillObject,
               styles.bottomNavLayer,
               {
-                opacity: bottomNavHidden ? 0 : bottomNavOpacity,
+                opacity: bottomNavOpacity,
               },
               chromeSlideStyle,
             ]}

@@ -1,35 +1,9 @@
 import { router, usePathname } from "expo-router";
-import { useEffect, useRef, useState } from "react";
-import { Animated, Image, Pressable } from "react-native";
+import { Image, Pressable, View } from "react-native";
 import styles from "../styles/bottomNavStyles";
-import { navCrossfadeProgress } from "./topNavScrollState";
 
 export default function BottomNav() {
   const pathname = usePathname();
-
-  const [navTouchable, setNavTouchable] = useState(false);
-  const navTouchableRef = useRef(false);
-
-  useEffect(() => {
-    const listenerId = navCrossfadeProgress.addListener(({ value }) => {
-      const nextTouchable = value > 0.02;
-
-      if (nextTouchable !== navTouchableRef.current) {
-        navTouchableRef.current = nextTouchable;
-        setNavTouchable(nextTouchable);
-      }
-    });
-
-    return () => {
-      navCrossfadeProgress.removeListener(listenerId);
-    };
-  }, []); 
-
-  const bottomNavOpacity = navCrossfadeProgress.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-    extrapolate: "clamp",
-  });
 
   const activeTab = (() => {
     if (pathname === "/home") return "home";
@@ -41,15 +15,7 @@ export default function BottomNav() {
   })();
 
   return (
-    <Animated.View
-      pointerEvents={navTouchable ? "auto" : "none"}
-      style={[
-        styles.bottomNav,
-        {
-          opacity: bottomNavOpacity,
-        },
-      ]}
-    >
+    <View style={styles.bottomNav}>
       <Pressable onPress={() => router.replace("/home")}>
         <Image
           source={
@@ -104,6 +70,6 @@ export default function BottomNav() {
           style={styles.bottomNavIcon}
         />
       </Pressable>
-    </Animated.View>
+    </View>
   );
 }

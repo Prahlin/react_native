@@ -1,12 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useMemo } from "react";
 import { Animated, Image, Platform, StyleSheet, View } from "react-native";
-import {
-  navCrossfadeProgress,
-  resetNavCrossfadeProgress,
-  resetTopNavScroll,
-  TOP_NAV_FADE_DISTANCE,
-  topNavScrollY,
-} from "./topNavScrollState";
+import { topNavScrollY } from "./topNavScrollState";
 
 const IS_ANDROID = Platform.OS === "android";
 
@@ -48,10 +42,6 @@ const BACKGROUND_ICONS = Array.from({
   };
 });
 
-function clamp01(value) {
-  return Math.max(0, Math.min(1, value));
-}
-
 export function CrownWandPattern({ style }) {
   return (
     <View pointerEvents="none" style={[styles.patternLayer, style]}>
@@ -91,62 +81,24 @@ export default function GrayBg({
   reverseNavCrossfade = false,
   initialNavCrossfadeProgress = 0,
 }) {
-  const lastHandledScrollYRef = useRef(0);
-  const progressRef = useRef(initialNavCrossfadeProgress);
+  const scrollHandler = useMemo(() => {
+    if (!fadeTopNavOnScroll) return undefined;
 
-  useEffect(() => {
-    if (!fadeTopNavOnScroll) return;
-
-    lastHandledScrollYRef.current = 0;
-    progressRef.current = initialNavCrossfadeProgress;
-
-    resetTopNavScroll(0);
-    resetNavCrossfadeProgress(initialNavCrossfadeProgress);
-  }, [
-    fadeTopNavOnScroll,
-    initialNavCrossfadeProgress,
-    reverseNavCrossfade,
-  ]);
-
-  const handleScroll = (event) => {
-    if (!fadeTopNavOnScroll) return;
-
-    const currentY = Math.max(0, event.nativeEvent.contentOffset.y);
-
-    topNavScrollY.setValue(currentY);
-
-    if (currentY <= 1) {
-      lastHandledScrollYRef.current = 0;
-      progressRef.current = initialNavCrossfadeProgress;
-      navCrossfadeProgress.setValue(initialNavCrossfadeProgress);
-      return;
-    }
-
-    const deltaY = currentY - lastHandledScrollYRef.current;
-
-    /*
-      Android sends very tiny scroll deltas during slow finger movement.
-      Previously those tiny deltas were discarded AND the scroll ref was updated,
-      which meant progress never accumulated. Now the ref only updates after
-      progress changes, so slow movement still eventually triggers the nav fade.
-    */
-    const minimumDelta = IS_ANDROID ? 0.75 : 0.2;
-
-    if (Math.abs(deltaY) < minimumDelta) return;
-
-    const progressDelta = deltaY / TOP_NAV_FADE_DISTANCE;
-
-    const nextProgress = reverseNavCrossfade
-      ? clamp01(progressRef.current - progressDelta)
-      : clamp01(progressRef.current + progressDelta);
-
-    if (nextProgress !== progressRef.current) {
-      progressRef.current = nextProgress;
-      navCrossfadeProgress.setValue(nextProgress);
-    }
-
-    lastHandledScrollYRef.current = currentY;
-  };
+    return Animated.event(
+      [
+        {
+          nativeEvent: {
+            contentOffset: {
+              y: topNavScrollY,
+            },
+          },
+        },
+      ],
+      {
+        useNativeDriver: true,
+      }
+    );
+  }, [fadeTopNavOnScroll]);
 
   return (
     <View style={styles.root}>
@@ -164,7 +116,7 @@ export default function GrayBg({
           paddingBottom: bottomPadding,
           gap,
         }}
-        onScroll={fadeTopNavOnScroll ? handleScroll : undefined}
+        onScroll={scrollHandler}
       >
         {children}
       </Animated.ScrollView>

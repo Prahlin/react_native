@@ -124,6 +124,14 @@ export default function Index() {
   const FIELD_ERROR_BOTTOM = isWeb ? 70 : 60;
   const FIELD_ERROR_BG_COLOR = isWeb ? "#97A2FE" : "#97A2FE";
 
+  /*
+    The card used to sit at flex-end with paddingBottom: 40.
+    This translates the entire card/background scene upward so the white card
+    lands in the exact vertical center, while every background ellipse/image
+    keeps its exact old relationship to the card.
+  */
+  const cardSceneTranslateY = -screenHeight * 0.15 + 40;
+
   const slideXAnim = useRef(
     new Animated.Value(fromLoadout === "1" ? screenWidth : 0)
   ).current;
@@ -191,11 +199,11 @@ export default function Index() {
     };
   }, []);
 
-  const jiggleScreen = () => {
+  const runJiggle = () => {
     jiggleAnim.stopAnimation();
     jiggleAnim.setValue(0);
 
-    return Animated.sequence([
+    Animated.sequence([
       Animated.timing(jiggleAnim, {
         toValue: -10,
         duration: 45,
@@ -226,122 +234,153 @@ export default function Index() {
         duration: 45,
         useNativeDriver: true,
       }),
-    ]);
+    ]).start();
   };
 
-  const runJiggle = () => {
-  jiggleAnim.stopAnimation();
-  jiggleAnim.setValue(0);
+  const showFieldError = (
+    setVisible,
+    opacityValue,
+    timeoutRef,
+    otherSetVisible = () => {},
+    otherOpacityValue = null,
+    otherTimeoutRef = null
+  ) => {
+    clearTimeout(timeoutRef?.current);
+    clearTimeout(otherTimeoutRef?.current);
 
-  Animated.sequence([
-    Animated.timing(jiggleAnim, {
-      toValue: -10,
-      duration: 45,
-      useNativeDriver: true,
-    }),
-    Animated.timing(jiggleAnim, {
-      toValue: 10,
-      duration: 45,
-      useNativeDriver: true,
-    }),
-    Animated.timing(jiggleAnim, {
-      toValue: -8,
-      duration: 45,
-      useNativeDriver: true,
-    }),
-    Animated.timing(jiggleAnim, {
-      toValue: 8,
-      duration: 45,
-      useNativeDriver: true,
-    }),
-    Animated.timing(jiggleAnim, {
-      toValue: -4,
-      duration: 45,
-      useNativeDriver: true,
-    }),
-    Animated.timing(jiggleAnim, {
-      toValue: 0,
-      duration: 45,
-      useNativeDriver: true,
-    }),
-  ]).start();
-};
+    otherSetVisible(false);
 
- const showFieldError = (
-  setVisible,
-  opacityValue,
-  timeoutRef,
-  otherSetVisible = () => {},
-  otherOpacityValue = null,
-  otherTimeoutRef = null
-) => {
-  clearTimeout(timeoutRef?.current);
-  clearTimeout(otherTimeoutRef?.current);
+    if (otherOpacityValue) {
+      otherOpacityValue.stopAnimation();
+      otherOpacityValue.setValue(0);
+    }
 
-  otherSetVisible(false);
+    setVisible(true);
 
-  if (otherOpacityValue) {
-    otherOpacityValue.stopAnimation();
-    otherOpacityValue.setValue(0);
-  }
+    opacityValue.stopAnimation();
+    opacityValue.setValue(0);
 
-  setVisible(true);
+    runJiggle();
 
-  opacityValue.stopAnimation();
-  opacityValue.setValue(0);
-
-  runJiggle();
-
-  Animated.timing(opacityValue, {
-    toValue: 0.5,
-    duration: 120,
-    useNativeDriver: true,
-  }).start();
-
-  timeoutRef.current = setTimeout(() => {
     Animated.timing(opacityValue, {
-      toValue: 0,
-      duration: 160,
+      toValue: 0.5,
+      duration: 120,
       useNativeDriver: true,
-    }).start(() => {
-      setVisible(false);
-    });
-  }, 1600);
-};
+    }).start();
 
-const showUsernameError = () => {
-  showFieldError(
-    setUsernameErrorVisible,
-    usernameErrorOpacity,
-    usernameErrorTimeoutRef,
-    setPasswordErrorVisible,
-    passwordErrorOpacity,
-    passwordErrorTimeoutRef
-  );
-};
+    timeoutRef.current = setTimeout(() => {
+      Animated.timing(opacityValue, {
+        toValue: 0,
+        duration: 160,
+        useNativeDriver: true,
+      }).start(() => {
+        setVisible(false);
+      });
+    }, 1600);
+  };
 
-const showPasswordError = () => {
-  showFieldError(
-    setPasswordErrorVisible,
-    passwordErrorOpacity,
-    passwordErrorTimeoutRef,
-    setUsernameErrorVisible,
-    usernameErrorOpacity,
-    usernameErrorTimeoutRef
-  );
-};
+  const showUsernameError = () => {
+    showFieldError(
+      setUsernameErrorVisible,
+      usernameErrorOpacity,
+      usernameErrorTimeoutRef,
+      setPasswordErrorVisible,
+      passwordErrorOpacity,
+      passwordErrorTimeoutRef
+    );
+  };
+
+  const showPasswordError = () => {
+    showFieldError(
+      setPasswordErrorVisible,
+      passwordErrorOpacity,
+      passwordErrorTimeoutRef,
+      setUsernameErrorVisible,
+      usernameErrorOpacity,
+      usernameErrorTimeoutRef
+    );
+  };
 
   const dots = [
-    [65, 51], [70, 51], [75, 51], [80, 51], [85, 51], [90, 51], [95, 51],
-    [65, 56], [70, 56], [75, 56], [80, 56], [85, 56], [90, 56], [95, 56], [100, 56],
-    [65, 61], [70, 61], [75, 61], [80, 61], [85, 61], [90, 61], [95, 61], [100, 61],
-    [60, 66], [65, 66], [70, 66], [75, 66], [80, 66], [85, 66], [90, 66], [95, 66], [100, 66],
-    [60, 71], [65, 71], [70, 71], [75, 71], [80, 71], [85, 71], [90, 71], [95, 71], [100, 71],
-    [60, 76], [65, 76], [70, 76], [75, 76], [80, 76], [85, 76], [90, 76], [95, 76], [100, 76],
-    [60, 81], [65, 81], [70, 81], [75, 81], [80, 81], [85, 81], [90, 81], [95, 81], [100, 81],
-    [65, 86], [70, 86], [75, 86], [80, 86], [85, 86], [90, 86], [95, 86], [100, 86],
-    [65, 91], [70, 91], [75, 91], [80, 91], [85, 91], [90, 91], [95, 91],
-    [70, 96], [75, 96], [80, 96], [85, 96], [90, 96],
+    [65, 51],
+    [70, 51],
+    [75, 51],
+    [80, 51],
+    [85, 51],
+    [90, 51],
+    [95, 51],
+    [65, 56],
+    [70, 56],
+    [75, 56],
+    [80, 56],
+    [85, 56],
+    [90, 56],
+    [95, 56],
+    [100, 56],
+    [65, 61],
+    [70, 61],
+    [75, 61],
+    [80, 61],
+    [85, 61],
+    [90, 61],
+    [95, 61],
+    [100, 61],
+    [60, 66],
+    [65, 66],
+    [70, 66],
+    [75, 66],
+    [80, 66],
+    [85, 66],
+    [90, 66],
+    [95, 66],
+    [100, 66],
+    [60, 71],
+    [65, 71],
+    [70, 71],
+    [75, 71],
+    [80, 71],
+    [85, 71],
+    [90, 71],
+    [95, 71],
+    [100, 71],
+    [60, 76],
+    [65, 76],
+    [70, 76],
+    [75, 76],
+    [80, 76],
+    [85, 76],
+    [90, 76],
+    [95, 76],
+    [100, 76],
+    [60, 81],
+    [65, 81],
+    [70, 81],
+    [75, 81],
+    [80, 81],
+    [85, 81],
+    [90, 81],
+    [95, 81],
+    [100, 81],
+    [65, 86],
+    [70, 86],
+    [75, 86],
+    [80, 86],
+    [85, 86],
+    [90, 86],
+    [95, 86],
+    [100, 86],
+    [65, 91],
+    [70, 91],
+    [75, 91],
+    [80, 91],
+    [85, 91],
+    [90, 91],
+    [95, 91],
+    [70, 96],
+    [75, 96],
+    [80, 96],
+    [85, 96],
+    [90, 96],
   ];
 
   const renderBlackOuterBorder = (style) => {
@@ -477,194 +516,206 @@ const showPasswordError = () => {
 
         <View style={styles.topBar} />
 
-<View style={styles.stage}>
-  {renderGradientEllipse(styles.ellipseTopCenterBack)}
-  {renderGradientEllipse(styles.bgEllipse3, true)}
-  {renderGradientEllipse(styles.bgEllipse4)}
+        <View style={styles.stage}>
+          <View
+            style={[
+              styles.stageScene,
+              {
+                transform: [{ translateY: cardSceneTranslateY }],
+              },
+            ]}
+          >
+            {renderGradientEllipse(styles.ellipseTopCenterBack)}
+            {renderGradientEllipse(styles.bgEllipse3, true)}
+            {renderGradientEllipse(styles.bgEllipse4)}
 
-  <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
+            <TwirlBackground source={require("../assets/twirl-background-png-1.png")} />
 
-  {renderGradientEllipse(styles.ellipseTopCenter)}
-  {renderGradientEllipse(styles.ellipseLeftSide, true)}
-  {renderGradientEllipse(styles.ellipseRightSide)}
-  {renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
-  {renderGradientEllipse(styles.ellipseRightSideBottom)}
+            {renderGradientEllipse(styles.ellipseTopCenter)}
+            {renderGradientEllipse(styles.ellipseLeftSide, true)}
+            {renderGradientEllipse(styles.ellipseRightSide)}
+            {renderGradientEllipse(styles.ellipseLeftSideBottom, true)}
+            {renderGradientEllipse(styles.ellipseRightSideBottom)}
 
-  {renderYellowEllipse({ ...styles.ellipseTop, top: TOP_YELLOW_TOP })}
-  {renderYellowEllipse({ ...styles.ellipseTopLeft, top: TOP_YELLOW_TOP })}
+            {renderYellowEllipse({ ...styles.ellipseTop, top: TOP_YELLOW_TOP })}
+            {renderYellowEllipse({
+              ...styles.ellipseTopLeft,
+              top: TOP_YELLOW_TOP,
+            })}
 
-  {renderYellowEllipse(styles.ellipseBottom, true)}
-  {renderYellowEllipse(styles.ellipseBottomLeft, true)}
+            {renderYellowEllipse(styles.ellipseBottom, true)}
+            {renderYellowEllipse(styles.ellipseBottomLeft, true)}
 
-          <View pointerEvents="none" style={styles.fancyCrownSvg}>
-            <Image
-              source={require("../assets/fancy_crown.png")}
-              style={[styles.fancyCrownImage, styles.crownBorderWide]}
-            />
+            <View pointerEvents="none" style={styles.fancyCrownSvg}>
+              <Image
+                source={require("../assets/fancy_crown.png")}
+                style={[styles.fancyCrownImage, styles.crownBorderWide]}
+              />
 
-            <Image
-              source={require("../assets/fancy_crown.png")}
-              style={[styles.fancyCrownImage, styles.crownBorder]}
-            />
+              <Image
+                source={require("../assets/fancy_crown.png")}
+                style={[styles.fancyCrownImage, styles.crownBorder]}
+              />
 
-            <Image
-              source={require("../assets/fancy_crown.png")}
-              style={styles.fancyCrownImage}
-            />
+              <Image
+                source={require("../assets/fancy_crown.png")}
+                style={styles.fancyCrownImage}
+              />
 
-            <Image
-              source={require("../assets/fancy_crown.png")}
-              style={[styles.fancyCrownImage, styles.crownLighten]}
-            />
+              <Image
+                source={require("../assets/fancy_crown.png")}
+                style={[styles.fancyCrownImage, styles.crownLighten]}
+              />
 
-            <Image
-              source={require("../assets/fancy_crown.png")}
-              style={[styles.fancyCrownImage, styles.fancyCrownTint]}
-            />
-          </View>
+              <Image
+                source={require("../assets/fancy_crown.png")}
+                style={[styles.fancyCrownImage, styles.fancyCrownTint]}
+              />
+            </View>
 
-          {renderGradientEllipse(styles.ellipseTopCenter)}
+            {renderGradientEllipse(styles.ellipseTopCenter)}
 
-          <View pointerEvents="none" style={styles.wandSvg}>
-            <Image
-              source={require("../assets/wand2.png")}
-              style={[styles.wandImage, styles.wandBorder]}
-            />
+            <View pointerEvents="none" style={styles.wandSvg}>
+              <Image
+                source={require("../assets/wand2.png")}
+                style={[styles.wandImage, styles.wandBorder]}
+              />
 
-            <Image
-              source={require("../assets/wand2.png")}
-              style={styles.wandImage}
-            />
+              <Image
+                source={require("../assets/wand2.png")}
+                style={styles.wandImage}
+              />
 
-            <Image
-              source={require("../assets/wand2.png")}
-              style={[styles.wandImage, styles.wandTint]}
-            />
-          </View>
+              <Image
+                source={require("../assets/wand2.png")}
+                style={[styles.wandImage, styles.wandTint]}
+              />
+            </View>
 
-          <View style={styles.card}>
-            <View style={{ flex: 1, justifyContent: "center" }}>
-              <View style={styles.logoContainer}>
-                <View style={styles.coinGroup}>
-                  <View style={styles.coinOuterCircle} />
+            <View style={styles.card}>
+              <View style={{ flex: 1, justifyContent: "center" }}>
+                <View style={styles.logoContainer}>
+                  <View style={styles.coinGroup}>
+                    <View style={styles.coinOuterCircle} />
 
-                  <LinearGradient
-                    colors={["#97A2FE", "#3E4BB5"]}
-                    start={{ x: 0, y: 1 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.coinGradientCircle}
-                  />
+                    <LinearGradient
+                      colors={["#97A2FE", "#3E4BB5"]}
+                      start={{ x: 0, y: 1 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.coinGradientCircle}
+                    />
 
-                  <View style={styles.coinDotsLayer}>
-                    {dots.map(([left, top], i) => (
-                      <View
-                        key={i}
-                        style={[
-                          styles.coinDot,
-                          {
-                            left: `${left}%`,
-                            top: `${top}%`,
-                          },
-                        ]}
-                      />
-                    ))}
+                    <View style={styles.coinDotsLayer}>
+                      {dots.map(([left, top], i) => (
+                        <View
+                          key={i}
+                          style={[
+                            styles.coinDot,
+                            {
+                              left: `${left}%`,
+                              top: `${top}%`,
+                            },
+                          ]}
+                        />
+                      ))}
+                    </View>
+
+                    <Image
+                      source={require("../assets/dollar.png")}
+                      style={styles.dollar}
+                    />
+
+                    <Image
+                      source={require("../assets/union.png")}
+                      style={styles.crown}
+                    />
                   </View>
 
-                  <Image
-                    source={require("../assets/dollar.png")}
-                    style={styles.dollar}
-                  />
+                  <View style={styles.logoTextGroup}>
+                    <Image
+                      source={require("../assets/credit.png")}
+                      style={styles.credit}
+                    />
 
-                  <Image
-                    source={require("../assets/union.png")}
-                    style={styles.crown}
-                  />
+                    <Image
+                      source={require("../assets/king.png")}
+                      style={styles.king}
+                    />
+                  </View>
                 </View>
 
-                <View style={styles.logoTextGroup}>
-                  <Image
-                    source={require("../assets/credit.png")}
-                    style={styles.credit}
-                  />
+                <View style={{ position: "relative", zIndex: 50 }}>
+                  {usernameErrorVisible &&
+                    renderFieldError("Please input username", usernameErrorOpacity)}
 
-                  <Image
-                    source={require("../assets/king.png")}
-                    style={styles.king}
-                  />
+                  <View style={styles.fieldRow}>
+                    <View style={styles.fieldIconContainer}>
+                      <Image
+                        source={require("../assets/avatar.png")}
+                        style={styles.avatarIcon}
+                      />
+                    </View>
+
+                    <TextInput
+                      placeholder="Username"
+                      value={username}
+                      onChangeText={setUsername}
+                      style={styles.input}
+                    />
+                  </View>
                 </View>
+
+                <View style={{ position: "relative", zIndex: 50 }}>
+                  {passwordErrorVisible &&
+                    renderFieldError(
+                      `Please input password for ${username.trim()}`,
+                      passwordErrorOpacity
+                    )}
+
+                  <View style={styles.fieldRow}>
+                    <View style={styles.fieldIconContainer}>
+                      <Image
+                        source={require("../assets/lock.png")}
+                        style={styles.lockIcon}
+                      />
+                    </View>
+
+                    <TextInput
+                      placeholder="Password"
+                      value={password}
+                      onChangeText={setPassword}
+                      secureTextEntry
+                      style={styles.input}
+                    />
+                  </View>
+                </View>
+
+                <View style={styles.rememberRow}>
+                  <CustomSwitch />
+
+                  <Text style={styles.rememberText}>Remember me</Text>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.signInButton}
+                  onPress={() => {
+                    if (!username.trim()) {
+                      showUsernameError();
+                      return;
+                    }
+
+                    if (!password.trim()) {
+                      showPasswordError();
+                      return;
+                    }
+
+                    setDisplayName(username);
+                    router.push("/loadin");
+                  }}
+                >
+                  <Text style={styles.signInText}>SIGN IN</Text>
+                </TouchableOpacity>
               </View>
-
-<View style={{ position: "relative", zIndex: 50 }}>
-  {usernameErrorVisible &&
-    renderFieldError("Please input username", usernameErrorOpacity)}
-
-  <View style={styles.fieldRow}>
-    <View style={styles.fieldIconContainer}>
-      <Image
-        source={require("../assets/avatar.png")}
-        style={styles.avatarIcon}
-      />
-    </View>
-
-    <TextInput
-      placeholder="Username"
-      value={username}
-      onChangeText={setUsername}
-      style={styles.input}
-    />
-  </View>
-</View>
-
-<View style={{ position: "relative", zIndex: 50 }}>
-  {passwordErrorVisible &&
-    renderFieldError(
-      `Please input password for ${username.trim()}`,
-      passwordErrorOpacity
-    )}
-
-  <View style={styles.fieldRow}>
-    <View style={styles.fieldIconContainer}>
-      <Image
-        source={require("../assets/lock.png")}
-        style={styles.lockIcon}
-      />
-    </View>
-
-    <TextInput
-      placeholder="Password"
-      value={password}
-      onChangeText={setPassword}
-      secureTextEntry
-      style={styles.input}
-    />
-  </View>
-</View>
-
-              <View style={styles.rememberRow}>
-                <CustomSwitch />
-
-                <Text style={styles.rememberText}>Remember me</Text>
-              </View>
-
-              <TouchableOpacity
-                style={styles.signInButton}
-                onPress={() => {
-                  if (!username.trim()) {
-                    showUsernameError();
-                    return;
-                  }
-
-                  if (!password.trim()) {
-                    showPasswordError();
-                    return;
-                  }
-
-                  setDisplayName(username);
-                  router.push("/loadin");
-                }}
-              >
-                <Text style={styles.signInText}>SIGN IN</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </View>

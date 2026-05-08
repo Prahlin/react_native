@@ -32,17 +32,18 @@ export default StyleSheet.create({
     opacity: 0.05,
   },
 
-crownBorder: {
-  tintColor: "#3E4BB5",
-  opacity: 0,
-  transform: [{ translateX: 4 }, { translateY: 4 }],
-},
+  crownBorder: {
+    tintColor: "#3E4BB5",
+    opacity: 0,
+    transform: [{ translateX: 4 }, { translateY: 4 }],
+  },
 
-crownBorderWide: {
-  tintColor: "#3E4BB5",
-  opacity: 0,
-  transform: [{ translateX: 7 }, { translateY: 7 }],
-},
+  crownBorderWide: {
+    tintColor: "#3E4BB5",
+    opacity: 0,
+    transform: [{ translateX: 7 }, { translateY: 7 }],
+  },
+
   fancyCrownSvg: {
     position: "absolute",
     left: "10%",
@@ -67,10 +68,16 @@ crownBorderWide: {
 
   stage: {
     flex: 1,
+    position: "relative",
+    overflow: "hidden",
+  },
+
+  stageScene: {
+    ...StyleSheet.absoluteFillObject,
     alignItems: "center",
     justifyContent: "flex-end",
     paddingBottom: 40,
-    overflow: "hidden",
+    overflow: "visible",
   },
 
   bgEllipse3: {
@@ -99,33 +106,33 @@ crownBorderWide: {
     borderColor: "#3E4BB5",
   },
 
-ellipseTopCenter: {
-  position: "absolute",
-  top: isWeb ? "25.5%" : "27.5%",
-  left: "50%",
-  width: 250,
-  height: 250,
-  borderRadius: 125,
-  overflow: "hidden",
-  zIndex: 4,
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-  transform: [{ translateX: -125 }],
-},
+  ellipseTopCenter: {
+    position: "absolute",
+    top: isWeb ? "25.5%" : "27.5%",
+    left: "50%",
+    width: 250,
+    height: 250,
+    borderRadius: 125,
+    overflow: "hidden",
+    zIndex: 4,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+    transform: [{ translateX: -125 }],
+  },
 
-ellipseTopCenterBack: {
-  position: "absolute",
-  top: isWeb ? "17.5%" : "17.5%",
-  left: "50%",
-  width: 200,
-  height: 200,
-  borderRadius: 100,
-  overflow: "hidden",
-  zIndex: 0,
-  borderWidth: 3,
-  borderColor: "#3E4BB5",
-  transform: [{ translateX: -100 }],
-},
+  ellipseTopCenterBack: {
+    position: "absolute",
+    top: isWeb ? "17.5%" : "17.5%",
+    left: "50%",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden",
+    zIndex: 0,
+    borderWidth: 3,
+    borderColor: "#3E4BB5",
+    transform: [{ translateX: -100 }],
+  },
 
   ellipseLeftSide: {
     position: "absolute",
@@ -288,22 +295,22 @@ ellipseTopCenterBack: {
     zIndex: 4,
   },
 
-logoContainer: {
-  width: "100%",
-  height: isWeb ? "38%" : "24%",
-  alignSelf: "center",
-  marginBottom: isWeb ? "10.5%" : "8%",
-  marginTop: isWeb ? 50 : 30,
-  flexDirection: "row",
-  alignItems: "flex-start",
-  justifyContent: "center",
-  paddingTop: isWeb ? 18 : 0,
-  transform: [
-    { translateX: isWeb ? -10 : -6 },
-    { translateY: isWeb ? -24 : 0 }, // 👈 move logo UP on web only
-    { scale: 0.8 },
-  ],
-},
+  logoContainer: {
+    width: "100%",
+    height: isWeb ? "38%" : "24%",
+    alignSelf: "center",
+    marginBottom: isWeb ? "10.5%" : "8%",
+    marginTop: isWeb ? 50 : 30,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    paddingTop: isWeb ? 18 : 0,
+    transform: [
+      { translateX: isWeb ? -10 : -6 },
+      { translateY: isWeb ? -24 : 0 },
+      { scale: 0.8 },
+    ],
+  },
 
   coinGroup: {
     width: 91 * S * 1.4,
@@ -425,22 +432,22 @@ logoContainer: {
     resizeMode: "contain",
   },
 
-input: {
-  flex: 1,
-  fontSize: isWeb ? 14 : 14,
-  lineHeight: isWeb ? 18 : 20,
-  height: isWeb ? 28 : 32,
-  color: "#808690",
-  borderBottomWidth: 2,
-  borderBottomColor: "#D0D4DC",
+  input: {
+    flex: 1,
+    fontSize: isWeb ? 14 : 14,
+    lineHeight: isWeb ? 18 : 20,
+    height: isWeb ? 28 : 32,
+    color: "#808690",
+    borderBottomWidth: 2,
+    borderBottomColor: "#D0D4DC",
 
-  paddingTop: isWeb ? 0 : 4,     // 👈 push text DOWN on Android
-  paddingBottom: isWeb ? 2 : 4,
-  paddingVertical: 0,
+    paddingTop: isWeb ? 0 : 4,
+    paddingBottom: isWeb ? 2 : 4,
+    paddingVertical: 0,
 
-  marginRight: isWeb ? 6 : 6,
-  includeFontPadding: false,
-},
+    marginRight: isWeb ? 6 : 6,
+    includeFontPadding: false,
+  },
 
   rememberRow: {
     flexDirection: "row",
@@ -490,11 +497,11 @@ input: {
     resizeMode: "contain",
   },
 
-wandBorder: {
-  tintColor: "#3E4BB5",
-  opacity: 0,
-  transform: [{ translateX: 4 }, { translateY: 4 }],
-},
+  wandBorder: {
+    tintColor: "#3E4BB5",
+    opacity: 0,
+    transform: [{ translateX: 4 }, { translateY: 4 }],
+  },
 
   signInText: {
     color: "#FFFFFF",

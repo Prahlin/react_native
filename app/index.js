@@ -765,4 +765,4 @@ export default function Index() {
       </SafeAreaView>
     </Animated.View>
   );
-}?
+}

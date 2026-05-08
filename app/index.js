@@ -81,7 +81,7 @@ style={{
           borderRadius: 10.8,
           backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
           top: -2.7,
-          left: -1.8,
+          left: 0,
           transform: [
             {
               translateX: switchAnim.interpolate({

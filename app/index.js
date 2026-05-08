@@ -63,9 +63,9 @@ const CustomSwitch = memo(() => {
       onPress={toggleSwitch}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       style={{
-        width: 44,
-        height: 20,
-        borderRadius: 10,
+        width: 39.6,
+        height: 18,
+        borderRadius: 9,
         backgroundColor: checked ? "#8D98F0" : "#D0D4DC",
         justifyContent: "center",
         zIndex: 20,
@@ -76,17 +76,17 @@ const CustomSwitch = memo(() => {
         pointerEvents="none"
         style={{
           position: "absolute",
-          width: 24,
-          height: 24,
-          borderRadius: 12,
+          width: 21.6,
+          height: 21.6,
+          borderRadius: 10.8,
           backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
-          top: -2,
-          left: -2,
+          top: -1.8,
+          left: -1.8,
           transform: [
             {
               translateX: switchAnim.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, 20],
+                outputRange: [0, 18],
               }),
             },
           ],

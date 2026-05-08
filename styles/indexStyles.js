@@ -301,9 +301,9 @@ export default StyleSheet.create({
 
   logoContainer: {
     width: "100%",
-    height: isWeb ? "38%" : "24%",
+    height: isWeb ? 118 : "24%",
     alignSelf: "center",
-    marginBottom: isWeb ? "10.5%" : "8%",
+    marginBottom: isWeb ? 18 : "8%",
     marginTop: isWeb ? 50 : 30,
     flexDirection: "row",
     alignItems: "flex-start",
@@ -311,7 +311,7 @@ export default StyleSheet.create({
     paddingTop: isWeb ? 18 : 0,
     transform: [
       { translateX: isWeb ? -10 : -6 },
-      { translateY: isWeb ? -24 : 0 },
+      { translateY: isWeb ? -52 : 0 },
       { scale: 0.8 },
     ],
   },
@@ -470,7 +470,7 @@ export default StyleSheet.create({
 
   signInButton: {
     alignSelf: "center",
-    width: "102%",
+    width: isWeb ? "100%" : "102%",
     transform: [{ translateX: -1 }],
     backgroundColor: "#8D98F0",
     borderRadius: isWeb ? 9 : 9 * S,

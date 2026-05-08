@@ -62,15 +62,15 @@ const CustomSwitch = memo(() => {
       activeOpacity={0.8}
       onPress={toggleSwitch}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-      style={{
-        width: 39.6,
-        height: 18,
-        borderRadius: 9,
-        backgroundColor: checked ? "#8D98F0" : "#D0D4DC",
-        justifyContent: "center",
-        zIndex: 20,
-        elevation: 20,
-      }}
+style={{
+  width: 39.6,
+  height: 16.2,
+  borderRadius: 8.1,
+  backgroundColor: checked ? "#8D98F0" : "#D0D4DC",
+  justifyContent: "center",
+  zIndex: 20,
+  elevation: 20,
+}}
     >
       <Animated.View
         pointerEvents="none"
@@ -80,7 +80,7 @@ const CustomSwitch = memo(() => {
           height: 21.6,
           borderRadius: 10.8,
           backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
-          top: -1.8,
+          top: -2.7,
           left: -1.8,
           transform: [
             {

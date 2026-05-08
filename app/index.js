@@ -45,16 +45,44 @@ const EllipseDots = memo(({ color }) => (
 const CustomSwitch = memo(() => {
   const [checked, setChecked] = useState(false);
   const switchAnim = useRef(new Animated.Value(0)).current;
+  const knobBounceAnim = useRef(new Animated.Value(1)).current;
 
   const toggleSwitch = () => {
     const next = !checked;
     setChecked(next);
 
-    Animated.timing(switchAnim, {
-      toValue: next ? 1 : 0,
-      duration: 90,
-      useNativeDriver: true,
-    }).start();
+    switchAnim.stopAnimation();
+    knobBounceAnim.stopAnimation();
+
+    knobBounceAnim.setValue(1);
+
+    Animated.parallel([
+      Animated.spring(switchAnim, {
+        toValue: next ? 1 : 0,
+        speed: 38,
+        bounciness: 13.5,
+        useNativeDriver: true,
+      }),
+
+      Animated.sequence([
+        Animated.timing(knobBounceAnim, {
+          toValue: 1.18,
+          duration: 70,
+          useNativeDriver: true,
+        }),
+        Animated.timing(knobBounceAnim, {
+          toValue: 0.94,
+          duration: 70,
+          useNativeDriver: true,
+        }),
+        Animated.spring(knobBounceAnim, {
+          toValue: 1,
+          speed: 18,
+          bounciness: 8,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start();
   };
 
   return (
@@ -62,44 +90,38 @@ const CustomSwitch = memo(() => {
       activeOpacity={0.8}
       onPress={toggleSwitch}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-style={{
-  width: 39.6,
-  height: 16.2,
-  borderRadius: 8.1,
-  backgroundColor: checked ? "#8D98F0" : "#D0D4DC",
-  justifyContent: "center",
-  zIndex: 20,
-  elevation: 20,
-}}
+      style={{
+        width: 39.6,
+        height: 16.2,
+        borderRadius: 8.1,
+        backgroundColor: checked ? "#8D98F0" : "#D0D4DC",
+        justifyContent: "center",
+        zIndex: 20,
+        elevation: 20,
+      }}
     >
       <Animated.View
         pointerEvents="none"
-style={{
-  position: "absolute",
-
-  // OFF = 5% smaller than 21.6 = 20.52
-  // ON = 5% larger than 21.6 = 22.68
-  width: checked ? 22.68 : 20.52,
-  height: checked ? 22.68 : 20.52,
-  borderRadius: checked ? 11.34 : 10.26,
-
-  backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
-
-  // Track height is 16.2.
-  // OFF top = (16.2 - 20.52) / 2 = -2.16
-  // ON top = (16.2 - 22.68) / 2 = -3.24
-  top: checked ? -3.24 : -2.16,
-
-  left: 0,
-  transform: [
-    {
-      translateX: switchAnim.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 18],
-      }),
-    },
-  ],
-}}
+        style={{
+          position: "absolute",
+          width: checked ? 22.68 : 20.52,
+          height: checked ? 22.68 : 20.52,
+          borderRadius: checked ? 11.34 : 10.26,
+          backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
+          top: checked ? -3.24 : -2.16,
+          left: checked ? 0 : -1,
+          transform: [
+            {
+              translateX: switchAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 18],
+              }),
+            },
+            {
+              scale: knobBounceAnim,
+            },
+          ],
+        }}
       />
     </TouchableOpacity>
   );
@@ -655,7 +677,10 @@ export default function Index() {
 
                 <View style={{ position: "relative", zIndex: 50 }}>
                   {usernameErrorVisible &&
-                    renderFieldError("Please input username", usernameErrorOpacity)}
+                    renderFieldError(
+                      "Please input username",
+                      usernameErrorOpacity
+                    )}
 
                   <View style={styles.fieldRow}>
                     <View style={styles.fieldIconContainer}>
@@ -702,7 +727,16 @@ export default function Index() {
                 <View style={styles.rememberRow}>
                   <CustomSwitch />
 
-                  <Text style={styles.rememberText}>Remember me</Text>
+                  <Text
+                    style={[
+                      styles.rememberText,
+                      Platform.OS === "web" && {
+                        transform: [{ translateY: 11 }],
+                      },
+                    ]}
+                  >
+                    Remember me
+                  </Text>
                 </View>
 
                 <TouchableOpacity

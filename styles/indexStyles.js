@@ -290,9 +290,13 @@ export default StyleSheet.create({
     paddingTop: 40,
     paddingHorizontal: "8%",
     paddingBottom: 40,
-    justifyContent: "center",
     overflow: "hidden",
     zIndex: 4,
+  },
+
+  cardInner: {
+    flex: 1,
+    justifyContent: "center",
   },
 
   logoContainer: {
@@ -440,11 +444,9 @@ export default StyleSheet.create({
     color: "#808690",
     borderBottomWidth: 2,
     borderBottomColor: "#D0D4DC",
-
     paddingTop: isWeb ? 0 : 4,
     paddingBottom: isWeb ? 2 : 4,
     paddingVertical: 0,
-
     marginRight: isWeb ? 6 : 6,
     includeFontPadding: false,
   },

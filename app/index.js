@@ -74,23 +74,32 @@ style={{
     >
       <Animated.View
         pointerEvents="none"
-        style={{
-          position: "absolute",
-          width: 21.6,
-          height: 21.6,
-          borderRadius: 10.8,
-          backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
-          top: -2.7,
-          left: 0,
-          transform: [
-            {
-              translateX: switchAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 18],
-              }),
-            },
-          ],
-        }}
+style={{
+  position: "absolute",
+
+  // OFF = 5% smaller than 21.6 = 20.52
+  // ON = 5% larger than 21.6 = 22.68
+  width: checked ? 22.68 : 20.52,
+  height: checked ? 22.68 : 20.52,
+  borderRadius: checked ? 11.34 : 10.26,
+
+  backgroundColor: checked ? "#3E4BB5" : "#FFFFFF",
+
+  // Track height is 16.2.
+  // OFF top = (16.2 - 20.52) / 2 = -2.16
+  // ON top = (16.2 - 22.68) / 2 = -3.24
+  top: checked ? -3.24 : -2.16,
+
+  left: 0,
+  transform: [
+    {
+      translateX: switchAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 18],
+      }),
+    },
+  ],
+}}
       />
     </TouchableOpacity>
   );
